@@ -46,17 +46,9 @@ var shareTab = Titanium.UI.createTab({
     window: shareWindow,
 });
 
-var shareLabel = Titanium.UI.createLabel({
-    color: '#821785',
-    text: 'Map window',
-    font: {
-        fontSize: 20
-    },
-    textAlign: 'center',
-    width: 'auto'
-});
+var mapWebView = Titanium.UI.createWebView({url:'html/index.html'});
 
-shareWindow.add(shareLabel);
+shareWindow.add(mapWebView);
 
 //  add tabs
 tabGroup.addTab(predictionTab);  
