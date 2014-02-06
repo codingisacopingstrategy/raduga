@@ -10,6 +10,10 @@
     <script src="http://leaflet.cloudmade.com/dist/leaflet.js"></script>
     <meta name="viewport" content="width=320">
     <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
         div#map {
             width: 320px;
             position: absolute;
@@ -42,7 +46,7 @@
         });
 
         map.addLayer(owmRainLayer);
-        map.addLayer(owmCloudsLayer);
+//        map.addLayer(owmCloudsLayer);
 
 
     </script>

@@ -17,7 +17,7 @@ var predictionWindow = Titanium.UI.createWindow({
 });
 var predictionTab = Titanium.UI.createTab({  
     icon: 'KS_nav_views.png',
-    title: 'Share',
+    title: 'Predict',
     window: predictionWindow,
 });
 
@@ -42,7 +42,7 @@ var shareWindow = Titanium.UI.createWindow({
 });
 var shareTab = Titanium.UI.createTab({
     icon: 'KS_nav_ui.png',
-    title: 'Tab 2',
+    title: 'Share',
     window: shareWindow,
 });
 
