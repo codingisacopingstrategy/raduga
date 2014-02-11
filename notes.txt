@@ -1,0 +1,39 @@
+If not preferences:
+  launch preferences page
+
+Android preferences in-app,
+
+
+Settings
+Location:
+current location
+update location automatically
+set location manually
+
+
+chck Receive push notifications
+
+for each user in registered users:
+    if in rainbow area:
+	    send rainbow
+
+Kaart met regenbogen
+    
+
+There is a rainbow near 
+
+
+Current location
+
+http://docs.appcelerator.com/cloud/latest/#!/api/PushNotifications-method-notify
+
+
+Feed: spotted rainbows appear
+Camera: goes directly to camera view.
+Globe: see rainbow images?
+
+http://docs.appcelerator.com/titanium/3.0/#!/guide/Camera_and_Photo_Gallery_APIs
+ 
+ 
+ Mochten we locaties van steden nodig hebben zie dan http://en.wikipedia.org/wiki/List_of_cities_and_towns_in_Russia
+
