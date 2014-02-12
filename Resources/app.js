@@ -11,11 +11,11 @@ var tabGroup = Titanium.UI.createTabGroup({
 //
 // create base UI tab and root window
 //
-var predictionWindow = Titanium.UI.createWindow({  
+var predictionWindow = Titanium.UI.createWindow({
     title: 'Predict',
     backgroundColor: '#000'
 });
-var predictionTab = Titanium.UI.createTab({  
+var predictionTab = Titanium.UI.createTab({
     icon: 'KS_nav_views.png',
     title: 'Predict',
     window: predictionWindow,
@@ -36,7 +36,7 @@ predictionWindow.add(predictionLabel);
 //
 // create controls tab and root window
 //
-var shareWindow = Titanium.UI.createWindow({  
+var shareWindow = Titanium.UI.createWindow({
     title: 'Tab 2',
     backgroundColor: '#000'
 });
@@ -47,12 +47,64 @@ var shareTab = Titanium.UI.createTab({
 });
 
 var mapWebView = Titanium.UI.createWebView({url:'html/index.html'});
-
 shareWindow.add(mapWebView);
 
+// from the example http://docs.appcelerator.com/titanium/3.0/#!/guide/Camera_and_Photo_Gallery_APIs :
+var showCam = function() {
+    Titanium.Media.showCamera({
+        success:function(event) {
+            // called when media returned from the camera
+            Ti.API.debug('Our type was: '+event.mediaType);
+            if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {
+                var imageView = Ti.UI.createImageView({
+                    width:win.width,   // doesn’t `win` need to be defined?
+                    height:win.height,
+                    image:event.media
+                });
+                win.add(imageView);
+            } else {
+                alert("got the wrong type back ="+event.mediaType);
+            }
+        },
+        cancel:function() {
+            // called when user cancels taking a picture
+        },
+        error:function(error) {
+            // called when there's an error
+            var a = Titanium.UI.createAlertDialog({title:'Camera'});
+            if (error.code == Titanium.Media.NO_CAMERA) {
+                a.setMessage('Please run this test on device');
+            } else {
+                a.setMessage('Unexpected error: ' + error.code);
+            }
+            a.show();
+        },
+        saveToPhotoGallery:true,
+        allowEditing:true,
+        mediaTypes:[Ti.Media.MEDIA_TYPE_VIDEO,Ti.Media.MEDIA_TYPE_PHOTO]
+    });
+};
+
+var cameraWindow = Titanium.UI.createWindow({
+    title: 'Camera',
+    backgroundColor: '#000'
+});
+
+// for now we add it as a tab, but it will probably be a seperate button on the top of the screen
+var cameraTab = Titanium.UI.createTab({
+    icon: 'KS_nav_ui.png',
+    title: 'Camera',
+    window: cameraWindow,
+});
+
+// it works now on ios, but if it happens to not work on Android, see:
+// https://developer.appcelerator.com/question/21191/android-window-events-not-working-with-tabgroup-titanium-12
+cameraTab.addEventListener("focus", showCam);
+
 //  add tabs
-tabGroup.addTab(predictionTab);  
+tabGroup.addTab(predictionTab);
 tabGroup.addTab(shareTab);
+tabGroup.addTab(cameraTab);
 
 // open tab group
 tabGroup.open();
