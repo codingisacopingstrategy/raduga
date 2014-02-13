@@ -1,3 +1,17 @@
+var Cloud = require('ti.cloud');
+
+// something like this?
+// http://stackoverflow.com/questions/2573592/how-to-organize-js-files-in-a-appcelerator-titanium-project
+var app = {
+  views: {},
+  controllers: {},
+  models: {
+      photos: []
+  },
+  ui: {}
+};
+
+
 // this sets the background color of the master UIView (when there are no windows/tab groups on it)
 Titanium.UI.setBackgroundColor('#000');
 
