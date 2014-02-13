@@ -57,17 +57,17 @@ var showCam = function() {
             Ti.API.debug('Our type was: '+event.mediaType);
             if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {
                 var imageView = Ti.UI.createImageView({
-                    width:win.width,   // doesn’t `win` need to be defined?
-                    height:win.height,
+                    width:cameraWindow.width,
+                    height:cameraWindow.height,
                     image:event.media
                 });
-                win.add(imageView);
+                cameraWindow.add(imageView);
             } else {
                 alert("got the wrong type back ="+event.mediaType);
             }
         },
         cancel:function() {
-            // called when user cancels taking a picture
+                alert("called when user cancels taking a picture");
         },
         error:function(error) {
             // called when there's an error
