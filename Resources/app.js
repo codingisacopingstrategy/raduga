@@ -22,13 +22,91 @@ var tabGroup = Titanium.UI.createTabGroup({
 });
 
 
+Cloud.Photos.query({
+    page: 1,
+    per_page: 20,
+}, function (e) {
+    if (e.success) {
+        alert('found on the internet ' + e.photos.length + ' photos');
+        app.models.photos = e.photos;
+        listView.setSections([createPhotoData()]);
+    } else {
+        alert('Error:\n' +
+            ((e.error && e.message) || JSON.stringify(e)));
+    }
+});
+
+
+var plainTemplate = {
+    childTemplates: [
+        {
+            type: 'Ti.UI.Label', // Use a label
+            bindId: 'rowtitle',  // Bind ID for this label
+            properties: {        // Sets the Label.left property
+                left: '10dp'
+            }
+        },
+        {
+            type: 'Ti.UI.ImageView',  // Use an image view
+            bindId: 'pic',            // Bind ID for this image view
+            properties: {             // Sets the ImageView.image property
+                image: 'KS_nav_ui.png'
+            }
+        },
+        {
+            type: 'Ti.UI.Button',   // Use a button
+            bindId: 'button',       // Bind ID for this button
+            properties: {           // Sets several button properties
+                width: '80dp',
+                height: '30dp',
+                right: '10dp',
+                title: 'press me'
+            },
+            events: { click : function() {
+                // Binds a callback to the button's click event
+            } }
+        }
+    ]
+};
+var listView = Ti.UI.createListView({
+    // Maps the plainTemplate object to the 'plain' style name
+    templates: { 'plain': plainTemplate },
+    // Use the plain template, that is, the plainTemplate object defined earlier
+    // for all data list items in this list view
+    defaultItemTemplate: 'plain'
+});
+
+var createPhotoData = function() {
+    alert('creating photo data for ' + app.models.photos.length + ' photos');
+    var data = [];
+    for (var i = 0; i < app.models.photos.length; i++) {
+        data.push({
+            // Maps to the rowtitle component in the template
+            // Sets the text property of the Label component
+            rowtitle : { text: 'Row ' + (i + 1) },
+            // Sets the regular list data properties
+            properties : {
+                itemId: 'row' + (i + 1),
+                accessoryType: Ti.UI.LIST_ACCESSORY_TYPE_NONE
+            }
+        });
+    }
+    return Ti.UI.createListSection({items: data});
+};
+
+listView.sections = [createPhotoData()];
+listView.addEventListener('photosFetched', function(e){
+    listView.setSections([createPhotoData()]); //doesnt work yet
+});
+
 //
 // create base UI tab and root window
 //
 var predictionWindow = Titanium.UI.createWindow({
-    title: 'Predict',
+    title: 'Wall',
     backgroundColor: '#000'
 });
+
 var predictionTab = Titanium.UI.createTab({
     icon: 'KS_nav_views.png',
     title: 'Predict',
@@ -45,7 +123,7 @@ var predictionLabel = Titanium.UI.createLabel({
     width: 'auto',
 });
 
-predictionWindow.add(predictionLabel);
+predictionWindow.add(listView);
 
 //
 // create controls tab and root window
