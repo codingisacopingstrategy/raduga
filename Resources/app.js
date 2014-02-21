@@ -11,6 +11,19 @@ var app = {
   ui: {}
 };
 
+/* Utility Functions */
+
+var zeroPad = function(n) {
+    var str = String(n);
+    return str.length === 1 ? '0' + str : str;
+};
+var Date2PonyDate = function(d) {
+    return zeroPad(d.getDay()) + '.' + zeroPad(d.getMonth()) + '.' + d.getFullYear();
+};
+
+var Date2PonyHour = function(d) {
+    return zeroPad(d.getHours()) + ':' + zeroPad(d.getMinutes());
+};
 
 // this sets the background color of the master UIView (when there are no windows/tab groups on it)
 Titanium.UI.setBackgroundColor('#000');
@@ -27,7 +40,7 @@ Cloud.Photos.query({
     per_page: 20,
 }, function (e) {
     if (e.success) {
-        alert('found on the internet ' + e.photos.length + ' photos');
+        Ti.API.info('found on the internet ' + e.photos.length + ' photos');
         app.models.photos = e.photos;
         listView.setSections([createPhotoData()]);
     } else {
@@ -41,16 +54,16 @@ var plainTemplate = {
     childTemplates: [
         {
             type: 'Ti.UI.Label', // Use a label
-            bindId: 'rowtitle',  // Bind ID for this label
+            bindId: 'date',  // Bind ID for this label
             properties: {        // Sets the Label.left property
-                left: '10dp'
+                left: '0dp'
             }
         },
         {
             type: 'Ti.UI.ImageView',  // Use an image view
             bindId: 'pic',            // Bind ID for this image view
-            properties: {             // Sets the ImageView.image property
-                image: 'KS_nav_ui.png'
+            properties: {
+                width: '100%',
             }
         },
         {
@@ -77,13 +90,22 @@ var listView = Ti.UI.createListView({
 });
 
 var createPhotoData = function() {
-    alert('creating photo data for ' + app.models.photos.length + ' photos');
+    Ti.API.info('creating photo data for ' + app.models.photos.length + ' photos');
     var data = [];
     for (var i = 0; i < app.models.photos.length; i++) {
+        photo = app.models.photos[i];
+
+        // Titanium’s cloud service uses the "2014-02-13T14:27:39+0000" format
+        // which is not recognised by the Date constructor in iOS
+        // The Z is another way of saying GMT.
+        photo.created_at = photo.created_at.replace('+0000','Z');
+
         data.push({
             // Maps to the rowtitle component in the template
             // Sets the text property of the Label component
-            rowtitle : { text: 'Row ' + (i + 1) },
+            date: { text: Date2PonyDate(new Date(photo.created_at)) },
+            pic:  { image: photo.urls.thumb_100 },
+            hour: { text: Date2PonyHour(new Date(photo.created_at)) },
             // Sets the regular list data properties
             properties : {
                 itemId: 'row' + (i + 1),
@@ -146,7 +168,7 @@ var showCam = function() {
     Titanium.Media.showCamera({
         success:function(event) {
             // called when media returned from the camera
-            Ti.API.debug('Our type was: '+event.mediaType);
+            Ti.API.info('Our type was: '+event.mediaType);
             if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {
                 var imageView = Ti.UI.createImageView({
                     width:cameraWindow.width,
