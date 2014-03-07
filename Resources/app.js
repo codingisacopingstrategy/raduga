@@ -1,5 +1,6 @@
 var Cloud = require('ti.cloud');
 
+/* Set up project structure */
 // something like this?
 // http://stackoverflow.com/questions/2573592/how-to-organize-js-files-in-a-appcelerator-titanium-project
 var app = {
@@ -10,6 +11,10 @@ var app = {
   },
   ui: {}
 };
+
+var Raduga = {};
+
+Ti.include('users.js');
 
 /* Utility Functions */
 
@@ -24,6 +29,8 @@ var Date2PonyDate = function(d) {
 var Date2PonyHour = function(d) {
     return zeroPad(d.getHours()) + ':' + zeroPad(d.getMinutes());
 };
+
+/* Set up UI */
 
 // this sets the background color of the master UIView (when there are no windows/tab groups on it)
 Titanium.UI.setBackgroundColor('#000');
@@ -215,10 +222,106 @@ var cameraTab = Titanium.UI.createTab({
 // https://developer.appcelerator.com/question/21191/android-window-events-not-working-with-tabgroup-titanium-12
 cameraTab.addEventListener("focus", showCam);
 
+var settingsWindow = Titanium.UI.createWindow({
+    title: 'Settings',
+    backgroundColor: '#000',
+    layout: 'vertical'
+});
+
+var settingsTab = Titanium.UI.createTab({
+    icon: 'KS_nav_ui.png',
+    title: 'Settings',
+    window: settingsWindow
+});
+
+var usernameLabel = Titanium.UI.createLabel({
+    color: '#821785',
+    text: 'User Name',
+    top: 10, left: 10,
+    width: 250
+});
+
+var usernameTextField = Ti.UI.createTextField({
+    borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
+    top: 10, left: 10,
+    width: 250
+});
+
+var passwordLabel = Titanium.UI.createLabel({
+    color: '#821785',
+    text: 'Password',
+    top: 10, left: 10,
+    width: 250
+});
+
+var passwordTextField = Ti.UI.createTextField({
+    borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
+    top: 10, left: 10,
+    width: 250,
+    passwordMask: true
+});
+
+var passwordCheckLabel = Titanium.UI.createLabel({
+    color: '#821785',
+    text: 'Password, again:',
+    top: 10, left: 10,
+    width: 250
+});
+
+var passwordCheckTextField = Ti.UI.createTextField({
+    borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
+    top: 10, left: 10,
+    width: 250,
+    passwordMask: true
+});
+
+var settingsButton = Titanium.UI.createButton({
+   title: 'Save',
+   top: 10,
+   width: 100
+});
+
+var signedUp = function() {
+   return Boolean(Ti.App.Properties.getString('username'));
+};
+var loggedIn = function() {
+    return Boolean(Ti.App.Properties.getString('sessionID'));
+};
+
+if (signedUp()) {
+    usernameTextField.value = Ti.App.Properties.getString('username');
+    usernameTextField.setEnabled(false); // Android only
+    usernameTextField.setEditable(false);
+}
+
+settingsWindow.add(usernameLabel);
+settingsWindow.add(usernameTextField);
+if (!loggedIn()) {
+    // We are not logged in. Add the pas
+    settingsWindow.add(passwordLabel);
+    settingsWindow.add(passwordTextField);
+    settingsButton.setTitle('Login');
+    if (!signedUp()) {
+        settingsWindow.add(passwordCheckLabel);
+        settingsWindow.add(passwordCheckTextField);
+        settingsButton.setTitle('Sign up');
+    }
+}
+settingsWindow.add(settingsButton);
+settingsButton.addEventListener('click',function(e) {
+   if (!signedUp()) {
+       createUser(usernameTextField.value, passwordTextField.value, passwordCheckTextField.value);
+   }
+});
+
 //  add tabs
 tabGroup.addTab(predictionTab);
 tabGroup.addTab(shareTab);
 tabGroup.addTab(cameraTab);
+tabGroup.addTab(settingsTab);
 
 // open tab group
 tabGroup.open();
+if (!Ti.App.Properties.getString('sessionID')) {
+    tabGroup.setActiveTab(settingsTab);
+}
