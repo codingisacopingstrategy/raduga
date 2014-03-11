@@ -21,10 +21,14 @@ var π = Math.PI,
     radians = π / 180,
     degrees = 180 / π;
 
-var projection = d3.geo.equirectangular()
-    .translate([width / 2, height / 2])
-    .scale(153)
-    .precision(.1);
+var diameter = 320,
+    radius = diameter/2;
+
+var projection = d3.geo.orthographic()
+    .scale(radius - 2)
+    .translate([radius, radius])
+    .clipAngle(90)
+    .rotate([60,0,0]);
 
 var circle = d3.geo.circle()
     .angle(90);
@@ -36,7 +40,7 @@ var svg = d3.select("body").append("svg")
     .attr("width", width)
     .attr("height", height);
 
-d3.json("json/world-50m.json", function(error, world) {
+d3.json("json/world-50m.json", function(error, world) {  // use world-110m.json for quicker, less detail
   svg.append("path")
       .datum(topojson.feature(world, world.objects.land))
       .attr("class", "land")
