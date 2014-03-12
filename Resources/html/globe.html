@@ -4,8 +4,26 @@
 
 .night {
   stroke: steelblue;
-  fill: steelblue;
+  fill: #000;
   fill-opacity: .3;
+}
+
+.land {
+  fill: #fd297e;
+  fill-opacity: .6;
+}
+
+.graticule {
+  fill: none;
+  stroke: #777;
+  stroke-width: .5px;
+  stroke-opacity: .5;
+}
+
+.boundary {
+  fill: none;
+  stroke: #fff;
+  stroke-width: .5px;
 }
 
 </style>
@@ -28,13 +46,15 @@ var projection = d3.geo.orthographic()
     .scale(radius - 2)
     .translate([radius, radius])
     .clipAngle(90)
-    .rotate([60,0,0]);
+    .rotate([-60,-21,0]);
 
 var circle = d3.geo.circle()
     .angle(90);
 
 var path = d3.geo.path()
     .projection(projection);
+
+var graticule = d3.geo.graticule();
 
 var svg = d3.select("body").append("svg")
     .attr("width", width)
@@ -45,6 +65,16 @@ d3.json("json/world-50m.json", function(error, world) {  // use world-110m.json 
       .datum(topojson.feature(world, world.objects.land))
       .attr("class", "land")
       .attr("d", path);
+
+  svg.insert("path", ".graticule")
+      .datum(topojson.mesh(world, world.objects.countries, function(a, b) { return a !== b; }))
+      .attr("class", "boundary")
+      .attr("d", path);
+
+  svg.append("path")
+    .datum(graticule)
+    .attr("class", "graticule")
+    .attr("d", path);
 
   var night = svg.append("path")
       .attr("class", "night")
