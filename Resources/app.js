@@ -325,3 +325,14 @@ tabGroup.open();
 if (!Ti.App.Properties.getString('sessionID')) {
     tabGroup.setActiveTab(settingsTab);
 }
+
+/* This I was using to quickly show some of the Pony’s png mockup directly on the device
+
+var win = Ti.UI.createWindow();
+var image = Ti.UI.createImageView({
+  image:'/ui/mock_04.png'
+});
+win.add(image);
+win.open();
+
+*/
