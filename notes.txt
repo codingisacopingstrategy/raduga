@@ -69,3 +69,11 @@ https://github.com/cambecc/earth/blob/master/server/gfs-update.js
 
 Dit is relevant voor Google App Store:
 http://retrodreamer.com/blog/2012/03/why-dont-we-have-paid-versions-on-the-android-market/
+
+
+
+
+http://www.planetary.org/blogs/guest-blogs/2013/20130723-beautiful-science-by-elektro-l.html
+
+
+This article started explaining stuff http://techslides.com/d3-globe-with-canvas-webgl-and-three-js/
