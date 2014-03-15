@@ -35,12 +35,40 @@ var Date2PonyHour = function(d) {
 // this sets the background color of the master UIView (when there are no windows/tab groups on it)
 Titanium.UI.setBackgroundColor('#000');
 
-// create tab group
-var tabGroup = Titanium.UI.createTabGroup({
-    activeTabBackgroundColor: '#ed12d1',
-    tabsBackgroundColor: '#821785',
+//
+// Windows
+//
+var predictionWindow = Titanium.UI.createWindow({
+    backgroundColor: '#000',
+    top: '20dp',
+    navBarHidden: true,
+    statusBarStyle: Titanium.UI.iPhone.StatusBar.LIGHT_CONTENT
 });
 
+var shareWindow = Titanium.UI.createWindow({
+    backgroundColor: '#000',
+    top: '20dp',
+    navBarHidden: true,
+    statusBarStyle: Titanium.UI.iPhone.StatusBar.LIGHT_CONTENT
+});
+
+var cameraWindow = Titanium.UI.createWindow({
+    backgroundColor: '#000',
+    top: '20dp',
+    navBarHidden: true,
+    statusBarStyle: Titanium.UI.iPhone.StatusBar.LIGHT_CONTENT
+});
+
+var settingsWindow = Titanium.UI.createWindow({
+    backgroundColor: '#000',
+    top: '20dp',
+    layout: 'vertical',
+    navBarHidden: true,
+    statusBarStyle: Titanium.UI.iPhone.StatusBar.LIGHT_CONTENT
+});
+
+
+// PredictionWindow behaviour
 
 Cloud.Photos.query({
     page: 1,
@@ -128,47 +156,15 @@ listView.addEventListener('photosFetched', function(e){
     listView.setSections([createPhotoData()]); //doesnt work yet
 });
 
-//
-// create base UI tab and root window
-//
-var predictionWindow = Titanium.UI.createWindow({
-    title: 'Wall',
-    backgroundColor: '#000'
-});
-
-var predictionTab = Titanium.UI.createTab({
-    icon: 'KS_nav_views.png',
-    title: 'Predict',
-    window: predictionWindow,
-});
-
-var predictionLabel = Titanium.UI.createLabel({
-    color: '#821785',
-    text: 'Prediction Window',
-    font: {
-        fontSize: 20,
-    },
-    textAlign: 'center',
-    width: 'auto',
-});
 
 predictionWindow.add(listView);
 
-//
-// create controls tab and root window
-//
-var shareWindow = Titanium.UI.createWindow({
-    title: 'Tab 2',
-    backgroundColor: '#000'
-});
-var shareTab = Titanium.UI.createTab({
-    icon: 'KS_nav_ui.png',
-    title: 'Share',
-    window: shareWindow,
-});
+// Map Behaviour
 
 var mapWebView = Titanium.UI.createWebView({url:'html/index.html'});
 shareWindow.add(mapWebView);
+
+// Camera Behaviour
 
 // from the example http://docs.appcelerator.com/titanium/3.0/#!/guide/Camera_and_Photo_Gallery_APIs :
 var showCam = function() {
@@ -206,33 +202,9 @@ var showCam = function() {
     });
 };
 
-var cameraWindow = Titanium.UI.createWindow({
-    title: 'Camera',
-    backgroundColor: '#000'
-});
 
-// for now we add it as a tab, but it will probably be a seperate button on the top of the screen
-var cameraTab = Titanium.UI.createTab({
-    icon: 'KS_nav_ui.png',
-    title: 'Camera',
-    window: cameraWindow,
-});
 
-// it works now on ios, but if it happens to not work on Android, see:
-// https://developer.appcelerator.com/question/21191/android-window-events-not-working-with-tabgroup-titanium-12
-cameraTab.addEventListener("focus", showCam);
-
-var settingsWindow = Titanium.UI.createWindow({
-    title: 'Settings',
-    backgroundColor: '#000',
-    layout: 'vertical'
-});
-
-var settingsTab = Titanium.UI.createTab({
-    icon: 'KS_nav_ui.png',
-    title: 'Settings',
-    window: settingsWindow
-});
+// Settings Form
 
 var usernameLabel = Titanium.UI.createLabel({
     color: '#821785',
@@ -275,6 +247,18 @@ var passwordCheckTextField = Ti.UI.createTextField({
     passwordMask: true
 });
 
+var notificationsLabel = Titanium.UI.createLabel({
+    color: '#821785',
+    text: 'City:',
+    top: 10, left: 10,
+    width: 250
+});
+
+var notificationsSwitch = Ti.UI.createSwitch({
+    value:true,
+    top: 10, left: 10,
+});
+
 var settingsButton = Titanium.UI.createButton({
    title: 'Save',
    top: 10,
@@ -307,6 +291,9 @@ if (!loggedIn()) {
         settingsButton.setTitle('Sign up');
     }
 }
+
+settingsWindow.add(notificationsLabel);
+settingsWindow.add(notificationsSwitch);
 settingsWindow.add(settingsButton);
 settingsButton.addEventListener('click',function(e) {
    if (!signedUp()) {
@@ -314,7 +301,44 @@ settingsButton.addEventListener('click',function(e) {
    }
 });
 
-//  add tabs
+//
+// tabs
+//
+
+var tabGroup = Titanium.UI.createTabGroup({
+    activeTabBackgroundColor: '#ed12d1',
+    tabsBackgroundColor: '#821785',
+});
+
+var predictionTab = Titanium.UI.createTab({
+    icon: 'KS_nav_views.png',
+    title: 'Predict',
+    window: predictionWindow,
+});
+
+var shareTab = Titanium.UI.createTab({
+    icon: 'KS_nav_ui.png',
+    title: 'Share',
+    window: shareWindow,
+});
+
+// for now we add it as a tab, but it will probably be a seperate button on the top of the screen
+var cameraTab = Titanium.UI.createTab({
+    icon: 'KS_nav_ui.png',
+    title: 'Camera',
+    window: cameraWindow,
+});
+
+// it works now on ios, but if it happens to not work on Android, see:
+// https://developer.appcelerator.com/question/21191/android-window-events-not-working-with-tabgroup-titanium-12
+cameraTab.addEventListener("focus", showCam);
+
+var settingsTab = Titanium.UI.createTab({
+    icon: 'KS_nav_ui.png',
+    title: 'Settings',
+    window: settingsWindow
+});
+
 tabGroup.addTab(predictionTab);
 tabGroup.addTab(shareTab);
 tabGroup.addTab(cameraTab);
