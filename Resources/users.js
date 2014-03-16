@@ -1,3 +1,4 @@
+/* A series of functions that deal with users: createUser, loginUser */
 
 var createUser = function(username, password, password_confirmation) {
     if (!username) {
