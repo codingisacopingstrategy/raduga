@@ -19,19 +19,16 @@ Titanium.UI.setBackgroundColor('#ffffff');
 var photosWindow = Titanium.UI.createWindow({
     backgroundColor: '#000',
     navBarHidden: true,
-    statusBarStyle: Titanium.UI.iPhone.StatusBar.LIGHT_CONTENT
 });
 
 var globeWindow = Titanium.UI.createWindow({
     backgroundColor: '#000',
     navBarHidden: true,
-    statusBarStyle: Titanium.UI.iPhone.StatusBar.LIGHT_CONTENT
 });
 
 var cameraWindow = Titanium.UI.createWindow({
     backgroundColor: '#000',
     navBarHidden: true,
-    statusBarStyle: Titanium.UI.iPhone.StatusBar.LIGHT_CONTENT
 });
 
 var settingsWindow = Titanium.UI.createWindow({
@@ -42,8 +39,14 @@ var settingsWindow = Titanium.UI.createWindow({
     backgroundColor: '#000',
     layout: 'vertical',
     navBarHidden: true,
-    statusBarStyle: Titanium.UI.iPhone.StatusBar.LIGHT_CONTENT
 });
+
+if (Titanium.Platform.osname === 'iphone') {
+    photosWindow.setStatusBarStyle(Titanium.UI.iPhone.StatusBar.LIGHT_CONTENT);
+    globeWindow.setStatusBarStyle(Titanium.UI.iPhone.StatusBar.LIGHT_CONTENT);
+    cameraWindow.setStatusBarStyle(Titanium.UI.iPhone.StatusBar.LIGHT_CONTENT);
+    settingsWindow.setStatusBarStyle(Titanium.UI.iPhone.StatusBar.LIGHT_CONTENT);
+}
 
 //
 // Add functionality to the windows
