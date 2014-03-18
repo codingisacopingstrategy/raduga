@@ -148,12 +148,26 @@ if (!loggedIn()) {
     }
 }
 
-settingsScrollView.add(notificationsLabel);
-settingsScrollView.add(notificationsSwitch);
 settingsScrollView.add(cityLabel);
 settingsScrollView.add(cityTextField);
+settingsScrollView.add(notificationsLabel);
+settingsScrollView.add(notificationsSwitch);
 settingsScrollView.add(settingsButton);
-settingsButton.addEventListener('click',function(e) {
+
+//
+// Behaviour
+//
+// Automatically go to next field after return:
+usernameTextField.addEventListener('return', function() {
+    passwordTextField.focus();
+});
+passwordTextField.addEventListener('return', function() {
+    passwordCheckTextField.focus();
+});
+passwordCheckTextField.addEventListener('return', function() {
+    cityTextField.focus();
+});
+settingsButton.addEventListener('click', function(e) {
    if (!signedUp()) {
        createUser(usernameTextField.value, passwordTextField.value, passwordCheckTextField.value);
    }
