@@ -4,6 +4,7 @@ var Raduga = {
 };
 
 var Cloud = require('ti.cloud');
+Ti.include('cities.js');
 Ti.include('utils.js');
 Ti.include('users.js');
 
@@ -34,6 +35,10 @@ var cameraWindow = Titanium.UI.createWindow({
 });
 
 var settingsWindow = Titanium.UI.createWindow({
+    left: 0,
+    right: 0,
+    height: 'auto',
+    top: 0,
     backgroundColor: '#000',
     layout: 'vertical',
     navBarHidden: true,

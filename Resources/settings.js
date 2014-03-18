@@ -1,3 +1,36 @@
+// Cities Selection
+
+var citiesWindow = Ti.UI.createWindow({
+    modal: true
+});
+
+var tableData = [];
+
+var cityNameField = Titanium.Locale.currentLanguage === 'ru' ? 'name_ru' : 'name_en';
+for (var i = 0; i < cities.length; i++) {
+    var city = cities[i];
+    tableData.push({ title: city[cityNameField], val: city });
+}
+
+var citiesSearch = Titanium.UI.createSearchBar({
+    barColor:'#000',
+    showCancel:true,
+    height:43,
+    top:0,
+});
+
+var citiesTable = Ti.UI.createTableView({
+    top: '20dp',
+    data: tableData,
+    search: citiesSearch
+});
+
+citiesWindow.add(citiesTable);
+citiesTable.addEventListener('click', function(e) {
+    cityTextField.value = e.rowData.title;
+    citiesWindow.close();
+});
+
 // Settings Form
 
 var topPadding = Titanium.UI.createView({
@@ -47,7 +80,7 @@ var passwordCheckTextField = Ti.UI.createTextField({
 
 var notificationsLabel = Titanium.UI.createLabel({
     color: '#821785',
-    text: 'City:',
+    text: 'Notifications:',
     top: 10, left: 10,
     width: 250
 });
@@ -55,6 +88,19 @@ var notificationsLabel = Titanium.UI.createLabel({
 var notificationsSwitch = Ti.UI.createSwitch({
     value:true,
     top: 10, left: 10,
+});
+
+var cityLabel = Titanium.UI.createLabel({
+    color: '#821785',
+    text: 'City:',
+    top: 10, left: 10,
+    width: 250
+});
+
+var cityTextField = Ti.UI.createTextField({
+    borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
+    top: 10, left: 10,
+    width: 250
 });
 
 var settingsButton = Titanium.UI.createButton({
@@ -70,7 +116,17 @@ var loggedIn = function() {
     return Boolean(Ti.App.Properties.getString('sessionID'));
 };
 
+var settingsScrollView = Ti.UI.createScrollView({
+   contentWidth:'auto',
+   contentHeight:'auto',
+   top:0,
+   layout: 'vertical',
+   showVerticalScrollIndicator:true,
+   showHorizontalScrollIndicator:true
+});
+
 settingsWindow.add(topPadding);
+settingsWindow.add(settingsScrollView);
 
 if (signedUp()) {
     usernameTextField.value = Ti.App.Properties.getString('username');
@@ -78,25 +134,31 @@ if (signedUp()) {
     usernameTextField.setEditable(false);
 }
 
-settingsWindow.add(usernameLabel);
-settingsWindow.add(usernameTextField);
+settingsScrollView.add(usernameLabel);
+settingsScrollView.add(usernameTextField);
 if (!loggedIn()) {
     // We are not logged in. Add the pas
-    settingsWindow.add(passwordLabel);
-    settingsWindow.add(passwordTextField);
+    settingsScrollView.add(passwordLabel);
+    settingsScrollView.add(passwordTextField);
     settingsButton.setTitle('Login');
     if (!signedUp()) {
-        settingsWindow.add(passwordCheckLabel);
-        settingsWindow.add(passwordCheckTextField);
+        settingsScrollView.add(passwordCheckLabel);
+        settingsScrollView.add(passwordCheckTextField);
         settingsButton.setTitle('Sign up');
     }
 }
 
-settingsWindow.add(notificationsLabel);
-settingsWindow.add(notificationsSwitch);
-settingsWindow.add(settingsButton);
+settingsScrollView.add(notificationsLabel);
+settingsScrollView.add(notificationsSwitch);
+settingsScrollView.add(cityLabel);
+settingsScrollView.add(cityTextField);
+settingsScrollView.add(settingsButton);
 settingsButton.addEventListener('click',function(e) {
    if (!signedUp()) {
        createUser(usernameTextField.value, passwordTextField.value, passwordCheckTextField.value);
    }
+});
+cityTextField.addEventListener('focus', function(e) {
+    cityTextField.blur();
+    citiesWindow.open();
 });
