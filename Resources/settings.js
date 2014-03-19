@@ -26,8 +26,7 @@ var citiesTable = Ti.UI.createTableView({
 });
 
 citiesWindow.add(citiesTable);
-citiesTable.addEventListener('click', function(e) {
-    cityTextField.value = e.rowData.title;
+citiesSearch.addEventListener('cancel', function(e) {
     citiesWindow.close();
 });
 
@@ -86,7 +85,7 @@ var notificationsLabel = Titanium.UI.createLabel({
 });
 
 var notificationsSwitch = Ti.UI.createSwitch({
-    value:true,
+    value: Ti.App.Properties.getString('notifications') !== 'false',
     top: 10, left: 10,
 });
 
@@ -98,6 +97,7 @@ var cityLabel = Titanium.UI.createLabel({
 });
 
 var cityTextField = Ti.UI.createTextField({
+    value: Ti.App.Properties.getString(Titanium.Locale.currentLanguage === 'ru' ? 'city_name_ru' : 'city_name_en'),
     borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
     top: 10, left: 10,
     width: 250
@@ -155,8 +155,19 @@ settingsScrollView.add(notificationsSwitch);
 settingsScrollView.add(settingsButton);
 
 //
-// Behaviour
+// Saving settings
 //
+citiesTable.addEventListener('click', function(e) {
+    cityTextField.value = e.rowData.title;
+    Ti.App.Properties.setString('city_name_en', e.rowData.val.name_en);
+    Ti.App.Properties.setString('city_name_ru', e.rowData.val.name_ru);
+    Ti.App.Properties.setString('city_lat', e.rowData.val.lat);
+    Ti.App.Properties.setString('city_lon', e.rowData.val.lon);
+    citiesWindow.close();
+});
+notificationsSwitch.addEventListener('change', function() {
+    Ti.App.Properties.setString('notifications', String(notificationsSwitch.value));
+});
 // Automatically go to next field after return:
 usernameTextField.addEventListener('return', function() {
     passwordTextField.focus();
@@ -167,12 +178,22 @@ passwordTextField.addEventListener('return', function() {
 passwordCheckTextField.addEventListener('return', function() {
     cityTextField.focus();
 });
+passwordTextField.addEventListener('return', function() {
+    passwordCheckTextField.focus();
+});
+passwordCheckTextField.addEventListener('return', function() {
+    cityTextField.focus();
+});
+
+// the city selection window
+cityTextField.addEventListener('focus', function(e) {
+    cityTextField.blur();
+    citiesWindow.open();
+    citiesSearch.focus();
+});
+// submit button
 settingsButton.addEventListener('click', function(e) {
    if (!signedUp()) {
        createUser(usernameTextField.value, passwordTextField.value, passwordCheckTextField.value);
    }
-});
-cityTextField.addEventListener('focus', function(e) {
-    cityTextField.blur();
-    citiesWindow.open();
 });
