@@ -110,6 +110,22 @@ if (!Ti.App.Properties.getString('sessionID')) {
     tabGroup.setActiveTab(settingsTab);
 }
 
+Cloud.Users.showMe(function (e) {
+    if (e.success) {
+        Raduga.user = e.users[0];
+        var user = Raduga.user;
+        Ti.API.info("User " +  user.username + " logged in");
+        Ti.App.Properties.setString('sessionID', Cloud.sessionId);
+        Ti.App.Properties.setString('username', user.username);
+    } else {
+        // this way the will know we need to log in.
+        Ti.API.info("No user logged in");
+        Ti.App.Properties.setString('sessionID', '');
+        settingsWindow.fireEvent('user_status_change');
+        tabGroup.setActiveTab(settingsTab);
+    }
+});
+
 /* This I was using to quickly show some of the Pony’s png mockup directly on the device
 
 var win = Ti.UI.createWindow();

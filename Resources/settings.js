@@ -36,46 +36,7 @@ var topPadding = Titanium.UI.createView({
     width: '100%',
     height: '20dp'
 });
-var usernameLabel = Titanium.UI.createLabel({
-    color: '#821785',
-    text: 'User Name',
-    top: 10, left: 10,
-    width: 250
-});
 
-var usernameTextField = Ti.UI.createTextField({
-    borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
-    top: 10, left: 10,
-    width: 250
-});
-
-var passwordLabel = Titanium.UI.createLabel({
-    color: '#821785',
-    text: 'Password',
-    top: 10, left: 10,
-    width: 250
-});
-
-var passwordTextField = Ti.UI.createTextField({
-    borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
-    top: 10, left: 10,
-    width: 250,
-    passwordMask: true
-});
-
-var passwordCheckLabel = Titanium.UI.createLabel({
-    color: '#821785',
-    text: 'Password, again:',
-    top: 10, left: 10,
-    width: 250
-});
-
-var passwordCheckTextField = Ti.UI.createTextField({
-    borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
-    top: 10, left: 10,
-    width: 250,
-    passwordMask: true
-});
 
 var notificationsLabel = Titanium.UI.createLabel({
     color: '#821785',
@@ -103,18 +64,6 @@ var cityTextField = Ti.UI.createTextField({
     width: 250
 });
 
-var settingsButton = Titanium.UI.createButton({
-   title: 'Save',
-   top: 10,
-   width: 100
-});
-
-var signedUp = function() {
-   return Boolean(Ti.App.Properties.getString('username'));
-};
-var loggedIn = function() {
-    return Boolean(Ti.App.Properties.getString('sessionID'));
-};
 
 var settingsScrollView = Ti.UI.createScrollView({
    contentWidth:'auto',
@@ -127,32 +76,12 @@ var settingsScrollView = Ti.UI.createScrollView({
 
 settingsWindow.add(topPadding);
 settingsWindow.add(settingsScrollView);
-
-if (signedUp()) {
-    usernameTextField.value = Ti.App.Properties.getString('username');
-    usernameTextField.setEnabled(false); // Android only
-    usernameTextField.setEditable(false);
-}
-
-settingsScrollView.add(usernameLabel);
-settingsScrollView.add(usernameTextField);
-if (!loggedIn()) {
-    // We are not logged in. Add the pas
-    settingsScrollView.add(passwordLabel);
-    settingsScrollView.add(passwordTextField);
-    settingsButton.setTitle('Login');
-    if (!signedUp()) {
-        settingsScrollView.add(passwordCheckLabel);
-        settingsScrollView.add(passwordCheckTextField);
-        settingsButton.setTitle('Sign up');
-    }
-}
+updateUserDialog(settingsScrollView);
 
 settingsScrollView.add(cityLabel);
 settingsScrollView.add(cityTextField);
 settingsScrollView.add(notificationsLabel);
 settingsScrollView.add(notificationsSwitch);
-settingsScrollView.add(settingsButton);
 
 //
 // Saving settings
@@ -195,5 +124,11 @@ cityTextField.addEventListener('focus', function(e) {
 settingsButton.addEventListener('click', function(e) {
    if (!signedUp()) {
        createUser(usernameTextField.value, passwordTextField.value, passwordCheckTextField.value);
+   } else if(!loggedIn()) {
+       loginUser(passwordTextField.value);
    }
+});
+// handle settings refresh
+settingsWindow.addEventListener('user_status_change', function() {
+    updateUserDialog(settingsScrollView);
 });
