@@ -73,6 +73,8 @@ var photosTab = Titanium.UI.createTab({
     window: photosWindow,
 });
 
+photosTab.addEventListener("focus", updatePhotos);
+
 var globeTab = Titanium.UI.createTab({
     icon: 'KS_nav_ui.png',
     title: 'Rainbows',

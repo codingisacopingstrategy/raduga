@@ -1,18 +1,25 @@
 // photosWindow behaviour
 
-Cloud.Photos.query({
-    page: 1,
-    per_page: 20,
-}, function (e) {
-    if (e.success) {
-        Ti.API.info('found on the internet ' + e.photos.length + ' photos');
-        Raduga.photos = e.photos;
-        tableView.setData(createTableData());
-    } else {
-        alert('Error:\n' +
-            ((e.error && e.message) || JSON.stringify(e)));
-    }
-});
+var updatePhotos = function() {
+    Cloud.Photos.query({
+        page: 1,
+        per_page: 20,
+    }, function (e) {
+        if (e.success) {
+            Ti.API.info('found on the internet ' + e.photos.length + ' photos');
+            Ti.API.info(Ti.App.Properties.getString('city_name_en'), Ti.App.Properties.getString('city_name_ru'), Ti.App.Properties.getString('city_lat'), Ti.App.Properties.getString('city_lon'));
+            Raduga.photos = e.photos;
+            tableView.setData(createTableData());
+            for (var i = 0; i < Raduga.photos.length; i++) {
+                var photo = Raduga.photos[i];
+                console.log(JSON.stringify(photo, null, 2));
+            }
+        } else {
+            alert('Error:\n' +
+                ((e.error && e.message) || JSON.stringify(e)));
+        }
+    });
+};
 
 var createTableData = function() {
     var tableData = [];
@@ -32,13 +39,13 @@ var createTableData = function() {
             rowIndex: i, // custom property, useful for determining the row during events
         });
 
-        var imageAvatar = Ti.UI.createImageView({
+        var rainbowImage = Ti.UI.createImageView({
             image: photo.urls.medium_640,
             left: 0,
             top: 0,
             width: '320dp'
         });
-        row.add(imageAvatar);
+        row.add(rainbowImage);
 
         tableData.push(row);
 
@@ -48,7 +55,8 @@ var createTableData = function() {
             // selectedBackgroundColor: 'black',
             rowIndex: i, // custom property, useful for determining the row during events
             height: '20dp',
-            layout:'horizontal'
+            layout:'horizontal',
+            height: Titanium.UI.SIZE,
         });
 
         var labelHour = Ti.UI.createLabel({
@@ -67,6 +75,14 @@ var createTableData = function() {
         });
         row.add(labelDate);
 
+        var labelCity = Ti.UI.createLabel({
+            color: 'white',
+            text: photo.custom_fields[Ti.Locale.currentLanguage === 'ru' ? 'name_ru' : 'name_en'],
+            width: Titanium.UI.SIZE,
+            left: '10dp'
+        });
+        row.add(labelCity);
+
         var labelUserName = Ti.UI.createLabel({
             color: 'white',
             text: photo.user.username,
@@ -82,8 +98,11 @@ var createTableData = function() {
 };
 
 var tableView = Ti.UI.createTableView({
-    backgroundColor: 'white',
+    minRowHeight: '20dp',
+    separatorColor: 'transparent',
+    backgroundColor: 'black',
     data: createTableData()
 });
 
 photosWindow.add(tableView);
+updatePhotos();
