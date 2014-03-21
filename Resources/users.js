@@ -144,7 +144,7 @@ var updateUserDialog = function(view) {
             view.add(passwordCheckTextField);
             settingsButton.setTitle('Sign up');
         }
-        settingsScrollView.add(settingsButton);
+        view.add(settingsButton);
     }
 
 };

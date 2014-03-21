@@ -37,6 +37,13 @@ var topPadding = Titanium.UI.createView({
     height: '20dp'
 });
 
+var userDialog = Titanium.UI.createView({
+   top:0,
+   height: Ti.UI.SIZE,
+   layout: 'vertical',
+});
+
+updateUserDialog(userDialog);
 
 var notificationsLabel = Titanium.UI.createLabel({
     color: '#821785',
@@ -76,8 +83,8 @@ var settingsScrollView = Ti.UI.createScrollView({
 
 settingsWindow.add(topPadding);
 settingsWindow.add(settingsScrollView);
-updateUserDialog(settingsScrollView);
 
+settingsScrollView.add(userDialog);
 settingsScrollView.add(cityLabel);
 settingsScrollView.add(cityTextField);
 settingsScrollView.add(notificationsLabel);
@@ -130,5 +137,5 @@ settingsButton.addEventListener('click', function(e) {
 });
 // handle settings refresh
 settingsWindow.addEventListener('user_status_change', function() {
-    updateUserDialog(settingsScrollView);
+    updateUserDialog(userDialog);
 });
