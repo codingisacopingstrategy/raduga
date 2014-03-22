@@ -4,6 +4,11 @@ var Raduga = {
 };
 
 var Cloud = require('ti.cloud');
+// Persist the session from last time so we don’t have to login again,
+// Normally, this would use the setSessionId function but that didn’t
+// seem to be working.
+Cloud.sessionId = Ti.App.Properties.getString('sessionID');
+
 Ti.include('cities.js');
 Ti.include('utils.js');
 Ti.include('users.js');
