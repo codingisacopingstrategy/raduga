@@ -11,3 +11,11 @@ var Date2PonyDate = function(d) {
 var Date2PonyHour = function(d) {
     return zeroPad(d.getHours()) + ':' + zeroPad(d.getMinutes());
 };
+
+var cityName = function() {
+    /**
+     * Get cityName in the right locale
+     */
+    var cityNameField = Titanium.Locale.currentLanguage === 'ru' ? 'city_name_ru' : 'city_name_en';
+    return Ti.App.Properties.getString(cityNameField);
+};
