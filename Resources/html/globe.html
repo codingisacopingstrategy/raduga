@@ -1,52 +1,60 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <style>
-
+* {
+    margin: 0;
+    padding: 0;
+}
+img#globe {
+    position: absolute;
+    z-index: -100;
+}
 .night {
-  stroke: steelblue;
-  fill: #000;
-  fill-opacity: .3;
+    stroke: steelblue;
+    fill: #000;
+    fill-opacity: .3;
 }
 
 .land {
-  fill: #fd297e;
-  fill-opacity: .6;
+    fill: none;
+    stroke: #777;
 }
 
 .graticule {
-  fill: none;
-  stroke: #777;
-  stroke-width: .5px;
-  stroke-opacity: .5;
+    fill: none;
+    stroke: #777;
+    stroke-width: .5px;
+    stroke-opacity: .5;
 }
 
 .boundary {
-  fill: none;
-  stroke: #fff;
-  stroke-width: .5px;
+    fill: none;
+    stroke: #fff;
+    stroke-width: .5px;
 }
 
 </style>
 <body>
+<img id="globe" src="elektro_l_20140311_0530_rgb.jpg" />
 <script src="js/d3.v3.min.js"></script>
 <script src="js/topojson.v1.min.js"></script>
 <script>
 
-var width = 960,
-    height = 480;
+var width = 1080,
+    height = 1080;
 
 var π = Math.PI,
     radians = π / 180,
     degrees = 180 / π;
 
-var diameter = 320,
+var diameter = 1054,
     radius = diameter/2;
 
 var projection = d3.geo.orthographic()
     .scale(radius - 2)
-    .translate([radius, radius])
+    .translate([radius + 18, radius + 15])
     .clipAngle(90)
-    .rotate([-60,-21,0]);
+    .rotate([-71,-1,0]);
 
 var circle = d3.geo.circle()
     .angle(90);
@@ -84,7 +92,7 @@ d3.json("json/world-50m.json", function(error, world) {  // use world-110m.json 
   /*setInterval(redraw, 1000);*/
 
   function redraw() {
-    night.datum(circle.origin(antipode(solarPosition(new Date)))).attr("d", path);
+    night.datum(circle.origin(antipode(solarPosition(new Date("2014-03-11T05:30:00Z") )))).attr("d", path);
   }
 });
 
