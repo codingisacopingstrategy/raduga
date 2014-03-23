@@ -5,9 +5,49 @@
     margin: 0;
     padding: 0;
 }
+/*
+ On this screen we first draw a globe.
+ The globe is a near real-time image from the Elektro L satellite.
+ (It’s a placeholder for now).
+
+ Then we overlay the globe with a graticule, country borders, and information about
+ rainbows. (the last part: soon!)
+
+ The overlays are an SVG, a scalable graphic plotted with the d3 library.
+
+ The CSS bits with #box and #content are there to create a box, that has a width of 100%
+ of the screen, and a height equal to the width.
+
+ via: http://www.mademyday.de/css-height-equals-width-with-pure-css.html
+
+ Theoretically, I could have been able to do this with the SVG’s preserveAspectRatio
+ attribute, but I couldn’t figure out how.
+ * */
+#box{
+    position: relative;
+    width: 100%;        /* desired width */
+}
+#box:before{
+    content: "";
+    display: block;
+    padding-top: 100%;  /* initial ratio of 1:1*/
+}
+#content{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
 img#globe {
     position: absolute;
-    z-index: -100;
+    z-index: -11;
+    width: 100%;
+}
+svg {
+    width: 100%;
+    position: static;
 }
 .night {
     stroke: steelblue;
@@ -35,7 +75,10 @@ img#globe {
 
 </style>
 <body>
-<img id="globe" src="elektro_l_20140311_0530_rgb.jpg" />
+<div id="box">
+    <div id="content"><img id="globe" src="elektro_l_20140311_0530_rgb.jpg" /></div>
+</div>
+
 <script src="js/d3.v3.min.js"></script>
 <script src="js/topojson.v1.min.js"></script>
 <script>
@@ -64,9 +107,11 @@ var path = d3.geo.path()
 
 var graticule = d3.geo.graticule();
 
-var svg = d3.select("body").append("svg")
-    .attr("width", width)
-    .attr("height", height);
+var svg = d3.select("#content").append("svg")
+    .attr("width", '100%')
+    .attr("viewBox", "0 0 1080 1080")
+    .attr("preserveAspectRatio", "xMaxYMin slice")
+    .attr("style", "z-index:111;");
 
 d3.json("json/world-50m.json", function(error, world) {  // use world-110m.json for quicker, less detail
   svg.append("path")
