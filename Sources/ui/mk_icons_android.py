@@ -22,7 +22,7 @@ icons = [
 ]
 
 for size, path in icons:
-    outputfile = os.path.join('..', path)
+    outputfile = os.path.join('..', '..', path)
     pipe = subprocess.Popen(['sips', '-s',
                              'format', 'png',
                              '--resampleWidth', str(size),

@@ -25,7 +25,7 @@ icons = [
 ]
 
 for size, filename in icons:
-    outputfile = os.path.join('..', 'Resources', 'iphone', filename)
+    outputfile = os.path.join('..', '..', 'Resources', 'iphone', filename)
     pipe = subprocess.Popen(['sips', '-s',
                              'format', 'png',
                              '--resampleWidth', str(size),

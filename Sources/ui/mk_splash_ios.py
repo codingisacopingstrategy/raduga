@@ -24,7 +24,7 @@ splash_screens = [
 ]
 
 for size, filename in splash_screens:
-    outputfile = os.path.join('..', 'Resources', 'iphone', filename)
+    outputfile = os.path.join('..', '..', 'Resources', 'iphone', filename)
     width, height = size
 
     
