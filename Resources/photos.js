@@ -12,7 +12,7 @@ var updatePhotos = function() {
             tableView.setData(createTableData());
             for (var i = 0; i < Raduga.photos.length; i++) {
                 var photo = Raduga.photos[i];
-                console.log(JSON.stringify(photo, null, 2));
+                //debug: console.log(JSON.stringify(photo, null, 2));
             }
         } else {
             alert('Error:\n' +

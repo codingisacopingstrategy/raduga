@@ -3,15 +3,39 @@ var Raduga = {
     user: null
 };
 
+var deviceToken = null;
+
 var Cloud = require('ti.cloud');
 // Persist the session from last time so we don’t have to login again,
 // Normally, this would use the setSessionId function but that didn’t
 // seem to be working.
 Cloud.sessionId = Ti.App.Properties.getString('sessionID');
 
-Ti.include('cities.js');
-Ti.include('utils.js');
-Ti.include('users.js');
+//. Set up push notifications
+
+if (Titanium.Platform.osname === 'android') {
+    Ti.include('push_android.js');
+} else {
+    Ti.include('push_ios.js');
+}
+
+setupPush(function() {
+    Cloud.PushNotifications.subscribe({
+        channel: 'raduga_predictions',
+        type: 'gcm',
+        device_token: deviceToken
+    }, function (e) {
+        if (e.success) {
+            Ti.API.info('Successfully subscribed to the Raduga push messages channel');
+        } else {
+            alertError((e.error && e.message) || JSON.stringify(e));
+        }
+    });
+});
+
+Ti.include('cities.js');   // the coordinates of 1100 Russian towns and cities
+Ti.include('utils.js');    // utility functions
+Ti.include('users.js');    // functions for logging in, logging out, and creating new users
 
 /* Set up UI */
 
@@ -124,6 +148,7 @@ Cloud.Users.showMe(function (e) {
         Ti.API.info("User " +  user.username + " logged in");
         Ti.App.Properties.setString('sessionID', Cloud.sessionId);
         Ti.App.Properties.setString('username', user.username);
+
     } else {
         // this way the will know we need to log in.
         Ti.API.info("No user logged in");

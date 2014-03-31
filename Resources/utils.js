@@ -19,3 +19,17 @@ var cityName = function() {
     var cityNameField = Titanium.Locale.currentLanguage === 'ru' ? 'city_name_ru' : 'city_name_en';
     return Ti.App.Properties.getString(cityNameField);
 };
+
+
+var alertError = function(error) {
+    /**
+     * Titanium uses an alert box in case of error in many of it’s code examples
+     * It’s a useful pattern, except that the box pops up saying ‘Alert’ whereas
+     * it is more clear if it has ‘Error’ as a title.
+     */
+    var dialog = Ti.UI.createAlertDialog({
+        message: error,
+        ok: 'OK',
+        title: L('error')
+    }).show();
+};
