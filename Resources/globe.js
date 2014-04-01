@@ -1,18 +1,7 @@
 // Behaviour of globeWindow, The globe with the rainbows
 var u = Ti.Android != undefined ? 'dp' : 0;
 
-var image = Ti.UI.createImageView({
-    image:'/ui/mock_03.png',
-    width: '320dp',
-    height: '480dp',
-});
-var container =  Titanium.UI.createView({
-    width:  '100%',
-    height: '100%',
-    borderRadius: 0 // https://developer.appcelerator.com/question/23931/imageview-scaling-mode
-});
-
-var globe = Titanium.UI.createWebView({
+var globe = Ti.UI.createWebView({
     top: '20dp',
     backgroundImage: 'html/elektro_l_20140311_0530_rgb.jpg',
     url: 'html/globe.html',
@@ -20,5 +9,11 @@ var globe = Titanium.UI.createWebView({
     height: Ti.Platform.displayCaps.platformWidth + u
 });
 
-container.add(image);
+var predictionLabel = Ti.UI.createLabel({
+    color: 'white',
+    text: 'Today it is cloudy. The nearest area with a high change of rainbows 500 km, from you, near Blagodarny.',
+    top: 10, left: 10, right: 10,
+});
+
 globeWindow.add(globe);
+globeWindow.add(predictionLabel);

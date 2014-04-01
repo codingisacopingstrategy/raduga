@@ -52,6 +52,7 @@ var photosWindow = Titanium.UI.createWindow({
 
 var globeWindow = Titanium.UI.createWindow({
     backgroundColor: '#000',
+    layout: 'vertical',
     navBarHidden: true,
 });
 
