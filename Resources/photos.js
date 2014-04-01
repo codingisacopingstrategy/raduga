@@ -7,7 +7,6 @@ var updatePhotos = function() {
     }, function (e) {
         if (e.success) {
             Ti.API.info('found on the internet ' + e.photos.length + ' photos');
-            Ti.API.info(Ti.App.Properties.getString('city_name_en'), Ti.App.Properties.getString('city_name_ru'), Ti.App.Properties.getString('city_lat'), Ti.App.Properties.getString('city_lon'));
             Raduga.photos = e.photos;
             tableView.setData(createTableData());
             for (var i = 0; i < Raduga.photos.length; i++) {
@@ -15,8 +14,7 @@ var updatePhotos = function() {
                 //debug: console.log(JSON.stringify(photo, null, 2));
             }
         } else {
-            alert('Error:\n' +
-                ((e.error && e.message) || JSON.stringify(e)));
+            alertError((e.error && e.message) || JSON.stringify(e));
         }
     });
 };
@@ -26,6 +24,12 @@ var createTableData = function() {
 
     for (var i = 0; i < Raduga.photos.length; i++) {
         var photo = Raduga.photos[i];
+
+        // Skip photo’s without sufficient metadata
+        if (typeof photo.custom_fields === 'undefined' || typeof photo.custom_fields.name_en === 'undefined' || typeof photo.custom_fields.name_ru === 'undefined') {
+            Ti.API.info('Photo ' + photo.id + ' does not have sufficient metadata');
+            continue;
+        }
 
         // Titanium’s cloud service uses the "2014-02-13T14:27:39+0000" format
         // which is not recognised by the Date constructor in iOS
