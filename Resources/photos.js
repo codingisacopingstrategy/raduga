@@ -9,14 +9,39 @@ var updatePhotos = function() {
             Ti.API.info('found on the internet ' + e.photos.length + ' photos');
             Raduga.photos = e.photos;
             tableView.setData(createTableData());
-            for (var i = 0; i < Raduga.photos.length; i++) {
-                var photo = Raduga.photos[i];
-                //debug: console.log(JSON.stringify(photo, null, 2));
-            }
+            // plot the photos in the webview
+            globe.evalJS('svg.append("path").datum(' + JSON.stringify(features2Photos())  + ').attr("d", path).attr("class", "place");');
+
         } else {
             alertError((e.error && e.message) || JSON.stringify(e));
         }
     });
+};
+
+var features2Photos = function() {
+    var geoJSON = {};
+    geoJSON.type = "FeatureCollection";
+    geoJSON.features = [];
+    for (var i = 0; i < Raduga.photos.length; i++) {
+        var photo = Raduga.photos[i];
+        var name = photo.custom_fields[Ti.Locale.currentLanguage === 'ru' ? 'name_ru' : 'name_en'];
+        var lon  = photo.custom_fields.coordinates[0][0];
+        var lat  = photo.custom_fields.coordinates[0][1];
+        var feature = {
+            type: "Feature",
+            properties: {
+                name: name,
+            },
+            geometry: {
+                type: "Point",
+                coordinates: [
+                    lon, lat
+                ]
+            }
+        };
+        geoJSON.features.push(feature);
+    }
+    return geoJSON;
 };
 
 var createTableData = function() {
