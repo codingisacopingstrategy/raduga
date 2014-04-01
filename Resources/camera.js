@@ -1,5 +1,5 @@
 var usernameLabel = Titanium.UI.createLabel({
-    color: '#821785',
+    color: 'white',
     text: 'User Name',
     top: 10, left: 10,
     width: 250
@@ -8,7 +8,7 @@ var usernameLabel = Titanium.UI.createLabel({
 // Set up screen
 
 var cameraLabel = Titanium.UI.createLabel({
-    color: '#821785',
+    color: 'white',
     text: 'Take picture',
     top: '10dp', left: '10dp', right: '10dp'
 });

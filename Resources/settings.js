@@ -46,7 +46,7 @@ var userDialog = Titanium.UI.createView({
 updateUserDialog(userDialog);
 
 var notificationsLabel = Titanium.UI.createLabel({
-    color: '#821785',
+    color: 'white',
     text: 'Notifications:',
     top: 10, left: 10,
     width: 250
@@ -58,7 +58,7 @@ var notificationsSwitch = Ti.UI.createSwitch({
 });
 
 var cityLabel = Titanium.UI.createLabel({
-    color: '#821785',
+    color: 'white',
     text: 'City:',
     top: 10, left: 10,
     width: 250

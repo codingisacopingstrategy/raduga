@@ -66,7 +66,7 @@ var loginUser = function(password) {
 
 /* View code */
 var usernameLabel = Titanium.UI.createLabel({
-    color: '#821785',
+    color: 'white',
     text: 'User Name',
     top: 10, left: 10,
     width: 250
@@ -79,7 +79,7 @@ var usernameTextField = Ti.UI.createTextField({
 });
 
 var passwordLabel = Titanium.UI.createLabel({
-    color: '#821785',
+    color: 'white',
     text: 'Password',
     top: 10, left: 10,
     width: 250
@@ -93,7 +93,7 @@ var passwordTextField = Ti.UI.createTextField({
 });
 
 var passwordCheckLabel = Titanium.UI.createLabel({
-    color: '#821785',
+    color: 'white',
     text: 'Password, again:',
     top: 10, left: 10,
     width: 250
