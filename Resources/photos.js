@@ -54,6 +54,28 @@ var createTableData = function() {
         tableData.push(row);
 
         var row = Ti.UI.createTableViewRow({
+            className: 'rainbowUsername', // used to improve table performance
+            backgroundColor: 'black',
+            // selectedBackgroundColor: 'black',
+            rowIndex: i, // custom property, useful for determining the row during events
+            height: '0dp',
+            layout:'horizontal',
+            height: Titanium.UI.SIZE,
+        });
+
+        var labelUserName = Ti.UI.createLabel({
+            color: 'white',
+            text: photo.user.username,
+            width: Titanium.UI.SIZE,
+            right: '10dp',
+            textAlign: Ti.UI.TEXT_ALIGNMENT_RIGHT,
+            width: '310dp'
+        });
+        row.add(labelUserName);
+
+        tableData.push(row);
+
+        var row = Ti.UI.createTableViewRow({
             className: 'rainbowMeta', // used to improve table performance
             backgroundColor: 'black',
             // selectedBackgroundColor: 'black',
@@ -87,16 +109,11 @@ var createTableData = function() {
         });
         row.add(labelCity);
 
-        var labelUserName = Ti.UI.createLabel({
-            color: 'white',
-            text: photo.user.username,
-            width: Titanium.UI.SIZE,
-            left: '10dp'
-
-        });
-        row.add(labelUserName);
-
         tableData.push(row);
+
+
+
+
     }
     return tableData;
 };
