@@ -127,14 +127,7 @@ cityTextField.addEventListener('focus', function(e) {
     citiesWindow.open();
     citiesSearch.focus();
 });
-// submit button
-settingsButton.addEventListener('click', function(e) {
-   if (!signedUp()) {
-       createUser(usernameTextField.value, passwordTextField.value, passwordCheckTextField.value);
-   } else if(!loggedIn()) {
-       loginUser(passwordTextField.value);
-   }
-});
+
 // handle settings refresh
 settingsWindow.addEventListener('user_status_change', function() {
     updateUserDialog(userDialog);

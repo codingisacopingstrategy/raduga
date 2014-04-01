@@ -63,7 +63,17 @@ var loginUser = function(password) {
     });
 };
 
-
+var logoutUser = function() {
+    Cloud.Users.logout(function (e) {
+        if (e.success) {
+            Ti.App.Properties.setString('sessionID', Cloud.sessionId); // set to null
+            Ti.API.info('Successfully logged out');
+            settingsWindow.fireEvent('user_status_change');
+        } else {
+            alertError((e.error && e.message) || JSON.stringify(e));
+    }
+});
+};
 /* View code */
 var usernameLabel = Titanium.UI.createLabel({
     color: 'white',
@@ -112,14 +122,34 @@ var settingsButton = Titanium.UI.createButton({
    width: 100
 });
 
+var loginButton = Titanium.UI.createButton({
+   title: 'Login',
+   top: 10,
+   width: 100
+});
+
+var logoutButton = Titanium.UI.createButton({
+   title: 'Logout',
+   top: 10,
+   width: 100
+});
+
+var signupButton = Titanium.UI.createButton({
+   title: 'Sign up',
+   top: 10,
+   width: 100
+});
+
+
+var handleSignup = function() {
+    createUser(usernameTextField.value, passwordTextField.value, passwordCheckTextField.value);
+};
+
+var handleLogin = function() {
+    loginUser(passwordTextField.value);
+};
 var updateUserDialog = function(view) {
-    view.remove(usernameLabel);
-    view.remove(usernameTextField);
-    view.remove(passwordLabel);
-    view.remove(passwordTextField);
-    view.remove(passwordCheckLabel);
-    view.remove(passwordCheckTextField);
-    view.remove(settingsButton);
+    view.removeAllChildren(); //TODO: also remove event listeners
 
     if (signedUp()) {
         usernameTextField.value = Ti.App.Properties.getString('username');
@@ -142,9 +172,15 @@ var updateUserDialog = function(view) {
         if (!signedUp()) {
             view.add(passwordCheckLabel);
             view.add(passwordCheckTextField);
-            settingsButton.setTitle('Sign up');
+            view.add(signupButton);
+            signupButton.addEventListener('click', handleSignup);
+        } else {
+            view.add(loginButton);
+            loginButton.addEventListener('click', handleLogin);
         }
-        view.add(settingsButton);
+    } else {
+        view.add(logoutButton);
+        logoutButton.addEventListener('click', logoutUser);
     }
 
 };
