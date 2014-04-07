@@ -10,7 +10,7 @@ var updatePhotos = function() {
             Raduga.photos = e.photos;
             tableView.setData(createTableData());
             // plot the photos in the webview
-            globe.evalJS('svg.append("path").datum(' + JSON.stringify(features2Photos())  + ').attr("d", path).attr("class", "place");');
+            globe.evalJS('svg.append("path").datum(' + JSON.stringify(features2Photos())  + ').attr("d", path.pointRadius(14)).attr("class", "place");');
 
         } else {
             alertError((e.error && e.message) || JSON.stringify(e));
