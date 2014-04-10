@@ -58,6 +58,7 @@ var globeWindow = Titanium.UI.createWindow({
 
 var cameraWindow = Titanium.UI.createWindow({
     backgroundColor: '#000',
+    layout: 'vertical',
     navBarHidden: true,
 });
 
@@ -98,7 +99,7 @@ var tabGroup = Titanium.UI.createTabGroup({
 });
 
 var photosTab = Titanium.UI.createTab({
-    icon: 'KS_nav_views.png',
+    icon: 'ui/icons/wall.png',
     titleid: 'photos_tab_title',
     window: photosWindow,
 });
@@ -106,14 +107,14 @@ var photosTab = Titanium.UI.createTab({
 photosTab.addEventListener("focus", updatePhotos);
 
 var globeTab = Titanium.UI.createTab({
-    icon: 'KS_nav_ui.png',
+    icon: 'ui/icons/earth.png',
     titleid: 'globe_tab_title',
     window: globeWindow,
 });
 
 // for now we add it as a tab, but it will probably be a seperate button on the top of the screen
 var cameraTab = Titanium.UI.createTab({
-    icon: 'KS_nav_ui.png',
+    icon: 'ui/icons/camera.png',
     titleid: 'camera_tab_title',
     window: cameraWindow,
 });
@@ -123,7 +124,7 @@ var cameraTab = Titanium.UI.createTab({
 cameraTab.addEventListener("focus", showCam);
 
 var settingsTab = Titanium.UI.createTab({
-    icon: 'KS_nav_ui.png',
+    icon: 'ui/icons/settings.png',
     titleid: 'settings_tab_title',
     window: settingsWindow
 });
