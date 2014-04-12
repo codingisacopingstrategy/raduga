@@ -3,7 +3,7 @@ var u = Ti.Android != undefined ? 'dp' : 0;
 
 var globe = Ti.UI.createWebView({
     top: '20dp',
-    backgroundImage: 'html/elektro_l_20140311_0530_rgb.jpg',
+    backgroundImage: 'html/elektro_l_20140311_0530_rgb_edt.jpg',
     url: 'html/globe.html',
     width: Ti.Platform.displayCaps.platformWidth + u,
     height: Ti.Platform.displayCaps.platformWidth + u
