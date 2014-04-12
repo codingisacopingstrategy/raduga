@@ -24,6 +24,13 @@ var features2Photos = function() {
     geoJSON.features = [];
     for (var i = 0; i < Raduga.photos.length; i++) {
         var photo = Raduga.photos[i];
+
+        // Skip photo’s without sufficient metadata
+        if (typeof photo.custom_fields === 'undefined' || typeof photo.custom_fields.name_en === 'undefined' || typeof photo.custom_fields.name_ru === 'undefined' || typeof photo.custom_fields.coordinates === 'undefined') {
+            Ti.API.info('Photo ' + photo.id + ' does not have sufficient metadata to locate on map');
+            continue;
+        }
+
         var name = photo.custom_fields[Ti.Locale.currentLanguage === 'ru' ? 'name_ru' : 'name_en'];
         var lon  = photo.custom_fields.coordinates[0][0];
         var lat  = photo.custom_fields.coordinates[0][1];
@@ -52,7 +59,7 @@ var createTableData = function() {
 
         // Skip photo’s without sufficient metadata
         if (typeof photo.custom_fields === 'undefined' || typeof photo.custom_fields.name_en === 'undefined' || typeof photo.custom_fields.name_ru === 'undefined') {
-            Ti.API.info('Photo ' + photo.id + ' does not have sufficient metadata');
+            Ti.API.info('Photo ' + photo.id + ' does not have sufficient metadata to display in photo tab');
             continue;
         }
 
