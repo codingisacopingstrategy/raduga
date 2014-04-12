@@ -7,6 +7,14 @@ var usernameLabel = Titanium.UI.createLabel({
 
 // Set up screen
 
+var cameraScrollView = Ti.UI.createScrollView({
+  contentWidth: 'auto',
+  contentHeight: 'auto',
+  height: '80%',
+  width: '100%'
+});
+
+
 var cameraLabel = Titanium.UI.createLabel({
     color: 'white',
     text: 'Take picture',
@@ -22,20 +30,19 @@ Raduga.callingCamera = false; // this might not be save across threads
 Raduga.tempFile = null;
 
 var resetCameraWindow = function() {
-    cameraWindow.remove(imageView);
-    cameraWindow.remove(cameraLabel);
-    cameraWindow.remove(uploadButton);
-
+    cameraScrollView.removeAllChildren(); //TODO: also remove event listeners
     Raduga.callingCamera = false;
 };
 
 var uploadPhoto = function(media) {
-    if (!Raduga.tempFile) {
+    var photo = Titanium.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory, Raduga.tempFile);
+    var photo = Titanium.Filesystem.getFile('ui/upload_test_photo.jpg');
+    /*if (!Raduga.tempFile) {
         return false;
-    }
+    }*/
     Cloud.Photos.create({
-        photo: Titanium.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory, Raduga.tempFile),
-        custom_fields : {
+        photo: photo,
+        custom_fields: {
             "city_name_en": Ti.App.Properties.getString('city_name_en'),
             "city_name_ru": Ti.App.Properties.getString('city_name_ru'),
             "coordinates": [Ti.App.Properties.getString('city_lon'), Ti.App.Properties.getString('city_lat')]
@@ -72,20 +79,22 @@ var showCam = function() {
             Ti.API.info('Our type was: '+event.mediaType);
             if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {
                 imageFileName = new Date().toISOString() + '.jpg';
-                var f = Titanium.Filesystem.getFile(Titanium.Filesystem.getApplicationDataDirectory(), imageFileName);
-                f.createFile();
-                f.write(event.media);
+                /* var f = Titanium.Filesystem.getFile(Titanium.Filesystem.getApplicationDataDirectory(), imageFileName);
+                f.write(event.media); */
                 Raduga.tempFile = imageFileName;
                 var imageView = Ti.UI.createImageView({
                     width: cameraWindow.width,
                     height: cameraWindow.height,
                     image: event.media
                 });
-                cameraWindow.add(imageView);
-                cameraWindow.add(cameraLabel);
+
+                cameraScrollView.add(imageView);
                 cameraLabel.setText('Uploading photo as user ' + Ti.App.Properties.getString('username') +
-                                    'from city: ' + cityName() );
-                cameraWindow.add(uploadButton);
+                    'from city: ' + cityName() );
+                cameraScrollView.add(cameraLabel);
+                cameraScrollView.add(uploadButton);
+                cameraWindow.add(cameraScrollView);
+
             } else {
                 alert("got the wrong type back =" + event.mediaType);
             }
