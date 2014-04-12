@@ -1,29 +1,37 @@
-If not preferences:
+Photo view: go to individual photo.
+            sharing options
+
+iOS and Android Push Notifications:
+    Open app on home page
+
+do uploading via server for now.
+
+If not logged in:
   launch preferences page
 
 Android preferences in-app,
-
+    We’ll try to do iOS in app too—lets just hope Apple is ok.
 
 Settings
 Location:
-current location
-update location automatically
-set location manually
+Choose a town (more private than using phone’s location service)
+Chck Receive push notifications
+(Tara Says: remove logout)
 
 
-chck Receive push notifications
+Server apps:
 
-for each user in registered users:
-    if in rainbow area:
-	    send rainbow
+Post *grib* fetch:
+    for each user in registered users:
+        if in rainbow area:
+            send push message
 
-Kaart met regenbogen
+Post upload:
+    New photos arrive automatically (something like a star on the tab when there are new ones?)
+    For each other user in 30 km:
+        send push message
 
 
-There is a rainbow near
-
-
-Current location
 
 http://docs.appcelerator.com/cloud/latest/#!/api/PushNotifications-method-notify
 
@@ -36,8 +44,6 @@ http://docs.appcelerator.com/titanium/3.0/#!/guide/Camera_and_Photo_Gallery_APIs
 
 
  Mochten we locaties van steden nodig hebben zie dan http://en.wikipedia.org/wiki/List_of_cities_and_towns_in_Russia
-
-
 
 In de Russisiche forecast zitten de volgende uren:
 6.0 0.25
@@ -55,7 +61,6 @@ In de Russisiche forecast zitten de volgende uren:
 Precipitation products:
 http://wmc.meteoinfo.ru/forc-losev
 
-
 In de GFS
 We probably need to look for:
 204	entire atmosphere (considered as a single layer)	PWAT	analysis	Precipitable Water [kg/m^2]
@@ -65,15 +70,9 @@ Klaarblijkelijk kunnen we het hele ding downloaden met
 https://github.com/cambecc/earth/blob/master/server/gfs-update.js
 
 
-
-
 Dit is relevant voor Google App Store:
 http://retrodreamer.com/blog/2012/03/why-dont-we-have-paid-versions-on-the-android-market/
 
-
-
-
 http://www.planetary.org/blogs/guest-blogs/2013/20130723-beautiful-science-by-elektro-l.html
-
 
 This article started explaining stuff http://techslides.com/d3-globe-with-canvas-webgl-and-three-js/
