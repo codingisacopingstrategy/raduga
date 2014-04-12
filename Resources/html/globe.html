@@ -55,6 +55,12 @@ svg {
     fill-opacity: .3;
 }
 
+.day {
+    stroke: #ffff00;
+    fill: #ffff00;
+    fill-opacity: .3;
+}
+
 .land {
     fill: none;
     stroke: #777;
@@ -146,12 +152,18 @@ d3.json("json/world-50m.json", function(error, world) {  // use world-110m.json 
       .attr("class", "night")
       .attr("d", path);
 
+    var day = svg.append("path")
+      .attr("class", "day")
+      .attr("d", path);
+
+
   redraw();
   /*setInterval(redraw, 1000);*/
 
-  function redraw() {
-    night.datum(circle.origin(antipode(solarPosition(new Date("2014-03-11T05:30:00Z") )))).attr("d", path);
-  }
+    function redraw() {
+        night.datum(circle.origin(antipode(solarPosition(new Date("2014-03-11T05:30:00Z") )))).attr("d", path);
+        day.datum(circle.origin(solarPosition(new Date("2014-03-11T05:30:00Z") ))).attr("d", path);
+    }
 });
 
 d3.select(self.frameElement).style("height", height + "px");
