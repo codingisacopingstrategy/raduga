@@ -3,10 +3,12 @@
 	<string name="globe_tab_title">Globe</string>
 	<string name="photos_tab_title">Photos</string>
 	<string name="camera_tab_title">Camera</string>
+	<string name="camera">Camera</string>
 	<string name="settings_tab_title">Settings</string>
 	<string name="city">City</string>
 	<string name="notifications">Notifications</string>
 	<string name="login">Log in</string>
+	<string name="logout">Log out</string>
 	<string name="password">Password</string>
 	<string name="password_again">Password (again)</string>
 	<string name="password_blank">Please enter password</string>
@@ -17,6 +19,7 @@
 	<string name="welcome">Welcome</string>
 	<string name="error">Error</string>
 	<string name="username_taken">A user with that username already exists</string>
+	<string name="photo_ready_for_upload">Uploading your photo of a rainbow at %1$s as user %2$s</string>
 	<string name="photo_uploaded_success">Succesfully uploaded your photo of a rainbow at %1$s</string>
 	<string name="account_creation_success">Succesfully created your account %1$s</string>
 	<string name="error_verbose">Can you tell the Raduga team about this error? Details:</string>
@@ -25,4 +28,5 @@
 	<string name="signup_before_upload">Before uploading, you need to sign up</string>
 	<string name="ready_for_upload">Ready to upload your photo of a rainbow at %1$s</string>
 	<string name="upload">Upload</string>
+	<string name="prediction_mock"> Today it is cloudy. The nearest area with a high change of rainbows is 500 km from you, near Blagodarny.</string>
 </resources>

@@ -11,7 +11,7 @@ var globe = Ti.UI.createWebView({
 
 var predictionLabel = Ti.UI.createLabel({
     color: 'white',
-    text: 'Today it is cloudy. The nearest area with a high change of rainbows 500 km, from you, near Blagodarny.',
+    textid: 'prediction_mock',
     top: 10, left: 10, right: 10,
 });
 

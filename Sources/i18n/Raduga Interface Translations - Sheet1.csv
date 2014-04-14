@@ -1,10 +1,12 @@
 globe_tab_title,Globe,Глобус
 photos_tab_title,Photos,фотa
 camera_tab_title,Camera,Камера
+camera,Camera,Камера
 settings_tab_title,Settings,Настройки
 city,City,Город
 notifications,Notifications,Push-уведомлений
 login,Log in,Войти
+logout,Log out,Выйти
 password,Password,Пароль
 password_again,Password (again),Пароль (еще раз)
 password_blank,Please enter password,Пароль не задан
@@ -15,6 +17,7 @@ signup,Sign up,Зарегистрироваться
 welcome,Welcome,Добро пожаловать
 error,Error,Ошибка
 username_taken,A user with that username already exists,Пользователь с таким именем уже существует
+photo_ready_for_upload,Uploading your photo of a rainbow at %1$s as user %2$s,Ваше фото загружается радуги в %1$s как пользователь %2$s
 photo_uploaded_success,Succesfully uploaded your photo of a rainbow at %1$s,Успешно загрузили фотографию радуги на %1$s
 account_creation_success,Succesfully created your account %1$s,Успешно создан учетной записи %1$s
 error_verbose,Can you tell the Raduga team about this error? Details:,Можете ли вы сказать команду Радуга об этой ошибке? Подробности:
@@ -23,3 +26,4 @@ signin_before_upload,"Before uploading, you need to sign in","Перед выг�
 signup_before_upload,"Before uploading, you need to sign up","Перед выгрузкой, необходимо зарегистрироваться"
 ready_for_upload,Ready to upload your photo of a rainbow at %1$s,Готовы загрузить свою фотографию радуги на %1$s
 upload,Upload,Загружать
+prediction_mock," Today it is cloudy. The nearest area with a high change of rainbows is 500 km from you, near Blagodarny.","Сегодня она мутная. Ближайшая зона с высоким изменения радуги находится в 500 км от вас, рядом Благодарный."

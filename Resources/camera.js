@@ -1,10 +1,3 @@
-var usernameLabel = Titanium.UI.createLabel({
-    color: 'white',
-    text: 'User Name',
-    top: 10, left: 10,
-    width: 250
-});
-
 // Set up screen
 
 var cameraScrollView = Ti.UI.createScrollView({
@@ -17,11 +10,10 @@ var cameraScrollView = Ti.UI.createScrollView({
 
 var cameraLabel = Titanium.UI.createLabel({
     color: 'white',
-    text: 'Take picture',
     top: '10dp', left: '10dp', right: '10dp'
 });
 var uploadButton = Titanium.UI.createButton({
-   title: 'Upload',
+   titleid: 'upload',
    top: 10,
    width: 100
 });
@@ -96,19 +88,19 @@ var showCam = function() {
                 cameraWindow.add(cameraScrollView);
 
             } else {
-                alert("got the wrong type back =" + event.mediaType);
+                alertError("got the wrong type back =" + event.mediaType);
             }
         },
         cancel:function() {
-                alert("called when user cancels taking a picture");
+                alert("called when user cancels taking a picture"); //TODO: close window, go to home tab
         },
         error:function(error) {
             // called when there's an error
-            var a = Titanium.UI.createAlertDialog({title:'Camera'});
+            var a = Titanium.UI.createAlertDialog({title:L('camera')});
             if (error.code == Titanium.Media.NO_CAMERA) {
                 a.setMessage('Please run this test on device');
             } else {
-                a.setMessage('Unexpected error: ' + error.code);
+                a.setMessage(L('error') + ': ' + error.code);
             }
             a.show();
         },

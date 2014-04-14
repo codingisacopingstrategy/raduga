@@ -77,7 +77,7 @@ var logoutUser = function() {
 /* View code */
 var usernameLabel = Titanium.UI.createLabel({
     color: 'white',
-    text: 'User Name',
+    textid: 'username',
     top: 10, left: 10,
     width: 250
 });
@@ -90,7 +90,7 @@ var usernameTextField = Ti.UI.createTextField({
 
 var passwordLabel = Titanium.UI.createLabel({
     color: 'white',
-    text: 'Password',
+    textid: 'password',
     top: 10, left: 10,
     width: 250
 });
@@ -104,7 +104,7 @@ var passwordTextField = Ti.UI.createTextField({
 
 var passwordCheckLabel = Titanium.UI.createLabel({
     color: 'white',
-    text: 'Password, again:',
+    textid: 'password_again',
     top: 10, left: 10,
     width: 250
 });
@@ -123,19 +123,19 @@ var settingsButton = Titanium.UI.createButton({
 });
 
 var loginButton = Titanium.UI.createButton({
-   title: 'Login',
+   titleid: 'login',
    top: 10,
    width: 100
 });
 
 var logoutButton = Titanium.UI.createButton({
-   title: 'Logout',
+   titleid: 'logout',
    top: 10,
    width: 100
 });
 
 var signupButton = Titanium.UI.createButton({
-   title: 'Sign up',
+   titleid: 'signup',
    top: 10,
    width: 100
 });
