@@ -100,9 +100,39 @@ citiesTable.addEventListener('click', function(e) {
     Ti.App.Properties.setString('city_lat', e.rowData.val.lat);
     Ti.App.Properties.setString('city_lon', e.rowData.val.lon);
     citiesWindow.close();
+    if (loggedIn()) {
+        Cloud.Users.update({
+            username: usernameTextField.value,
+            custom_fields: {
+                name_en: e.rowData.val.name_en,
+                name_ru: e.rowData.val.name_ru,
+                coordinates: [[e.rowData.val.lon, e.rowData.val.lat]],
+            }
+        }, function (e) {
+            if (e.success) {
+                Ti.API.info('Succesfully updated location settings for user ' + e.users[0].username);
+            } else {
+                alertError((e.error && e.message) || JSON.stringify(e));
+            }
+        });
+    }
 });
 notificationsSwitch.addEventListener('change', function() {
     Ti.App.Properties.setString('notifications', String(notificationsSwitch.value));
+    if (loggedIn()) {
+        Cloud.Users.update({
+            username: usernameTextField.value,
+            custom_fields: {
+                notifications: notificationsSwitch.value,
+            }
+        }, function (e) {
+            if (e.success) {
+                Ti.API.info('Succesfully updated push notification settings for user ' + e.users[0].username);
+            } else {
+                alertError((e.error && e.message) || JSON.stringify(e));
+            }
+        });
+    }
 });
 // Automatically go to next field after return:
 usernameTextField.addEventListener('return', function() {
