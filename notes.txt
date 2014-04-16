@@ -43,6 +43,27 @@ Globe: see rainbow images?
 http://docs.appcelerator.com/titanium/3.0/#!/guide/Camera_and_Photo_Gallery_APIs
 
 
+Raduga Terms of Use
+
+This is an agreement between you and Stichting Pink Pony Express, Rotterdam, The Netherlands.
+
+1. Privacy
+
+Your privacy is very important to us. As we continually learn, there is no way in which data stored online can be completely secured from criminals and government agencies. We therefore figured the safest strategy would be to keep as little data as possible about you. On its servers, Raduga stores a login-token, your username (which can be a pseudonym), and your location. Your location is not determined by your device’s GPS (to which Raduga has no access), but rather by you selecting one of Russia’s 1100 towns from a list. This information is less fine-grained than the GPS location.
+
+2. Software
+
+Instead of most software manufacturers, we are not secretive about how our app works. You should feel free to reverse engineer, decompile, disassemble or otherwise study the Raduga app. If you feel like inspecting the source code of the software, it is available at https://github.com/codingisacopingstrategy/raduga
+
+3. Intellectual Property
+
+You retain the copyright to any photo and its metadata posted to Raduga. You do agree to license the photo and its metadata under the Creative Commons CC BY SA license. This gives us (and others) the right to reproduce these images (including but not limited to, displaying the photos within the Raduga app to other users). By the terms of the license, if we (or someone else) make a derivative work (like a poster) this will be also made available under the same open license. In this way, we create an open and free collection rainbows.
+
+The CC BY SA license requires attribution. As the username is the only personally identifying information we have of you, you agree that it is this name that will be used for attribution.
+
+
+
+
  Mochten we locaties van steden nodig hebben zie dan http://en.wikipedia.org/wiki/List_of_cities_and_towns_in_Russia
 
 In de Russisiche forecast zitten de volgende uren:
