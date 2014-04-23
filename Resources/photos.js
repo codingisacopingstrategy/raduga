@@ -1,21 +1,28 @@
 // photosWindow behaviour
 
 var updatePhotos = function() {
-    Cloud.Photos.query({
-        page: 1,
-        per_page: 20,
-    }, function (e) {
-        if (e.success) {
-            Ti.API.info('found on the internet ' + e.photos.length + ' photos');
-            Raduga.photos = e.photos;
+    var url = "http://vps40616.public.cloudvps.com/photos/";
+    var json;
+
+    var xhr = Ti.Network.createHTTPClient({
+        onload: function() {
+            // parse the retrieved data, turning it into a JavaScript object
+            json = JSON.parse(this.responseText);
+            var photos = json._items;
+            Ti.API.info('found on the internet ' + photos.length + ' photos');
+            Raduga.photos = photos;
             tableView.setData(createTableData());
             // plot the photos in the webview
             globe.evalJS('svg.append("path").datum(' + JSON.stringify(features2Photos())  + ').attr("d", path.pointRadius(14)).attr("class", "place");');
 
-        } else {
-            alertError((e.error && e.message) || JSON.stringify(e));
+        },
+        onerror: function(error) {
+            alertError(error);
         }
     });
+
+    xhr.open("GET", url);
+    xhr.send();
 };
 
 var features2Photos = function() {
