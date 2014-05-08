@@ -74,9 +74,13 @@ var settingsWindow = Titanium.UI.createWindow({
 
 if (Titanium.Platform.osname === 'iphone') {
     photosWindow.setStatusBarStyle(Titanium.UI.iPhone.StatusBar.LIGHT_CONTENT);
+    photosWindow.setExtendEdges([Ti.UI.EXTEND_EDGE_TOP, Ti.UI.EXTEND_EDGE_BOTTOM]);
     globeWindow.setStatusBarStyle(Titanium.UI.iPhone.StatusBar.LIGHT_CONTENT);
+    globeWindow.setExtendEdges([Ti.UI.EXTEND_EDGE_TOP, Ti.UI.EXTEND_EDGE_BOTTOM]);
     cameraWindow.setStatusBarStyle(Titanium.UI.iPhone.StatusBar.LIGHT_CONTENT);
+    cameraWindow.setExtendEdges([Ti.UI.EXTEND_EDGE_TOP, Ti.UI.EXTEND_EDGE_BOTTOM]);
     settingsWindow.setStatusBarStyle(Titanium.UI.iPhone.StatusBar.LIGHT_CONTENT);
+    settingsWindow.setExtendEdges([Ti.UI.EXTEND_EDGE_TOP, Ti.UI.EXTEND_EDGE_BOTTOM]);
 }
 
 //
@@ -94,8 +98,8 @@ Ti.include('settings.js');
 //
 
 var tabGroup = Titanium.UI.createTabGroup({
-    backgroundColor: 'transparent',
-    tabsBackgroundColor: 'transparent',
+    tabsBackgroundImage: 'ui/backgrounds/semi-transparant-pixel-60.png',
+    tintColor: 'white'
 });
 
 var photosTab = Titanium.UI.createTab({
@@ -159,14 +163,3 @@ Cloud.Users.showMe(function (e) {
         tabGroup.setActiveTab(settingsTab);
     }
 });
-
-/* This I was using to quickly show some of the Pony’s png mockup directly on the device
-
-var win = Ti.UI.createWindow();
-var image = Ti.UI.createImageView({
-  image:'/ui/mock_04.png'
-});
-win.add(image);
-win.open();
-
-*/
