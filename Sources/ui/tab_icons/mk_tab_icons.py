@@ -24,13 +24,13 @@ for source in sources:
 
     pipe = subprocess.Popen([inkscape,
                              '--export-png=%s' % small_outputfile,
-                             '--export-width=25',
-                             '--export-height=25',
+                             '--export-dpi=90',
+                             '--export-background-opacity=0.0',
                              source])
     pipe.wait()
     pipe = subprocess.Popen([inkscape,
                              '--export-png=%s' % large_outputfile,
-                             '--export-width=50',
-                             '--export-height=50',
+                             '--export-dpi=180',
+                             '--export-background-opacity=0.0',
                              source])
     pipe.wait()

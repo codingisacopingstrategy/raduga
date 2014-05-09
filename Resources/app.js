@@ -56,6 +56,12 @@ var globeWindow = Titanium.UI.createWindow({
     navBarHidden: true,
 });
 
+var mapWindow = Titanium.UI.createWindow({
+    backgroundColor: '#000',
+    layout: 'vertical',
+    navBarHidden: true,
+});
+
 var cameraWindow = Titanium.UI.createWindow({
     backgroundColor: '#000',
     layout: 'vertical',
@@ -77,6 +83,8 @@ if (Titanium.Platform.osname === 'iphone') {
     photosWindow.setExtendEdges([Ti.UI.EXTEND_EDGE_TOP, Ti.UI.EXTEND_EDGE_BOTTOM]);
     globeWindow.setStatusBarStyle(Titanium.UI.iPhone.StatusBar.LIGHT_CONTENT);
     globeWindow.setExtendEdges([Ti.UI.EXTEND_EDGE_TOP, Ti.UI.EXTEND_EDGE_BOTTOM]);
+    mapWindow.setStatusBarStyle(Titanium.UI.iPhone.StatusBar.LIGHT_CONTENT);
+    mapWindow.setExtendEdges([Ti.UI.EXTEND_EDGE_TOP, Ti.UI.EXTEND_EDGE_BOTTOM]);
     cameraWindow.setStatusBarStyle(Titanium.UI.iPhone.StatusBar.LIGHT_CONTENT);
     cameraWindow.setExtendEdges([Ti.UI.EXTEND_EDGE_TOP, Ti.UI.EXTEND_EDGE_BOTTOM]);
     settingsWindow.setStatusBarStyle(Titanium.UI.iPhone.StatusBar.LIGHT_CONTENT);
@@ -104,7 +112,7 @@ var tabGroup = Titanium.UI.createTabGroup({
 
 var photosTab = Titanium.UI.createTab({
     icon: 'ui/icons/wall.png',
-    titleid: 'photos_tab_title',
+    activeIcon: 'ui/icons/wall.png',
     window: photosWindow,
 });
 
@@ -112,14 +120,20 @@ photosTab.addEventListener("focus", updatePhotos);
 
 var globeTab = Titanium.UI.createTab({
     icon: 'ui/icons/earth.png',
-    titleid: 'globe_tab_title',
+    activeIcon: 'ui/icons/earth.png',
     window: globeWindow,
+});
+
+var mapTab = Titanium.UI.createTab({
+    icon: 'ui/icons/map.png',
+    activeIcon: 'ui/icons/map.png',
+    window: mapWindow,
 });
 
 // for now we add it as a tab, but it will probably be a seperate button on the top of the screen
 var cameraTab = Titanium.UI.createTab({
     icon: 'ui/icons/camera.png',
-    titleid: 'camera_tab_title',
+    activeIcon: 'ui/icons/camera.png',
     window: cameraWindow,
 });
 
@@ -129,12 +143,13 @@ cameraTab.addEventListener("focus", showCam);
 
 var settingsTab = Titanium.UI.createTab({
     icon: 'ui/icons/settings.png',
-    titleid: 'settings_tab_title',
+    activeIcon: 'ui/icons/settings.png',
     window: settingsWindow
 });
 
 tabGroup.addTab(globeTab);
 tabGroup.addTab(photosTab);
+tabGroup.addTab(mapTab);
 tabGroup.addTab(cameraTab);
 tabGroup.addTab(settingsTab);
 
