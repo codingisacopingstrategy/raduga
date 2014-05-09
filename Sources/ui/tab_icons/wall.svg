@@ -14,7 +14,7 @@
    id="svg3873"
    version="1.1"
    inkscape:version="0.48.2 r9819"
-   sodipodi:docname="earth.svg">
+   sodipodi:docname="wall.svg">
   <defs
      id="defs3875" />
   <sodipodi:namedview
@@ -24,9 +24,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.22352941"
      inkscape:pageshadow="2"
-     inkscape:zoom="63.356767"
-     inkscape:cx="6.3961796"
-     inkscape:cy="24.59861"
+     inkscape:zoom="15.839192"
+     inkscape:cx="13.75568"
+     inkscape:cy="20.183636"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -39,7 +39,7 @@
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:snap-global="false">
+     inkscape:snap-global="true">
     <inkscape:grid
        type="xygrid"
        id="grid4567"
@@ -56,7 +56,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -65,23 +65,18 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(-93.916536,-110.58403)">
-    <g
-       transform="translate(-29.32202,-654.43623)"
-       id="g3667">
-      <g
-         id="g3669">
-        <rect
-           style="fill:none;stroke:#ffffff;stroke-width:0.5"
-           x="126.969"
-           y="768.646"
-           width="19.188999"
-           height="19.190001"
-           id="rect3671" />
-      </g>
-      <polygon
-         style="fill:none;stroke:#ffffff;stroke-width:0.5"
-         points="142.682,765.261 123.491,765.261 123.491,784.45 126.878,784.45 126.878,768.646 142.682,768.646 "
-         id="polygon3673" />
-    </g>
+    <path
+       style="fill:none;stroke:#ffffff;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 113.41653,113.58403 0,-2.50001 -18.999994,0 0,19.00001 3.166666,0"
+       id="path8497"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc" />
+    <rect
+       style="fill:none;stroke:#ffffff;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect8499"
+       width="19"
+       height="19"
+       x="97.416534"
+       y="114.08403" />
   </g>
 </svg>
