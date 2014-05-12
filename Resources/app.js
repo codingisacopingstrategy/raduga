@@ -98,6 +98,7 @@ if (Titanium.Platform.osname === 'iphone') {
 
 Ti.include('globe.js');
 Ti.include('photos.js');
+Ti.include('map.js');
 Ti.include('camera.js');
 Ti.include('settings.js');
 

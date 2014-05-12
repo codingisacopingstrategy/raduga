@@ -7,6 +7,7 @@
 
     <link rel="stylesheet" href="http://leaflet.cloudmade.com/dist/leaflet.css" />
     <!--[if lte IE 8]><link rel="stylesheet" href="http://leaflet.cloudmade.com/dist/leaflet.ie.css" /><![endif]-->
+    <script type="text/javascript" src="http://maps.stamen.com/js/tile.stamen.js?v1.2.4"></script>
     <script src="http://leaflet.cloudmade.com/dist/leaflet.js"></script>
     <meta name="viewport" content="width=320">
     <style>
@@ -29,7 +30,11 @@
     <script>
         var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         osmAttribution = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
-        osmLayer = new L.TileLayer(osmUrl, {maxZoom: 18, attribution: osmAttribution});
+        osmLayer = new L.TileLayer(osmUrl, {
+            maxZoom: 18,
+            detectRetina: true,
+            attribution: osmAttribution
+        });
 
         var map = new L.Map('map');
         map.setView(new L.LatLng(0, 0), 4);
@@ -37,12 +42,14 @@
 
         var owmCloudsLayer = L.tileLayer('http://{s}.tile.openweathermap.org/map/clouds_cls/{z}/{x}/{y}.png', {
             attribution: 'Map data &copy; <a href="http://openweathermap.org">OpenWeatherMap</a>',
-            maxZoom: 18
+            maxZoom: 18,
+            detectRetina: true,
         });
 
         var owmRainLayer = L.tileLayer('http://{s}.tile.openweathermap.org/map/precipitation_cls/{z}/{x}/{y}.png', {
             attribution: 'Map data &copy; <a href="http://openweathermap.org">OpenWeatherMap</a>',
-            maxZoom: 18
+            maxZoom: 18,
+            detectRetina: true,
         });
 
         map.addLayer(owmRainLayer);
