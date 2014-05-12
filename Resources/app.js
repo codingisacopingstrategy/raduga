@@ -107,12 +107,16 @@ Ti.include('settings.js');
 
 var tabGroup = Titanium.UI.createTabGroup({
     tabsBackgroundImage: 'ui/backgrounds/semi-transparant-pixel-60.png',
+    // I want to not have the default tab icons be coloured grey. Both of these have no effect:
+    // cf http://developer.appcelerator.com/question/163061/tab-group-grey-icons-in-io7
+    // tabsBackgroundColor: 'white',
+    // tabsBackgroundDisabledColor: 'white',
     tintColor: 'white'
 });
 
 var photosTab = Titanium.UI.createTab({
     icon: 'ui/icons/wall.png',
-    activeIcon: 'ui/icons/wall.png',
+    activeIcon: 'ui/icons/wall_hi.png',
     window: photosWindow,
 });
 
@@ -120,20 +124,20 @@ photosTab.addEventListener("focus", updatePhotos);
 
 var globeTab = Titanium.UI.createTab({
     icon: 'ui/icons/earth.png',
-    activeIcon: 'ui/icons/earth.png',
+    activeIcon: 'ui/icons/earth_hi.png',
     window: globeWindow,
 });
 
 var mapTab = Titanium.UI.createTab({
     icon: 'ui/icons/map.png',
-    activeIcon: 'ui/icons/map.png',
+    activeIcon: 'ui/icons/map_hi.png',
     window: mapWindow,
 });
 
 // for now we add it as a tab, but it will probably be a seperate button on the top of the screen
 var cameraTab = Titanium.UI.createTab({
     icon: 'ui/icons/camera.png',
-    activeIcon: 'ui/icons/camera.png',
+    activeIcon: 'ui/icons/camera_hi.png',
     window: cameraWindow,
 });
 
@@ -143,7 +147,7 @@ cameraTab.addEventListener("focus", showCam);
 
 var settingsTab = Titanium.UI.createTab({
     icon: 'ui/icons/settings.png',
-    activeIcon: 'ui/icons/settings.png',
+    activeIcon: 'ui/icons/settings_hi.png',
     window: settingsWindow
 });
 
