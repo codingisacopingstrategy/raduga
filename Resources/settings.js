@@ -6,13 +6,13 @@ var citiesWindow = Ti.UI.createWindow({
 
 var tableData = [];
 
-var cityNameField = Titanium.Locale.currentLanguage === 'ru' ? 'name_ru' : 'name_en';
+var cityNameField = Ti.Locale.currentLanguage === 'ru' ? 'name_ru' : 'name_en';
 for (var i = 0; i < cities.length; i++) {
     var city = cities[i];
     tableData.push({ title: city[cityNameField], val: city });
 }
 
-var citiesSearch = Titanium.UI.createSearchBar({
+var citiesSearch = Ti.UI.createSearchBar({
     barColor:'#000',
     showCancel:true,
     height:43,
@@ -32,12 +32,12 @@ citiesSearch.addEventListener('cancel', function(e) {
 
 // Settings Form
 
-var topPadding = Titanium.UI.createView({
+var topPadding = Ti.UI.createView({
     width: '100%',
     height: '20dp'
 });
 
-var userDialog = Titanium.UI.createView({
+var userDialog = Ti.UI.createView({
    top:0,
    height: Ti.UI.SIZE,
    layout: 'vertical',
@@ -45,7 +45,7 @@ var userDialog = Titanium.UI.createView({
 
 updateUserDialog(userDialog);
 
-var notificationsLabel = Titanium.UI.createLabel({
+var notificationsLabel = Ti.UI.createLabel({
     color: 'white',
     textid: 'notifications',
     top: 10, left: 10,
@@ -57,7 +57,7 @@ var notificationsSwitch = Ti.UI.createSwitch({
     top: 10, left: 10,
 });
 
-var cityLabel = Titanium.UI.createLabel({
+var cityLabel = Ti.UI.createLabel({
     color: 'white',
     textid: 'city',
     top: 10, left: 10,
@@ -65,7 +65,7 @@ var cityLabel = Titanium.UI.createLabel({
 });
 
 var cityTextField = Ti.UI.createTextField({
-    value: Ti.App.Properties.getString(Titanium.Locale.currentLanguage === 'ru' ? 'city_name_ru' : 'city_name_en'),
+    value: Ti.App.Properties.getString(Ti.Locale.currentLanguage === 'ru' ? 'city_name_ru' : 'city_name_en'),
     borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
     top: 10, left: 10,
     width: 250

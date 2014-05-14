@@ -8,11 +8,11 @@ var cameraScrollView = Ti.UI.createScrollView({
 });
 
 
-var cameraLabel = Titanium.UI.createLabel({
+var cameraLabel = Ti.UI.createLabel({
     color: 'white',
     top: '10dp', left: '10dp', right: '10dp'
 });
-var uploadButton = Titanium.UI.createButton({
+var uploadButton = Ti.UI.createButton({
    titleid: 'upload',
    top: 10,
    width: 100
@@ -27,8 +27,8 @@ var resetCameraWindow = function() {
 };
 
 var uploadPhoto = function(media) {
-    var photo = Titanium.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory, Raduga.tempFile);
-    var photo = Titanium.Filesystem.getFile('ui/upload_test_photo.jpg');
+    var photo = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, Raduga.tempFile);
+    var photo = Ti.Filesystem.getFile('ui/upload_test_photo.jpg');
     /*if (!Raduga.tempFile) {
         return false;
     }*/
@@ -64,14 +64,14 @@ var showCam = function() {
     }
     Raduga.callingCamera = true;
     Ti.API.info("called showCam");
-    Titanium.Media.showCamera({
+    Ti.Media.showCamera({
         success:function(event) {
-            Ti.API.info('application folder', Titanium.Filesystem.getApplicationDataDirectory());
+            Ti.API.info('application folder', Ti.Filesystem.getApplicationDataDirectory());
             // called when media returned from the camera
             Ti.API.info('Our type was: '+event.mediaType);
             if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {
                 imageFileName = new Date().toISOString() + '.jpg';
-                /* var f = Titanium.Filesystem.getFile(Titanium.Filesystem.getApplicationDataDirectory(), imageFileName);
+                /* var f = Ti.Filesystem.getFile(Ti.Filesystem.getApplicationDataDirectory(), imageFileName);
                 f.write(event.media); */
                 Raduga.tempFile = imageFileName;
                 var imageView = Ti.UI.createImageView({
@@ -96,8 +96,8 @@ var showCam = function() {
         },
         error:function(error) {
             // called when there's an error
-            var a = Titanium.UI.createAlertDialog({title:L('camera')});
-            if (error.code == Titanium.Media.NO_CAMERA) {
+            var a = Ti.UI.createAlertDialog({title:L('camera')});
+            if (error.code == Ti.Media.NO_CAMERA) {
                 a.setMessage('Please run this test on device');
             } else {
                 a.setMessage(L('error') + ': ' + error.code);

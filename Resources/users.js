@@ -75,7 +75,7 @@ var logoutUser = function() {
 });
 };
 /* View code */
-var usernameLabel = Titanium.UI.createLabel({
+var usernameLabel = Ti.UI.createLabel({
     color: 'white',
     textid: 'username',
     top: 10, left: 10,
@@ -88,7 +88,7 @@ var usernameTextField = Ti.UI.createTextField({
     width: 250
 });
 
-var passwordLabel = Titanium.UI.createLabel({
+var passwordLabel = Ti.UI.createLabel({
     color: 'white',
     textid: 'password',
     top: 10, left: 10,
@@ -102,7 +102,7 @@ var passwordTextField = Ti.UI.createTextField({
     passwordMask: true
 });
 
-var passwordCheckLabel = Titanium.UI.createLabel({
+var passwordCheckLabel = Ti.UI.createLabel({
     color: 'white',
     textid: 'password_again',
     top: 10, left: 10,
@@ -116,25 +116,25 @@ var passwordCheckTextField = Ti.UI.createTextField({
     passwordMask: true
 });
 
-var settingsButton = Titanium.UI.createButton({
+var settingsButton = Ti.UI.createButton({
    title: 'Save',
    top: 10,
    width: 100
 });
 
-var loginButton = Titanium.UI.createButton({
+var loginButton = Ti.UI.createButton({
    titleid: 'login',
    top: 10,
    width: 100
 });
 
-var logoutButton = Titanium.UI.createButton({
+var logoutButton = Ti.UI.createButton({
    titleid: 'logout',
    top: 10,
    width: 100
 });
 
-var signupButton = Titanium.UI.createButton({
+var signupButton = Ti.UI.createButton({
    titleid: 'signup',
    top: 10,
    width: 100

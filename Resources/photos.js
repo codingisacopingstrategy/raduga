@@ -99,13 +99,13 @@ var createTableData = function() {
             rowIndex: i, // custom property, useful for determining the row during events
             height: '0dp',
             layout:'horizontal',
-            height: Titanium.UI.SIZE,
+            height: Ti.UI.SIZE,
         });
 
         var labelUserName = Ti.UI.createLabel({
             color: 'white',
             text: photo.user.username,
-            width: Titanium.UI.SIZE,
+            width: Ti.UI.SIZE,
             right: '10dp',
             textAlign: Ti.UI.TEXT_ALIGNMENT_RIGHT,
             width: '310dp'
@@ -121,13 +121,13 @@ var createTableData = function() {
             rowIndex: i, // custom property, useful for determining the row during events
             height: '20dp',
             layout:'horizontal',
-            height: Titanium.UI.SIZE,
+            height: Ti.UI.SIZE,
         });
 
         var labelHour = Ti.UI.createLabel({
             color: 'white',
             text: Date2PonyHour(new Date(photo.created_at)),
-            width: Titanium.UI.SIZE,
+            width: Ti.UI.SIZE,
             left: '10dp'
         });
         row.add(labelHour);
@@ -135,7 +135,7 @@ var createTableData = function() {
         var labelDate = Ti.UI.createLabel({
             color: 'white',
             text: Date2PonyDate(new Date(photo.created_at)),
-            width: Titanium.UI.SIZE,
+            width: Ti.UI.SIZE,
             left: '10dp'
         });
         row.add(labelDate);
@@ -143,7 +143,7 @@ var createTableData = function() {
         var labelCity = Ti.UI.createLabel({
             color: 'white',
             text: photo.custom_fields[Ti.Locale.currentLanguage === 'ru' ? 'name_ru' : 'name_en'],
-            width: Titanium.UI.SIZE,
+            width: Ti.UI.SIZE,
             left: '10dp'
         });
         row.add(labelCity);

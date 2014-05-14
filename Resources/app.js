@@ -13,7 +13,7 @@ Cloud.sessionId = Ti.App.Properties.getString('sessionID');
 
 //. Set up push notifications
 
-if (Titanium.Platform.osname === 'android') {
+if (Ti.Platform.osname === 'android') {
     Ti.include('push_android.js');
 } else {
     Ti.include('push_ios.js');
@@ -40,35 +40,35 @@ Ti.include('users.js');    // functions for logging in, logging out, and creatin
 /* Set up UI */
 
 // this sets the background color of the master UIView (when there are no windows/tab groups on it)
-Titanium.UI.setBackgroundColor('#ffffff');
+Ti.UI.setBackgroundColor('#ffffff');
 
 //
 // Create the Windows
 //
-var photosWindow = Titanium.UI.createWindow({
+var photosWindow = Ti.UI.createWindow({
     backgroundColor: '#000',
     navBarHidden: true,
 });
 
-var globeWindow = Titanium.UI.createWindow({
-    backgroundColor: '#000',
-    layout: 'vertical',
-    navBarHidden: true,
-});
-
-var mapWindow = Titanium.UI.createWindow({
+var globeWindow = Ti.UI.createWindow({
     backgroundColor: '#000',
     layout: 'vertical',
     navBarHidden: true,
 });
 
-var cameraWindow = Titanium.UI.createWindow({
+var mapWindow = Ti.UI.createWindow({
     backgroundColor: '#000',
     layout: 'vertical',
     navBarHidden: true,
 });
 
-var settingsWindow = Titanium.UI.createWindow({
+var cameraWindow = Ti.UI.createWindow({
+    backgroundColor: '#000',
+    layout: 'vertical',
+    navBarHidden: true,
+});
+
+var settingsWindow = Ti.UI.createWindow({
     left: 0,
     right: 0,
     height: 'auto',
@@ -78,16 +78,16 @@ var settingsWindow = Titanium.UI.createWindow({
     navBarHidden: true,
 });
 
-if (Titanium.Platform.osname === 'iphone') {
-    photosWindow.setStatusBarStyle(Titanium.UI.iPhone.StatusBar.LIGHT_CONTENT);
+if (Ti.Platform.osname === 'iphone') {
+    photosWindow.setStatusBarStyle(Ti.UI.iPhone.StatusBar.LIGHT_CONTENT);
     photosWindow.setExtendEdges([Ti.UI.EXTEND_EDGE_TOP, Ti.UI.EXTEND_EDGE_BOTTOM]);
-    globeWindow.setStatusBarStyle(Titanium.UI.iPhone.StatusBar.LIGHT_CONTENT);
+    globeWindow.setStatusBarStyle(Ti.UI.iPhone.StatusBar.LIGHT_CONTENT);
     globeWindow.setExtendEdges([Ti.UI.EXTEND_EDGE_TOP, Ti.UI.EXTEND_EDGE_BOTTOM]);
-    mapWindow.setStatusBarStyle(Titanium.UI.iPhone.StatusBar.LIGHT_CONTENT);
+    mapWindow.setStatusBarStyle(Ti.UI.iPhone.StatusBar.LIGHT_CONTENT);
     mapWindow.setExtendEdges([Ti.UI.EXTEND_EDGE_TOP, Ti.UI.EXTEND_EDGE_BOTTOM]);
-    cameraWindow.setStatusBarStyle(Titanium.UI.iPhone.StatusBar.LIGHT_CONTENT);
+    cameraWindow.setStatusBarStyle(Ti.UI.iPhone.StatusBar.LIGHT_CONTENT);
     cameraWindow.setExtendEdges([Ti.UI.EXTEND_EDGE_TOP, Ti.UI.EXTEND_EDGE_BOTTOM]);
-    settingsWindow.setStatusBarStyle(Titanium.UI.iPhone.StatusBar.LIGHT_CONTENT);
+    settingsWindow.setStatusBarStyle(Ti.UI.iPhone.StatusBar.LIGHT_CONTENT);
     settingsWindow.setExtendEdges([Ti.UI.EXTEND_EDGE_TOP, Ti.UI.EXTEND_EDGE_BOTTOM]);
 }
 
@@ -106,7 +106,7 @@ Ti.include('settings.js');
 // Create tabs that will house the windows
 //
 
-var tabGroup = Titanium.UI.createTabGroup({
+var tabGroup = Ti.UI.createTabGroup({
     tabsBackgroundImage: 'ui/backgrounds/semi-transparant-pixel-60.png',
     // I want to not have the default tab icons be coloured grey. Both of these have no effect:
     // cf http://developer.appcelerator.com/question/163061/tab-group-grey-icons-in-io7
@@ -115,7 +115,7 @@ var tabGroup = Titanium.UI.createTabGroup({
     tintColor: 'white'
 });
 
-var photosTab = Titanium.UI.createTab({
+var photosTab = Ti.UI.createTab({
     icon: 'ui/icons/wall.png',
     activeIcon: 'ui/icons/wall_hi.png',
     window: photosWindow,
@@ -123,20 +123,20 @@ var photosTab = Titanium.UI.createTab({
 
 photosTab.addEventListener("focus", updatePhotos);
 
-var globeTab = Titanium.UI.createTab({
+var globeTab = Ti.UI.createTab({
     icon: 'ui/icons/earth.png',
     activeIcon: 'ui/icons/earth_hi.png',
     window: globeWindow,
 });
 
-var mapTab = Titanium.UI.createTab({
+var mapTab = Ti.UI.createTab({
     icon: 'ui/icons/map.png',
     activeIcon: 'ui/icons/map_hi.png',
     window: mapWindow,
 });
 
 // for now we add it as a tab, but it will probably be a seperate button on the top of the screen
-var cameraTab = Titanium.UI.createTab({
+var cameraTab = Ti.UI.createTab({
     icon: 'ui/icons/camera.png',
     activeIcon: 'ui/icons/camera_hi.png',
     window: cameraWindow,
@@ -146,7 +146,7 @@ var cameraTab = Titanium.UI.createTab({
 // https://developer.appcelerator.com/question/21191/android-window-events-not-working-with-tabgroup-titanium-12
 cameraTab.addEventListener("focus", showCam);
 
-var settingsTab = Titanium.UI.createTab({
+var settingsTab = Ti.UI.createTab({
     icon: 'ui/icons/settings.png',
     activeIcon: 'ui/icons/settings_hi.png',
     window: settingsWindow

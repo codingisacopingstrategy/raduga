@@ -16,7 +16,7 @@ var cityName = function() {
     /**
      * Get cityName in the right locale
      */
-    var cityNameField = Titanium.Locale.currentLanguage === 'ru' ? 'city_name_ru' : 'city_name_en';
+    var cityNameField = Ti.Locale.currentLanguage === 'ru' ? 'city_name_ru' : 'city_name_en';
     return Ti.App.Properties.getString(cityNameField);
 };
 
