@@ -18,6 +18,7 @@ var createUser = function(username, password, password_confirmation) {
         return false;
     }
 
+    activityIndicator.show();
     Cloud.Users.create({
         username: username,
         password: password,
@@ -35,6 +36,7 @@ var createUser = function(username, password, password_confirmation) {
             alert('Error:\n' +
                 ((e.error && e.message) || JSON.stringify(e)));
         }
+        activityIndicator.hide();
     });
 };
 
@@ -44,6 +46,8 @@ var loginUser = function(password) {
         alert('Please enter password');
         return false;
     }
+
+    activityIndicator.show();
     var username = Ti.App.Properties.getString('username');
     Cloud.Users.login({
         login: username,
@@ -60,10 +64,12 @@ var loginUser = function(password) {
             alert('Error for ' + username + ' and ' + password + ':\n' +
                 ((e.error && e.message) || JSON.stringify(e)));
         }
+        activityIndicator.hide();
     });
 };
 
 var logoutUser = function() {
+    activityIndicator.show();
     Cloud.Users.logout(function (e) {
         if (e.success) {
             Ti.App.Properties.setString('sessionID', Cloud.sessionId); // set to null
@@ -71,10 +77,18 @@ var logoutUser = function() {
             settingsWindow.fireEvent('user_status_change');
         } else {
             alertError((e.error && e.message) || JSON.stringify(e));
-    }
-});
+        }
+    activityIndicator.hide();
+    });
 };
 /* View code */
+var activityIndicator = Ti.UI.createActivityIndicator({
+    top: 0,
+    left: 0,
+    height: '10dp',
+    width: '10dp'
+});
+
 var usernameLabel = Ti.UI.createLabel({
     color: 'white',
     textid: 'username',

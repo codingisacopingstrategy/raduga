@@ -81,7 +81,7 @@ var settingsScrollView = Ti.UI.createScrollView({
    showHorizontalScrollIndicator:true
 });
 
-settingsWindow.add(topPadding);
+settingsScrollView.add(activityIndicator);
 settingsWindow.add(settingsScrollView);
 
 settingsScrollView.add(userDialog);
