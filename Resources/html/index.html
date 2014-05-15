@@ -5,6 +5,7 @@
 
     <title>Weather example</title>
 
+    <script src="js/cities_lookup_table.js"></script>
     <link rel="stylesheet" href="http://leaflet.cloudmade.com/dist/leaflet.css" />
     <!--[if lte IE 8]><link rel="stylesheet" href="http://leaflet.cloudmade.com/dist/leaflet.ie.css" /><![endif]-->
     <script src="http://leaflet.cloudmade.com/dist/leaflet.js"></script>
@@ -40,7 +41,6 @@
         });
 
         var map = new L.Map('map');
-        map.setView(new L.LatLng(0, 0), 4);
         map.addLayer(osmLayer);
 
         var owmCloudsLayer = L.tileLayer('http://{s}.tile.openweathermap.org/map/clouds_cls/{z}/{x}/{y}.png', {
@@ -56,8 +56,11 @@
         });
 
         map.addLayer(owmRainLayer);
-//        map.addLayer(owmCloudsLayer);
 
+        var initMap = function(cityName) {
+            var city = cityLookUpHash[cityName];
+            map.setView(new L.LatLng(city.lat, city.lon), 8);
+        };
 
     </script>
   </body>
