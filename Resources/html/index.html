@@ -6,9 +6,9 @@
     <title>Weather example</title>
 
     <script src="js/cities_lookup_table.js"></script>
-    <link rel="stylesheet" href="http://leaflet.cloudmade.com/dist/leaflet.css" />
-    <!--[if lte IE 8]><link rel="stylesheet" href="http://leaflet.cloudmade.com/dist/leaflet.ie.css" /><![endif]-->
-    <script src="http://leaflet.cloudmade.com/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="js/lib/leaflet.css" />
+    <script src="js/lib/leaflet.js"></script>
+    <script src="js/lib/jquery-1.11.1.min.js"></script>
     <meta name="viewport" content="width=320">
     <style>
         body {
@@ -55,11 +55,23 @@
             detectRetina: true,
         });
 
-        map.addLayer(owmRainLayer);
+        // map.addLayer(owmRainLayer);
+
+        var rainbowStyle = {
+            "color": "#ff7800",
+            "opacity": 0.65,
+            "weight": 0,
+        };
 
         var initMap = function(cityName) {
             var city = cityLookUpHash[cityName];
             map.setView(new L.LatLng(city.lat, city.lon), 8);
+
+            $.getJSON("http://vps40616.public.cloudvps.com/latest/rainbows.json", function( data ){
+                L.geoJson(data.features, {
+                    style: rainbowStyle
+                }).addTo(map);
+            });
         };
 
     </script>

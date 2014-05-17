@@ -89,8 +89,8 @@ svg {
     <div id="content"><img id="globe" src="elektro_l_20140311_0530_rgb_edt.jpg" /></div>
 </div>
 
-<script src="js/d3.v3.min.js"></script>
-<script src="js/topojson.v1.min.js"></script>
+<script src="js/lib/d3.v3.min.js"></script>
+<script src="js/lib/topojson.v1.min.js"></script>
 <script>
 
 var width = 1080,
@@ -124,24 +124,24 @@ var svg = d3.select("#content").append("svg")
     .attr("style", "z-index:111;");
 
 d3.json("json/world-50m.json", function(error, world) {  // use world-110m.json for quicker, less detail
-  
+
     /**
     We filter the list of countries, because we want to draw only Russia
     */
     var countries = [];
-  
+
     for (var i = 0; i < world.objects.countries.geometries.length; i++) {
         if (world.objects.countries.geometries[i].id !== 643) {
             delete world.objects.countries.geometries[i];
         }
     }
-  
+
     svg.selectAll("path", ".country-borders")
         .data(topojson.feature(world, world.objects.countries).features)
         .enter()
         .append("path")
         .attr("d", path)
-        .attr("class", "boundary")
+        .attr("class", "boundary");
 
   svg.append("path")
     .datum(graticule)
