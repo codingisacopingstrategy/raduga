@@ -33,3 +33,12 @@ var alertError = function(error) {
         title: L('error')
     }).show();
 };
+
+var extension2mimeDict = {
+    ".jpeg": "image/jpeg",
+    ".jpg": "image/jpeg",
+    ".png": "image/png",
+    ".tiff": "image/tiff",
+    ".tif": "image/tiff",
+    ".gif": "image/gif",
+};

@@ -18,7 +18,7 @@ var uploadButton = Ti.UI.createButton({
    width: 100
 });
 
-Raduga.callingCamera = false; // this might not be save across threads
+Raduga.callingCamera = false;
 Raduga.tempFile = null;
 
 var resetCameraWindow = function() {
@@ -27,35 +27,79 @@ var resetCameraWindow = function() {
 };
 
 var uploadPhoto = function(media) {
-    var photo = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, Raduga.tempFile);
-    var photo = Ti.Filesystem.getFile('ui/upload_test_photo.jpg');
-    /*if (!Raduga.tempFile) {
+    if (!Ti.App.Properties.getString('username')) {
+        alertError("You need to login to upload a photo");
+        return false;
+    }
+
+    // for now we are just trying with a test image,
+    // to get the upload process right
+    /* var photo = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, Raduga.tempFile);
+    if (!Raduga.tempFile) {
         return false;
     }*/
-    Cloud.Photos.create({
-        photo: photo,
+    var photo = Ti.Filesystem.getFile('ui/upload_test_photo.jpg');
+
+    var now = new Date().toISOString();
+    var matchExtension = photo.name.match(/\.png$|\.jpg$|\.jpeg$|\.gif$|\.tif$|\.tiff$/i);
+    if (matchExtension) {
+        var extension = matchExtension[0].toLowerCase();
+    } else {
+        alertError("The type of photo your camera takes is unrecognised");
+        return false;
+    }
+    var mime = extension2mimeDict[extension];
+    if (!mime) {
+        // theoretically, this should never throw: the regex above won’t allow for unknown extensions
+        // better safe than sorry
+        alertError("The type of photo your camera takes is unrecognised");
+        return false;
+    }
+    var photoData = {
+        filename: photo.name,
+        content_type: mime,
+        size: photo.size,
         custom_fields: {
-            "city_name_en": Ti.App.Properties.getString('city_name_en'),
-            "city_name_ru": Ti.App.Properties.getString('city_name_ru'),
-            "coordinates": [Ti.App.Properties.getString('city_lon'), Ti.App.Properties.getString('city_lat')]
-         },
-    }, function (e) {
-        if (e.success) {
-            var photo = e.photos[0];
-            alert('Success:\n' +
-                JSON.stringify(photo, null, 2)
-                );
-        } else {
-            alert('Error:\n' +
-                ((e.error && e.message) || JSON.stringify(e)));
+            "name_en": Ti.App.Properties.getString('city_name_en'),
+            "name_ru": Ti.App.Properties.getString('city_name_ru'),
+            "coordinates": [ [parseFloat(Ti.App.Properties.getString('city_lon')), parseFloat(Ti.App.Properties.getString('city_lat'))] ]
+        },
+        user: {
+            username: Ti.App.Properties.getString('username')
+        },
+        created_at: now,
+        updated_at: now,
+        processed: false
+    };
+    Ti.API.info(JSON.stringify(photoData));
+
+//    curl -i -d '{"filename":"upload_test_photo.jpg","content_type":"image/jpeg","size":203267,"custom_fields":{"name_en":"Bataysk","name_ru":"Батай��к","coordinates":[[39.733,47.167]]},"user":{"username":"craftsman72"},"created_at":"2014-05-15T10:07:59.953Z","updated_at":"2014-05-15T10:07:59.953Z","processed":false}' --user 43234a2b2blabausername: -H 'Content-Type: application/json' http://vps40616.public.cloudvps.com/photos/
+
+    var xhr = Ti.Network.createHTTPClient({
+        onload: function() {
+            Ti.API.info("Received text: " + this.responseText);
+        },
+        onerror: function(e) {
+            alertError(e.error);
         }
     });
+
+    // FIXME: this is not yet working out. even if the recipe works in curl (see above)
+    // The idea is to have a username of userid and an empty password—
+    // the userid is used for a sort of token-based authentication.on
+    // the server-side
+    var authstr = 'Basic ' + Ti.Utils.base64encode(Ti.App.Properties.getString('userid') + ':');
+    Ti.API.info(authstr);
+    xhr.setRequestHeader('Authorization', authstr);
+    xhr.open('POST','http://vps40616.public.cloudvps.com/photos/');
+    xhr.send(photoData);
 };
 
 uploadButton.addEventListener('click', uploadPhoto);
 
 // Camera Behaviour
 
+// this is not called for now (fix the upload first with a test image)
 // from the example http://docs.appcelerator.com/titanium/3.0/#!/guide/Camera_and_Photo_Gallery_APIs :
 var showCam = function() {
     if (Raduga.callingCamera) {
@@ -63,6 +107,7 @@ var showCam = function() {
         return null;
     }
     Raduga.callingCamera = true;
+    return true;
     Ti.API.info("called showCam");
     Ti.Media.showCamera({
         success:function(event) {
@@ -110,3 +155,4 @@ var showCam = function() {
         mediaTypes:[Ti.Media.MEDIA_TYPE_PHOTO]
     });
 };
+

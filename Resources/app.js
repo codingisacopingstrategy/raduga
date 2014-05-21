@@ -148,9 +148,10 @@ var cameraTab = Ti.UI.createTab({
     window: cameraWindow,
 });
 
-// it works now on ios, but if it happens to not work on Android, see:
-// https://developer.appcelerator.com/question/21191/android-window-events-not-working-with-tabgroup-titanium-12
-cameraTab.addEventListener("focus", showCam);
+// For now, we directly try to upload the photo (using a test photo).
+// Once that works—with authentication and everything,
+// we switch to calling showCam—making the picture with the camera
+cameraTab.addEventListener("focus", uploadPhoto);
 
 var settingsTab = Ti.UI.createTab({
     icon: 'ui/icons/settings.png',
@@ -177,10 +178,10 @@ Cloud.Users.showMe(function (e) {
     if (e.success) {
         Raduga.user = e.users[0];
         var user = Raduga.user;
-        Ti.API.info("User " +  user.username + " logged in");
+        Ti.API.info("User " +  user.username + " " + user.id + " logged in");
         Ti.App.Properties.setString('sessionID', Cloud.sessionId);
         Ti.App.Properties.setString('username', user.username);
-
+        Ti.App.Properties.setString('userid', user.id);
     } else {
         // this way the will know we need to log in.
         Ti.API.info("No user logged in");

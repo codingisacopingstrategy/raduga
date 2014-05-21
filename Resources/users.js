@@ -29,12 +29,12 @@ var createUser = function(username, password, password_confirmation) {
             var user = Raduga.user;
             Ti.App.Properties.setString('sessionID', Cloud.sessionId);
             Ti.App.Properties.setString('username', user.username);
+            Ti.App.Properties.setString('userid', user.id);
             settingsWindow.fireEvent('user_status_change');
             alert('Welcome,' + '\n' +
                 'username: ' + user.username );
         } else {
-            alert('Error:\n' +
-                ((e.error && e.message) || JSON.stringify(e)));
+            alertError((e.error && e.message) || JSON.stringify(e));
         }
         activityIndicator.hide();
     });
@@ -58,6 +58,7 @@ var loginUser = function(password) {
             var user = Raduga.user;
             Ti.App.Properties.setString('sessionID', Cloud.sessionId);
             Ti.App.Properties.setString('username', user.username);
+            Ti.App.Properties.setString('userid', user.id);
             Ti.API.info("User " +  user.username + " logged in");
             settingsWindow.fireEvent('user_status_change');
         } else {
