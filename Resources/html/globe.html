@@ -86,7 +86,7 @@ svg {
 </style>
 <body>
 <div id="box">
-    <div id="content"><img id="globe" src="elektro_l_20140311_0530_rgb_edt.jpg" /></div>
+    <div id="content"><img id="globe" src="elektro_l_20140311_0530_rgb.png" /></div>
 </div>
 
 <script src="js/lib/d3.v3.min.js"></script>
@@ -136,12 +136,12 @@ d3.json("json/world-50m.json", function(error, world) {  // use world-110m.json 
         }
     }
 
-    svg.selectAll("path", ".country-borders")
+    /*svg.selectAll("path", ".country-borders")
         .data(topojson.feature(world, world.objects.countries).features)
         .enter()
         .append("path")
         .attr("d", path)
-        .attr("class", "boundary");
+        .attr("class", "boundary");*/
 
   svg.append("path")
     .datum(graticule)
@@ -156,8 +156,8 @@ d3.json("json/world-50m.json", function(error, world) {  // use world-110m.json 
       .attr("class", "day")
       .attr("d", path);
 
-
-  redraw();
+  // have to figure out how the draw the pony straight line first:
+  // redraw();
   /*setInterval(redraw, 1000);*/
 
     function redraw() {

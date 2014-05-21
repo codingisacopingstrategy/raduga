@@ -51,7 +51,13 @@ var photosWindow = Ti.UI.createWindow({
 });
 
 var globeWindow = Ti.UI.createWindow({
-    backgroundColor: '#000',
+    backgroundColor: 'transparent',
+    backgroundGradient: {
+        type: 'linear',
+        startPoint: { x: '50%', y: '0%' },
+        endPoint: { x: '50%', y: '100%' },
+        colors: [ { color: 'rgb(36,35,89)', offset: 0.0}, { color: 'rgb(104,174,135)', offset: 0.68 }, { color: 'rgb(67,29,88)', offset: 1.0 } ],
+    },
     layout: 'vertical',
     navBarHidden: true,
 });
@@ -107,12 +113,12 @@ Ti.include('settings.js');
 //
 
 var tabGroup = Ti.UI.createTabGroup({
-    tabsBackgroundImage: 'ui/backgrounds/semi-transparant-pixel-60.png',
+    tabsBackgroundImage: 'ui/backgrounds/semi-transparant-pixel-40.png',
     // I want to not have the default tab icons be coloured grey. Both of these have no effect:
     // cf http://developer.appcelerator.com/question/163061/tab-group-grey-icons-in-io7
     // tabsBackgroundColor: 'white',
     // tabsBackgroundDisabledColor: 'white',
-    tintColor: 'white'
+    tintColor: '#929292'
 });
 
 var photosTab = Ti.UI.createTab({
