@@ -91,7 +91,7 @@ var activityIndicator = Ti.UI.createActivityIndicator({
 });
 
 var usernameLabel = Ti.UI.createLabel({
-    color: 'white',
+    color: 'black',
     textid: 'username',
     top: 10, left: 10,
     width: 250
@@ -104,7 +104,7 @@ var usernameTextField = Ti.UI.createTextField({
 });
 
 var passwordLabel = Ti.UI.createLabel({
-    color: 'white',
+    color: 'black',
     textid: 'password',
     top: 10, left: 10,
     width: 250
@@ -118,7 +118,7 @@ var passwordTextField = Ti.UI.createTextField({
 });
 
 var passwordCheckLabel = Ti.UI.createLabel({
-    color: 'white',
+    color: 'black',
     textid: 'password_again',
     top: 10, left: 10,
     width: 250

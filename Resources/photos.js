@@ -77,8 +77,7 @@ var createTableData = function() {
 
         var row = Ti.UI.createTableViewRow({
             className: 'rainbowPhoto', // used to improve table performance
-            backgroundColor: 'black',
-            // selectedBackgroundColor: 'white',
+            backgroundColor: 'transparent',
             rowIndex: i, // custom property, useful for determining the row during events
         });
 
@@ -94,8 +93,7 @@ var createTableData = function() {
 
         var row = Ti.UI.createTableViewRow({
             className: 'rainbowUsername', // used to improve table performance
-            backgroundColor: 'black',
-            // selectedBackgroundColor: 'black',
+            backgroundColor: 'transparent',
             rowIndex: i, // custom property, useful for determining the row during events
             height: '0dp',
             layout:'horizontal',
@@ -103,7 +101,7 @@ var createTableData = function() {
         });
 
         var labelUserName = Ti.UI.createLabel({
-            color: 'white',
+            color: 'black',
             text: photo.user.username,
             width: Ti.UI.SIZE,
             right: '10dp',
@@ -116,8 +114,7 @@ var createTableData = function() {
 
         var row = Ti.UI.createTableViewRow({
             className: 'rainbowMeta', // used to improve table performance
-            backgroundColor: 'black',
-            // selectedBackgroundColor: 'black',
+            backgroundColor: 'transparent',
             rowIndex: i, // custom property, useful for determining the row during events
             height: '20dp',
             layout:'horizontal',
@@ -125,7 +122,7 @@ var createTableData = function() {
         });
 
         var labelHour = Ti.UI.createLabel({
-            color: 'white',
+            color: 'black',
             text: Date2PonyHour(new Date(photo.created_at)),
             width: Ti.UI.SIZE,
             left: '10dp'
@@ -133,7 +130,7 @@ var createTableData = function() {
         row.add(labelHour);
 
         var labelDate = Ti.UI.createLabel({
-            color: 'white',
+            color: 'black',
             text: Date2PonyDate(new Date(photo.created_at)),
             width: Ti.UI.SIZE,
             left: '10dp'
@@ -141,7 +138,7 @@ var createTableData = function() {
         row.add(labelDate);
 
         var labelCity = Ti.UI.createLabel({
-            color: 'white',
+            color: 'black',
             text: photo.custom_fields[Ti.Locale.currentLanguage === 'ru' ? 'name_ru' : 'name_en'],
             width: Ti.UI.SIZE,
             left: '10dp'
@@ -160,7 +157,7 @@ var createTableData = function() {
 var tableView = Ti.UI.createTableView({
     minRowHeight: '20dp',
     separatorColor: 'transparent',
-    backgroundColor: 'black',
+    backgroundColor: 'transparent',
     data: createTableData()
 });
 

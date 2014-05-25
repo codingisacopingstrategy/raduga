@@ -9,7 +9,7 @@ var cameraScrollView = Ti.UI.createScrollView({
 
 
 var cameraLabel = Ti.UI.createLabel({
-    color: 'white',
+    color: 'black',
     top: '10dp', left: '10dp', right: '10dp'
 });
 var uploadButton = Ti.UI.createButton({

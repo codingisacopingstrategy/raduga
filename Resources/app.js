@@ -46,7 +46,7 @@ Ti.UI.setBackgroundColor('#ffffff');
 // Create the Windows
 //
 var photosWindow = Ti.UI.createWindow({
-    backgroundColor: '#000',
+    backgroundColor: 'white',
     navBarHidden: true,
 });
 
@@ -63,13 +63,13 @@ var globeWindow = Ti.UI.createWindow({
 });
 
 var mapWindow = Ti.UI.createWindow({
-    backgroundColor: '#000',
+    backgroundColor: 'white',
     layout: 'vertical',
     navBarHidden: true,
 });
 
 var cameraWindow = Ti.UI.createWindow({
-    backgroundColor: '#000',
+    backgroundColor: 'white',
     layout: 'vertical',
     navBarHidden: true,
 });
@@ -79,7 +79,7 @@ var settingsWindow = Ti.UI.createWindow({
     right: 0,
     height: 'auto',
     top: 0,
-    backgroundColor: '#000',
+    backgroundColor: 'white',
     layout: 'vertical',
     navBarHidden: true,
 });

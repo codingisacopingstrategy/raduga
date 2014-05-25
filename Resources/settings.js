@@ -46,7 +46,7 @@ var userDialog = Ti.UI.createView({
 updateUserDialog(userDialog);
 
 var notificationsLabel = Ti.UI.createLabel({
-    color: 'white',
+    color: 'black',
     textid: 'notifications',
     top: 10, left: 10,
     width: 250
@@ -58,7 +58,7 @@ var notificationsSwitch = Ti.UI.createSwitch({
 });
 
 var cityLabel = Ti.UI.createLabel({
-    color: 'white',
+    color: 'black',
     textid: 'city',
     top: 10, left: 10,
     width: 250
