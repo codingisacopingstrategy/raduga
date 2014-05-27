@@ -84,15 +84,13 @@ var uploadPhoto = function(media) {
         }
     });
 
-    // FIXME: this is not yet working out. even if the recipe works in curl (see above)
-    // The idea is to have a username of userid and an empty password—
-    // the userid is used for a sort of token-based authentication.on
-    // the server-side
+    // Here we upload the metadata FIXME: we should also upload the file itself
     var authstr = 'Basic ' + Ti.Utils.base64encode(Ti.App.Properties.getString('userid') + ':');
     Ti.API.info(authstr);
-    xhr.setRequestHeader('Authorization', authstr);
     xhr.open('POST','http://vps40616.public.cloudvps.com/photos/');
-    xhr.send(photoData);
+    xhr.setRequestHeader("Content-Type","application/json; charset=utf-8");
+    xhr.setRequestHeader('Authorization', authstr);
+    xhr.send(JSON.stringify(photoData));
 };
 
 uploadButton.addEventListener('click', uploadPhoto);
