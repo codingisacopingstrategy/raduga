@@ -24,11 +24,11 @@ var initPush = function() {
     setupPush(function() {
         Cloud.PushNotifications.subscribe({
             channel: 'raduga_predictions',
-            type: 'gcm',
+            type: Ti.Platform.osname === 'android' ? 'android' : 'ios',
             device_token: deviceToken
         }, function (e) {
             if (e.success) {
-                Ti.API.info('Successfully subscribed to the Raduga push messages channel');
+                Ti.API.info('Successfully subscribed to the Raduga push messages channel with device token ' + deviceToken);
             } else {
                 alertError('Failed Push Notification subscription: ' + (e.error && e.message) || JSON.stringify(e));
             }

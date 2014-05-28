@@ -16,7 +16,11 @@ var setupPush = function (success) {
             alertError('Failed to register for iOS push notifications! ' + e.error);
         },
         callback: function(e) {
-            alert('Received push: ' + JSON.stringify(e));
+            var dialog = Ti.UI.createAlertDialog({
+                message: e.data.alert + JSON.stringify(e),
+                ok: 'OK',
+                title: L('rainbow')
+            }).show();
         }
     });
 
