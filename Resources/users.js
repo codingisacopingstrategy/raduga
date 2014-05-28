@@ -31,6 +31,7 @@ var createUser = function(username, password, password_confirmation) {
             Ti.App.Properties.setString('username', user.username);
             Ti.App.Properties.setString('userid', user.id);
             settingsWindow.fireEvent('user_status_change');
+            initPush();
             alert('Welcome,' + '\n' +
                 'username: ' + user.username );
         } else {
@@ -61,6 +62,7 @@ var loginUser = function(password) {
             Ti.App.Properties.setString('userid', user.id);
             Ti.API.info("User " +  user.username + " logged in");
             settingsWindow.fireEvent('user_status_change');
+            initPush();
         } else {
             alert('Error for ' + username + ' and ' + password + ':\n' +
                 ((e.error && e.message) || JSON.stringify(e)));

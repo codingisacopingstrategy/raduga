@@ -13,25 +13,28 @@ Cloud.sessionId = Ti.App.Properties.getString('sessionID');
 
 //. Set up push notifications
 
+// this exports the function `setupPush(callback)`
+
 if (Ti.Platform.osname === 'android') {
     Ti.include('push_android.js');
 } else {
     Ti.include('push_ios.js');
 }
-
-setupPush(function() {
-    Cloud.PushNotifications.subscribe({
-        channel: 'raduga_predictions',
-        type: 'gcm',
-        device_token: deviceToken
-    }, function (e) {
-        if (e.success) {
-            Ti.API.info('Successfully subscribed to the Raduga push messages channel');
-        } else {
-            alertError('Failed Push Notification subscription: ' + (e.error && e.message) || JSON.stringify(e));
-        }
+var initPush = function() {
+    setupPush(function() {
+        Cloud.PushNotifications.subscribe({
+            channel: 'raduga_predictions',
+            type: 'gcm',
+            device_token: deviceToken
+        }, function (e) {
+            if (e.success) {
+                Ti.API.info('Successfully subscribed to the Raduga push messages channel');
+            } else {
+                alertError('Failed Push Notification subscription: ' + (e.error && e.message) || JSON.stringify(e));
+            }
+        });
     });
-});
+};
 
 Ti.include('cities.js');   // the coordinates of 1100 Russian towns and cities
 Ti.include('utils.js');    // utility functions
@@ -182,6 +185,7 @@ Cloud.Users.showMe(function (e) {
         Ti.App.Properties.setString('sessionID', Cloud.sessionId);
         Ti.App.Properties.setString('username', user.username);
         Ti.App.Properties.setString('userid', user.id);
+        initPush();
     } else {
         // this way the will know we need to log in.
         Ti.API.info("No user logged in");
