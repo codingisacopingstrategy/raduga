@@ -28,7 +28,7 @@ setupPush(function() {
         if (e.success) {
             Ti.API.info('Successfully subscribed to the Raduga push messages channel');
         } else {
-            alertError((e.error && e.message) || JSON.stringify(e));
+            alertError('Failed Push Notification subscription: ' + (e.error && e.message) || JSON.stringify(e));
         }
     });
 });

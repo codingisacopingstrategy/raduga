@@ -11,7 +11,7 @@ var setupPush = function (success) {
                     success();
                 },
         error:  function deviceTokenError(e) {
-                    alertError('Failed to register for push notifications! ' + e.error);
+                    alertError('Failed to register for Android push notifications! ' + e.error);
                }
     });
 

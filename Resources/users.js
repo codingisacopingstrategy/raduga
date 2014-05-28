@@ -34,7 +34,7 @@ var createUser = function(username, password, password_confirmation) {
             alert('Welcome,' + '\n' +
                 'username: ' + user.username );
         } else {
-            alertError((e.error && e.message) || JSON.stringify(e));
+            alertError('Failed creating user: ' + (e.error && e.message) || JSON.stringify(e));
         }
         activityIndicator.hide();
     });
@@ -77,7 +77,7 @@ var logoutUser = function() {
             Ti.API.info('Successfully logged out');
             settingsWindow.fireEvent('user_status_change');
         } else {
-            alertError((e.error && e.message) || JSON.stringify(e));
+            alertError('Failed logging out user: ' + (e.error && e.message) || JSON.stringify(e));
         }
     activityIndicator.hide();
     });

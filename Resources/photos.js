@@ -17,7 +17,7 @@ var updatePhotos = function() {
 
         },
         onerror: function(error) {
-            alertError(error);
+            alertError('Failed loading photos through network: ' + error);
         }
     });
 

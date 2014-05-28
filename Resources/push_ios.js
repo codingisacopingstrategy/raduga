@@ -13,7 +13,7 @@ var setupPush = function (success) {
             success();
         },
         error: function deviceTokenError(e) {
-            alertError('Failed to register for push notifications! ' + e.error);
+            alertError('Failed to register for iOS push notifications! ' + e.error);
         },
         callback: function(e) {
             alert('Received push: ' + JSON.stringify(e));

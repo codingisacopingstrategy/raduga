@@ -112,7 +112,7 @@ citiesTable.addEventListener('click', function(e) {
             if (e.success) {
                 Ti.API.info('Succesfully updated location settings for user ' + e.users[0].username);
             } else {
-                alertError((e.error && e.message) || JSON.stringify(e));
+                alertError('Failed updating location settings: ' + (e.error && e.message) || JSON.stringify(e));
             }
         });
     }
@@ -129,7 +129,7 @@ notificationsSwitch.addEventListener('change', function() {
             if (e.success) {
                 Ti.API.info('Succesfully updated push notification settings for user ' + e.users[0].username);
             } else {
-                alertError((e.error && e.message) || JSON.stringify(e));
+                alertError('Failed updating push notification settings ' + (e.error && e.message) || JSON.stringify(e));
             }
         });
     }

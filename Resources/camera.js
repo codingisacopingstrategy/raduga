@@ -45,14 +45,14 @@ var uploadPhoto = function(media) {
     if (matchExtension) {
         var extension = matchExtension[0].toLowerCase();
     } else {
-        alertError("The type of photo your camera takes is unrecognised");
+        alertError("The type of photo your camera takes, " + photo.name + ", is unrecognised");
         return false;
     }
     var mime = extension2mimeDict[extension];
     if (!mime) {
         // theoretically, this should never throw: the regex above won’t allow for unknown extensions
         // better safe than sorry
-        alertError("The type of photo your camera takes is unrecognised");
+        alertError("The extension of photo your camera takes " + extension + " is unrecognised");
         return false;
     }
     var photoData = {
@@ -80,7 +80,7 @@ var uploadPhoto = function(media) {
             Ti.API.info("Received text: " + this.responseText);
         },
         onerror: function(e) {
-            alertError(e.error);
+            alertError('Failed uploading metadata camera: ' + e.error);
         }
     });
 
@@ -131,7 +131,7 @@ var showCam = function() {
                 cameraWindow.add(cameraScrollView);
 
             } else {
-                alertError("got the wrong type back =" + event.mediaType);
+                alertError("Camera got the wrong type back: " + event.mediaType);
             }
         },
         cancel:function() {
