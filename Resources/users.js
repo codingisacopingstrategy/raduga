@@ -42,14 +42,13 @@ var createUser = function(username, password, password_confirmation) {
 };
 
 
-var loginUser = function(password) {
+var loginUser = function(username, password) {
     if (!password) {
         alert('Please enter password');
         return false;
     }
 
     activityIndicator.show();
-    var username = Ti.App.Properties.getString('username');
     Cloud.Users.login({
         login: username,
         password: password
@@ -163,15 +162,17 @@ var handleSignup = function() {
 };
 
 var handleLogin = function() {
-    loginUser(passwordTextField.value);
+    loginUser(usernameTextField.value, passwordTextField.value);
 };
 var updateUserDialog = function(view) {
     view.removeAllChildren(); //TODO: also remove event listeners
 
     if (signedUp()) {
         usernameTextField.value = Ti.App.Properties.getString('username');
-        usernameTextField.setEnabled(false); // Android only
-        usernameTextField.setEditable(false);
+        if (loggedIn()) {
+            usernameTextField.setEnabled(false); // Android only
+            usernameTextField.setEditable(false);
+        }
     } else {
         usernameTextField.value = '';
         usernameTextField.setEnabled(true); // Android only
