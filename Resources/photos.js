@@ -34,7 +34,7 @@ var features2Photos = function() {
 
         // Skip photo’s without sufficient metadata
         if (typeof photo.custom_fields === 'undefined' || typeof photo.custom_fields.name_en === 'undefined' || typeof photo.custom_fields.name_ru === 'undefined' || typeof photo.custom_fields.coordinates === 'undefined') {
-            Ti.API.info('Photo ' + photo.id + ' does not have sufficient metadata to locate on map');
+            Ti.API.info('Photo ' + photo._id + ' does not have sufficient metadata to locate on map');
             continue;
         }
 

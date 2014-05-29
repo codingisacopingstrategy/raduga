@@ -27,10 +27,13 @@ var resetCameraWindow = function() {
 };
 
 var uploadPhoto = function(media) {
+
     if (!Ti.App.Properties.getString('username')) {
         alertError("You need to login to upload a photo");
         return false;
     }
+
+    var authstr = 'Basic ' + Ti.Utils.base64encode(Ti.App.Properties.getString('userid') + ':');
 
     // for now we are just trying with a test image,
     // to get the upload process right
@@ -71,13 +74,43 @@ var uploadPhoto = function(media) {
         updated_at: now,
         processed: false
     };
-    Ti.API.info(JSON.stringify(photoData));
-
-//    curl -i -d '{"filename":"upload_test_photo.jpg","content_type":"image/jpeg","size":203267,"custom_fields":{"name_en":"Bataysk","name_ru":"Батай��к","coordinates":[[39.733,47.167]]},"user":{"username":"craftsman72"},"created_at":"2014-05-15T10:07:59.953Z","updated_at":"2014-05-15T10:07:59.953Z","processed":false}' --user 43234a2b2blabausername: -H 'Content-Type: application/json' http://vps40616.public.cloudvps.com/photos/
 
     var xhr = Ti.Network.createHTTPClient({
         onload: function() {
-            Ti.API.info("Received text: " + this.responseText);
+            response = JSON.parse(this.responseText);
+            Ti.API.info(JSON.stringify(response));
+
+            if (response._status === "ERR") {
+                alertError('Failed uploading photo metadata, API trouble: ' + this.responseText);
+                return false;
+            }
+            Ti.API.info("Succesfully uploaded photo metadata, with _id " + response._id + " to the server");
+
+            // now upload the image itself:
+            var secondXhr = Titanium.Network.createHTTPClient({
+                onload: function(e) {
+                    // {"_updated":"Thu, 29 May 2014 15:57:29 GMT","_status":"OK","_id":"538758e922497d0249bb9662","_links":{"self":{"href":"127.0.0.1:5000/photos/538758e922497d0249bb9662","title":"Photo"}},"_etag":"bfb6ba7eb0ff446e682b6be0f9cc6b28d7e09ae1"}
+                    response = JSON.parse(this.responseText);
+                    if (response._status === "ERR") {
+                        alertError('Failed uploading photo file, API trouble: ' + this.responseText);
+                        return false;
+                    }
+                    Ti.API.info(JSON.stringify(response));
+                },
+                onerror: function(e) {
+                    Ti.API.info(this.responseText);
+                    alertError('Failed uploading photo file: ' + e.error + '\n\n' + this.responseText);
+                }
+            });
+Ti.API.info(response._links.self.href);
+            secondXhr.open('PATCH', 'http://' + response._links.self.href);
+            secondXhr.setRequestHeader('If-Match', response._etag);
+            secondXhr.setRequestHeader('Authorization', authstr);
+            secondXhr.send({
+                id: response._id,
+                image: photo.read.blob,
+            });
+
         },
         onerror: function(e) {
             alertError('Failed uploading metadata camera: ' + e.error);
@@ -85,8 +118,7 @@ var uploadPhoto = function(media) {
     });
 
     // Here we upload the metadata FIXME: we should also upload the file itself
-    var authstr = 'Basic ' + Ti.Utils.base64encode(Ti.App.Properties.getString('userid') + ':');
-    Ti.API.info(authstr);
+//    xhr.open('POST','http://127.0.0.1:5000/photos/');
     xhr.open('POST','http://vps40616.public.cloudvps.com/photos/');
     xhr.setRequestHeader("Content-Type","application/json; charset=utf-8");
     xhr.setRequestHeader('Authorization', authstr);
