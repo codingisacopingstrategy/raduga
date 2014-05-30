@@ -276,7 +276,7 @@ var cityLookUpHash = {
         "href_en": "http://en.wikipedia.org/wiki/Armavir,_Russia",
         "name_en": "Armavir",
         "name_ru": "Армавир",
-        "lat": 45,
+        "lat": 45.0,
         "lon": 41.117
     },
     "Arsenyev": {
@@ -325,7 +325,7 @@ var cityLookUpHash = {
         "href_en": "http://en.wikipedia.org/wiki/Asbest",
         "name_en": "Asbest",
         "name_ru": "Асбест",
-        "lat": 57,
+        "lat": 57.0,
         "lon": 61.467
     },
     "Asha": {
@@ -339,7 +339,7 @@ var cityLookUpHash = {
         "href_en": "http://en.wikipedia.org/wiki/Asino",
         "name_en": "Asino",
         "name_ru": "Асино",
-        "lat": 57,
+        "lat": 57.0,
         "lon": 86.15
     },
     "Astrakhan": {
@@ -354,7 +354,7 @@ var cityLookUpHash = {
         "name_en": "Atkarsk",
         "name_ru": "Аткарск",
         "lat": 51.867,
-        "lon": 45
+        "lon": 45.0
     },
     "Aznakayevo": {
         "href_en": "http://en.wikipedia.org/wiki/Aznakayevo",
@@ -774,7 +774,7 @@ var cityLookUpHash = {
         "name_en": "Bolkhov",
         "name_ru": "Болхов",
         "lat": 53.433,
-        "lon": 36
+        "lon": 36.0
     },
     "Bologoye": {
         "href_en": "http://en.wikipedia.org/wiki/Bologoye",
@@ -1032,7 +1032,7 @@ var cityLookUpHash = {
         "href_en": "http://en.wikipedia.org/wiki/Chernogolovka",
         "name_en": "Chernogolovka",
         "name_ru": "Черноголовка",
-        "lat": 56,
+        "lat": 56.0,
         "lon": 38.367
     },
     "Chernogorsk": {
@@ -1732,8 +1732,8 @@ var cityLookUpHash = {
         "href_en": "http://en.wikipedia.org/wiki/Ipatovo,_Stavropol_Krai",
         "name_en": "Ipatovo",
         "name_ru": "Ипатово",
-        "lat": 45,
-        "lon": 42
+        "lat": 45.0,
+        "lon": 42.0
     },
     "Irbit": {
         "href_en": "http://en.wikipedia.org/wiki/Irbit",
@@ -1852,7 +1852,7 @@ var cityLookUpHash = {
         "name_en": "Kalach",
         "name_ru": "Калач",
         "lat": 50.433,
-        "lon": 41
+        "lon": 41.0
     },
     "Kalach-na-Donu": {
         "href_en": "http://en.wikipedia.org/wiki/Kalach-na-Donu",
@@ -1950,7 +1950,7 @@ var cityLookUpHash = {
         "name_en": "Kameshkovo",
         "name_ru": "Камешково",
         "lat": 56.35,
-        "lon": 41
+        "lon": 41.0
     },
     "Kamyshin": {
         "href_en": "http://en.wikipedia.org/wiki/Kamyshin",
@@ -2159,8 +2159,8 @@ var cityLookUpHash = {
         "href_en": "http://en.wikipedia.org/wiki/Khanty-Mansiysk",
         "name_en": "Khanty-Mansiysk",
         "name_ru": "Ханты-Мансийск",
-        "lat": 61,
-        "lon": 69
+        "lat": 61.0,
+        "lon": 69.0
     },
     "Kharabali": {
         "href_en": "http://en.wikipedia.org/wiki/Kharabali",
@@ -2307,7 +2307,7 @@ var cityLookUpHash = {
         "name_en": "Kirovo-Chepetsk",
         "name_ru": "Кирово-Чепецк",
         "lat": 58.55,
-        "lon": 50
+        "lon": 50.0
     },
     "Kirovsk": {
         "href_en": "http://en.wikipedia.org/wiki/Kirovsk,_Murmansk_Oblast",
@@ -2341,7 +2341,7 @@ var cityLookUpHash = {
         "href_en": "http://en.wikipedia.org/wiki/Kiselyovsk",
         "name_en": "Kiselyovsk",
         "name_ru": "Киселёвск",
-        "lat": 54,
+        "lat": 54.0,
         "lon": 86.65
     },
     "Kislovodsk": {
@@ -2482,7 +2482,7 @@ var cityLookUpHash = {
         "name_en": "Komsomolsk-na-Amure",
         "name_ru": "Комсомольск-на-Амуре",
         "lat": 50.567,
-        "lon": 137
+        "lon": 137.0
     },
     "Konakovo": {
         "href_en": "http://en.wikipedia.org/wiki/Konakovo",
@@ -2803,7 +2803,7 @@ var cityLookUpHash = {
         "href_en": "http://en.wikipedia.org/wiki/Kronstadt",
         "name_en": "Kronstadt",
         "name_ru": "Кронштадт",
-        "lat": 60,
+        "lat": 60.0,
         "lon": 29.767
     },
     "Kropotkin": {
@@ -3499,7 +3499,7 @@ var cityLookUpHash = {
         "href_en": "http://en.wikipedia.org/wiki/Miass",
         "name_en": "Miass",
         "name_ru": "Миасс",
-        "lat": 55,
+        "lat": 55.0,
         "lon": 60.1
     },
     "Michurinsk": {
@@ -3772,7 +3772,7 @@ var cityLookUpHash = {
         "href_en": "http://en.wikipedia.org/wiki/Nazarovo,_Krasnoyarsk_Krai",
         "name_en": "Nazarovo",
         "name_ru": "Назарово",
-        "lat": 56,
+        "lat": 56.0,
         "lon": 90.383
     },
     "Nazran": {
@@ -3934,7 +3934,7 @@ var cityLookUpHash = {
         "name_en": "Nizhneudinsk",
         "name_ru": "Нижнеудинск",
         "lat": 54.933,
-        "lon": 99
+        "lon": 99.0
     },
     "Nizhnevartovsk": {
         "href_en": "http://en.wikipedia.org/wiki/Nizhnevartovsk",
@@ -3962,7 +3962,7 @@ var cityLookUpHash = {
         "name_en": "Nizhny Novgorod",
         "name_ru": "Нижний Новгород",
         "lat": 56.333,
-        "lon": 44
+        "lon": 44.0
     },
     "Nizhny Tagil": {
         "href_en": "http://en.wikipedia.org/wiki/Nizhny_Tagil",
@@ -4269,7 +4269,7 @@ var cityLookUpHash = {
         "href_en": "http://en.wikipedia.org/wiki/Obluchye",
         "name_en": "Obluchye",
         "name_ru": "Облучье",
-        "lat": 49,
+        "lat": 49.0,
         "lon": 131.08306
     },
     "Obninsk": {
@@ -4577,7 +4577,7 @@ var cityLookUpHash = {
         "href_en": "http://en.wikipedia.org/wiki/Perm",
         "name_en": "Perm",
         "name_ru": "Пермь",
-        "lat": 58,
+        "lat": 58.0,
         "lon": 56.317
     },
     "Pervomaysk": {
@@ -4934,7 +4934,7 @@ var cityLookUpHash = {
         "href_en": "http://en.wikipedia.org/wiki/Pushkino,_Moscow_Oblast",
         "name_en": "Pushkino",
         "name_ru": "Пушкино",
-        "lat": 56,
+        "lat": 56.0,
         "lon": 37.833
     },
     "Pustoshka": {
@@ -5495,7 +5495,7 @@ var cityLookUpHash = {
         "name_en": "Shchyolkovo",
         "name_ru": "Щёлково",
         "lat": 55.917,
-        "lon": 38
+        "lon": 38.0
     },
     "Shebekino": {
         "href_en": "http://en.wikipedia.org/wiki/Shebekino",
@@ -5536,7 +5536,7 @@ var cityLookUpHash = {
         "href_en": "http://en.wikipedia.org/wiki/Shimanovsk",
         "name_en": "Shimanovsk",
         "name_ru": "Шимановск",
-        "lat": 52,
+        "lat": 52.0,
         "lon": 127.7
     },
     "Shlisselburg": {
@@ -5606,7 +5606,7 @@ var cityLookUpHash = {
         "href_en": "http://en.wikipedia.org/wiki/Slavgorod",
         "name_en": "Slavgorod",
         "name_ru": "Славгород",
-        "lat": 53,
+        "lat": 53.0,
         "lon": 78.65
     },
     "Slavsk": {
@@ -5662,7 +5662,7 @@ var cityLookUpHash = {
         "href_en": "http://en.wikipedia.org/wiki/Sobinka",
         "name_en": "Sobinka",
         "name_ru": "Собинка",
-        "lat": 56,
+        "lat": 56.0,
         "lon": 40.033
     },
     "Sochi": {
@@ -5705,7 +5705,7 @@ var cityLookUpHash = {
         "name_en": "Sol-Iletsk",
         "name_ru": "Соль-Илецк",
         "lat": 51.167,
-        "lon": 55
+        "lon": 55.0
     },
     "Solnechnogorsk": {
         "href_en": "http://en.wikipedia.org/wiki/Solnechnogorsk",
@@ -6383,7 +6383,7 @@ var cityLookUpHash = {
         "href_en": "http://en.wikipedia.org/wiki/Turan,_Tuva_Republic",
         "name_en": "Turan",
         "name_ru": "Туран",
-        "lat": 52,
+        "lat": 52.0,
         "lon": 94.133
     },
     "Turinsk": {
@@ -6545,13 +6545,13 @@ var cityLookUpHash = {
         "name_en": "Urzhum",
         "name_ru": "Уржум",
         "lat": 57.117,
-        "lon": 50
+        "lon": 50.0
     },
     "Usinsk": {
         "href_en": "http://en.wikipedia.org/wiki/Usinsk",
         "name_en": "Usinsk",
         "name_ru": "Усинск",
-        "lat": 66,
+        "lat": 66.0,
         "lon": 57.533
     },
     "Usman": {
@@ -6593,7 +6593,7 @@ var cityLookUpHash = {
         "href_en": "http://en.wikipedia.org/wiki/Ust-Ilimsk",
         "name_en": "Ust-Ilimsk",
         "name_ru": "Усть-Илимск",
-        "lat": 58,
+        "lat": 58.0,
         "lon": 102.667
     },
     "Ust-Katav": {
@@ -6965,7 +6965,7 @@ var cityLookUpHash = {
         "name_en": "Votkinsk",
         "name_ru": "Воткинск",
         "lat": 57.05,
-        "lon": 54
+        "lon": 54.0
     },
     "Vsevolozhsk": {
         "href_en": "http://en.wikipedia.org/wiki/Vsevolozhsk",
@@ -7048,7 +7048,7 @@ var cityLookUpHash = {
         "href_en": "http://en.wikipedia.org/wiki/Vytegra",
         "name_en": "Vytegra",
         "name_ru": "Вытегра",
-        "lat": 61,
+        "lat": 61.0,
         "lon": 36.45
     },
     "Yadrin": {
