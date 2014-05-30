@@ -89,13 +89,19 @@ var uploadPhoto = function(media) {
             // now upload the image itself:
             var secondXhr = Titanium.Network.createHTTPClient({
                 onload: function(e) {
+                    // example response:
                     // {"_updated":"Thu, 29 May 2014 15:57:29 GMT","_status":"OK","_id":"538758e922497d0249bb9662","_links":{"self":{"href":"127.0.0.1:5000/photos/538758e922497d0249bb9662","title":"Photo"}},"_etag":"bfb6ba7eb0ff446e682b6be0f9cc6b28d7e09ae1"}
+
                     response = JSON.parse(this.responseText);
                     if (response._status === "ERR") {
                         alertError('Failed uploading photo file, API trouble: ' + this.responseText);
                         return false;
                     }
-                    Ti.API.info(JSON.stringify(response));
+                    Ti.API.info("Succesfully uploaded photo: " + JSON.stringify(response));
+
+                    // We are done here!
+                    // switch to the tab that shows the photos
+                    tabGroup.setActiveTab(photosTab);
                 },
                 onerror: function(e) {
                     Ti.API.info(this.responseText);
@@ -117,7 +123,7 @@ Ti.API.info(response._links.self.href);
         }
     });
 
-    // Here we upload the metadata FIXME: we should also upload the file itself
+    // Here we upload the metadata
 //    xhr.open('POST','http://127.0.0.1:5000/photos/');
     xhr.open('POST','http://vps40616.public.cloudvps.com/photos/');
     xhr.setRequestHeader("Content-Type","application/json; charset=utf-8");
