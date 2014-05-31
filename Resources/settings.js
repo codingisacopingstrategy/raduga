@@ -110,7 +110,10 @@ citiesTable.addEventListener('click', function(e) {
             }
         }, function (e) {
             if (e.success) {
-                Ti.API.info('Succesfully updated location settings for user ' + e.users[0].username);
+                Ti.API.info('Succesfully updated location settings for user ' + e.users[0].username + " at " +
+                Ti.App.Properties.getString('city_name_en') + '/' + Ti.App.Properties.getString('city_name_ru') +
+                ' (' + parseFloat(Ti.App.Properties.getString('city_lon')) + ', ' +
+                parseFloat(Ti.App.Properties.getString('city_lat')) + ')' );
             } else {
                 alertError('Failed updating location settings: ' + (e.error && e.message) || JSON.stringify(e));
             }

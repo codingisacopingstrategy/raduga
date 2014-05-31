@@ -154,7 +154,7 @@ var cameraTab = Ti.UI.createTab({
 // For now, we directly try to upload the photo (using a test photo).
 // Once that works—with authentication and everything,
 // we switch to calling showCam—making the picture with the camera
-cameraTab.addEventListener("focus", uploadPhoto);
+cameraTab.addEventListener("focus", showCam);
 
 var settingsTab = Ti.UI.createTab({
     icon: 'ui/icons/settings.png',
@@ -181,7 +181,12 @@ Cloud.Users.showMe(function (e) {
     if (e.success) {
         Raduga.user = e.users[0];
         var user = Raduga.user;
-        Ti.API.info("User " +  user.username + " " + user.id + " logged in");
+
+        Ti.API.info("User " +  user.username + " " + user.id + " logged in at " +
+        Ti.App.Properties.getString('city_name_en') + '/' + Ti.App.Properties.getString('city_name_ru') +
+        ' (' + parseFloat(Ti.App.Properties.getString('city_lon')) + ', ' +
+        parseFloat(Ti.App.Properties.getString('city_lat')) + ')' );
+
         Ti.App.Properties.setString('sessionID', Cloud.sessionId);
         Ti.App.Properties.setString('username', user.username);
         Ti.App.Properties.setString('userid', user.id);

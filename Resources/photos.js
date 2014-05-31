@@ -2,6 +2,7 @@
 
 var updatePhotos = function() {
     var url = "http://vps40616.public.cloudvps.com/photos/";
+    // var url = "http://127.0.0.1:5000/photos/";
     var json;
 
     var xhr = Ti.Network.createHTTPClient({
@@ -17,7 +18,7 @@ var updatePhotos = function() {
 
         },
         onerror: function(error) {
-            alertError('Failed loading photos through network: ' + error);
+            alertError('Failed loading photos through network: ' + JSON.stringify(error));
         }
     });
 
@@ -65,9 +66,11 @@ var createTableData = function() {
         var photo = Raduga.photos[i];
 
         // Skip photo’s without sufficient metadata
-        if (typeof photo.urls === 'undefined' || typeof photo.custom_fields === 'undefined' || typeof photo.custom_fields.name_en === 'undefined' || typeof photo.custom_fields.name_ru === 'undefined') {
-            Ti.API.info('Photo ' + photo.id + ' does not have sufficient metadata to display in photo tab');
+        if (typeof photo.user === 'undefined' || typeof photo.urls === 'undefined' || typeof photo.custom_fields === 'undefined' || typeof photo.custom_fields.name_en === 'undefined' || typeof photo.custom_fields.name_ru === 'undefined') {
+            Ti.API.info('Photo ' + photo._id + ' does not have sufficient metadata to display in photo tab');
             continue;
+        } else {
+            Ti.API.info('Showing photo ' + photo._id);
         }
 
         // Titanium’s cloud service uses the "2014-02-13T14:27:39+0000" format

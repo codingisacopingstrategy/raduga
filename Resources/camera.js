@@ -28,40 +28,26 @@ var resetCameraWindow = function() {
 
 var uploadPhoto = function(media) {
 
-    if (!Ti.App.Properties.getString('username')) {
+    if (!Ti.App.Properties.getString('sessionID')) {
         alertError("You need to login to upload a photo");
         return false;
     }
 
-    var authstr = 'Basic ' + Ti.Utils.base64encode(Ti.App.Properties.getString('userid') + ':');
-
-    // for now we are just trying with a test image,
-    // to get the upload process right
-    /* var photo = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, Raduga.tempFile);
-    if (!Raduga.tempFile) {
-        return false;
-    }*/
-    var photo = Ti.Filesystem.getFile('ui/upload_test_photo.jpg');
-
     var now = new Date().toISOString();
-    var matchExtension = photo.name.match(/\.png$|\.jpg$|\.jpeg$|\.gif$|\.tif$|\.tiff$/i);
-    if (matchExtension) {
-        var extension = matchExtension[0].toLowerCase();
-    } else {
-        alertError("The type of photo your camera takes, " + photo.name + ", is unrecognised");
-        return false;
-    }
-    var mime = extension2mimeDict[extension];
-    if (!mime) {
+    var mime = media.mimeType;
+    var extension = mime2extensionDict[mime];
+    if (!extension) {
         // theoretically, this should never throw: the regex above won’t allow for unknown extensions
         // better safe than sorry
         alertError("The extension of photo your camera takes " + extension + " is unrecognised");
         return false;
     }
+    var filename = now + '_raduga_by_' + Ti.App.Properties.getString('username') + extension;
+
     var photoData = {
-        filename: photo.name,
+        filename: filename,
         content_type: mime,
-        size: photo.size,
+        size: media.size,
         custom_fields: {
             "name_en": Ti.App.Properties.getString('city_name_en'),
             "name_ru": Ti.App.Properties.getString('city_name_ru'),
@@ -74,6 +60,8 @@ var uploadPhoto = function(media) {
         updated_at: now,
         processed: false
     };
+
+    var authstr = 'Basic ' + Ti.Utils.base64encode(Ti.App.Properties.getString('userid') + ':');
 
     var xhr = Ti.Network.createHTTPClient({
         onload: function() {
@@ -108,13 +96,12 @@ var uploadPhoto = function(media) {
                     alertError('Failed uploading photo file: ' + e.error + '\n\n' + this.responseText);
                 }
             });
-Ti.API.info(response._links.self.href);
             secondXhr.open('PATCH', 'http://' + response._links.self.href);
             secondXhr.setRequestHeader('If-Match', response._etag);
             secondXhr.setRequestHeader('Authorization', authstr);
             secondXhr.send({
                 id: response._id,
-                image: photo.read.blob,
+                image: media,
             });
 
         },
@@ -135,47 +122,31 @@ uploadButton.addEventListener('click', uploadPhoto);
 
 // Camera Behaviour
 
-// this is not called for now (fix the upload first with a test image)
 // from the example http://docs.appcelerator.com/titanium/3.0/#!/guide/Camera_and_Photo_Gallery_APIs :
 var showCam = function() {
-    if (Raduga.callingCamera) {
-        Ti.API.info("called showCam, but not listening");
-        return null;
-    }
-    Raduga.callingCamera = true;
-    return true;
-    Ti.API.info("called showCam");
+    var close = function() {
+        if (Ti.Platform.osname === 'android') {
+            cameraTab.close();
+        } else {
+            cameraTab.close(cameraWindow);
+        }
+    };
+
     Ti.Media.showCamera({
         success:function(event) {
-            Ti.API.info('application folder', Ti.Filesystem.getApplicationDataDirectory());
-            // called when media returned from the camera
-            Ti.API.info('Our type was: '+event.mediaType);
             if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {
-                imageFileName = new Date().toISOString() + '.jpg';
-                /* var f = Ti.Filesystem.getFile(Ti.Filesystem.getApplicationDataDirectory(), imageFileName);
-                f.write(event.media); */
-                Raduga.tempFile = imageFileName;
-                var imageView = Ti.UI.createImageView({
-                    width: cameraWindow.width,
-                    height: cameraWindow.height,
-                    image: event.media
-                });
-
-                cameraScrollView.add(imageView);
-                cameraLabel.setText('Uploading photo as user ' + Ti.App.Properties.getString('username') +
-                    'from city: ' + cityName() );
-                cameraScrollView.add(cameraLabel);
-                cameraScrollView.add(uploadButton);
-                cameraWindow.add(cameraScrollView);
-
+               uploadPhoto(event.media);
             } else {
                 alertError("Camera got the wrong type back: " + event.mediaType);
             }
+            close();
         },
         cancel:function() {
-                alert("called when user cancels taking a picture"); //TODO: close window, go to home tab
+                // called when user cancels taking a picture
+                close();
         },
         error:function(error) {
+            close();
             // called when there's an error
             var a = Ti.UI.createAlertDialog({title:L('camera')});
             if (error.code == Ti.Media.NO_CAMERA) {

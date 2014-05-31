@@ -34,11 +34,8 @@ var alertError = function(error) {
     }).show();
 };
 
-var extension2mimeDict = {
-    ".jpeg": "image/jpeg",
-    ".jpg": "image/jpeg",
-    ".png": "image/png",
-    ".tiff": "image/tiff",
-    ".tif": "image/tiff",
-    ".gif": "image/gif",
+var mime2extensionDict = {
+    "image/jpeg": '.jpg',
+    "image/png": ".png",
+    "image/tiff": ".tiff",
 };
