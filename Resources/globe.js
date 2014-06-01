@@ -14,7 +14,7 @@ var globe = Ti.UI.createWebView({
 
 var predictionLabel = Ti.UI.createLabel({
     color: 'white',
-    textid: 'prediction_mock',
+    text: '',
     textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
     top: 10, left: 10, right: 10,
 });
@@ -32,3 +32,39 @@ globeWindow.setBackgroundGradient({
     endPoint: { x: '50%', y: '100%' },
     colors: gradientStops[gradientSlug],
 });
+
+var rainbowCities;
+
+// Check if we are in an area with heightened rainbow chance and update the display accordingly
+
+var updateRainbowCities = function() {
+    var url = "http://vps40616.public.cloudvps.com/latest/rainbow_cities.json";
+
+    var xhr = Ti.Network.createHTTPClient({
+        onload: function() {
+            var json = JSON.parse(this.responseText);
+            rainbowCities = json;
+            Ti.API.info('found on the internet ' + rainbowCities.length + ' cities with heightened chance of rainbows');
+
+            for (var i = 0; i < rainbowCities.length; i++) {
+                if (rainbowCities[i].name_en === Ti.App.Properties.getString('city_name_en')) {
+                // we are in rainbow area!
+                    if (new Date().getHours() < 12) {
+                        predictionLabel.setText(L('rainbow_predicted_morning'));
+                    } else {
+                        predictionLabel.setText(L('rainbow_predicted_afternoon'));
+                    }
+                    break;
+                }
+            }
+
+        },
+        onerror: function(error) {
+            alertError('Failed loading rainbow cities through network: ' + JSON.stringify(error));
+        }
+    });
+    xhr.open("GET", url);
+    xhr.send();
+};
+
+updateRainbowCities();

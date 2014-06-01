@@ -28,5 +28,9 @@
 	<string name="signup_before_upload">Before uploading, you need to sign up</string>
 	<string name="ready_for_upload">Ready to upload your photo of a rainbow at %1$s</string>
 	<string name="upload">Upload</string>
-	<string name="prediction_mock"> Today it is cloudy. The nearest area with a high change of rainbows is 500 km from you, near Blagodarny.</string>
+	<string name="prediction">Rainbows predicted near %1$s, %2$s and %3$s.</string>
+	<string name="rainbow_spotted">User %1$s spotted a rainbow near %2$s</string>
+	<string name="rainbow_predicted_afternoon">This afternoon, you have a high chance of encountering rainbows!</string>
+	<string name="rainbow_predicted_morning">This morning, you have a high chance of encountering rainbows!</string>
+	<string name="prediction_updated">Prediction updated</string>
 </resources>
