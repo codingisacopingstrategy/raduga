@@ -13,8 +13,8 @@ var globe = Ti.UI.createWebView({
     backgroundImage: 'html/elektro_l_20140311_0530_rgb.png',
     url: 'html/globe.html',
     backgroundColor: 'transparent',
-    width: Ti.Platform.displayCaps.platformWidth + u,
-    height: Ti.Platform.displayCaps.platformWidth + u,
+    width: Ti.Platform.displayCaps.platformWidth * .8 + u,
+    height: Ti.Platform.displayCaps.platformWidth * .8 + u,
     touchEnabled: false,
     disableBounce: true
 });
