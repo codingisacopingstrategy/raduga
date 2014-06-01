@@ -39,6 +39,7 @@ var initPush = function() {
 Ti.include('cities.js');   // the coordinates of 1100 Russian towns and cities
 Ti.include('utils.js');    // utility functions
 Ti.include('users.js');    // functions for logging in, logging out, and creating new users
+Ti.include('gradients.js');    // `exposes gradient_stops`
 
 /* Set up UI */
 

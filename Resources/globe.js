@@ -21,3 +21,14 @@ var predictionLabel = Ti.UI.createLabel({
 
 globeWindow.add(globe);
 globeWindow.add(predictionLabel);
+
+var d = new Date(); d.setSeconds(0); d.setMilliseconds(0);
+if (d.getMinutes() > 30) { d.setMinutes(30); } else { d.setMinutes(0); }
+var gradientSlug = zeroPad(d.getHours()) + ':' + zeroPad(d.getMinutes()); // "11:30"
+
+globeWindow.setBackgroundGradient({
+    type: 'linear',
+    startPoint: { x: '50%', y: '0%' },
+    endPoint: { x: '50%', y: '100%' },
+    colors: gradientStops[gradientSlug],
+});
