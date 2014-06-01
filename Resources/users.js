@@ -94,41 +94,41 @@ var activityIndicator = Ti.UI.createActivityIndicator({
 var usernameLabel = Ti.UI.createLabel({
     color: 'black',
     textid: 'username',
-    top: 10, left: 10,
-    width: 250
+    top: '10dp', left: '10dp',
+    width: '250dp'
 });
 
 var usernameTextField = Ti.UI.createTextField({
     borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
-    top: 10, left: 10,
-    width: 250
+    top: '10dp', left: '10dp',
+    width: '250dp'
 });
 
 var passwordLabel = Ti.UI.createLabel({
     color: 'black',
     textid: 'password',
-    top: 10, left: 10,
-    width: 250
+    top: '10dp', left: '10dp',
+    width: '250dp'
 });
 
 var passwordTextField = Ti.UI.createTextField({
     borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
-    top: 10, left: 10,
-    width: 250,
+    top: '10dp', left: '10dp',
+    width: '250dp',
     passwordMask: true
 });
 
 var passwordCheckLabel = Ti.UI.createLabel({
     color: 'black',
     textid: 'password_again',
-    top: 10, left: 10,
-    width: 250
+    top: '10dp', left: '10dp',
+    width: '250dp'
 });
 
 var passwordCheckTextField = Ti.UI.createTextField({
     borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
-    top: 10, left: 10,
-    width: 250,
+    top: '10dp', left: '10dp',
+    width: '250dp',
     passwordMask: true
 });
 

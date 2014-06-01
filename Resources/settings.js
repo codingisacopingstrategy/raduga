@@ -48,27 +48,27 @@ updateUserDialog(userDialog);
 var notificationsLabel = Ti.UI.createLabel({
     color: 'black',
     textid: 'notifications',
-    top: 10, left: 10,
-    width: 250
+    top: '10dp', left: '10dp',
+    width: '250dp'
 });
 
 var notificationsSwitch = Ti.UI.createSwitch({
     value: Ti.App.Properties.getString('notifications') !== 'false',
-    top: 10, left: 10,
+    top: '10dp', left: '10dp',
 });
 
 var cityLabel = Ti.UI.createLabel({
     color: 'black',
     textid: 'city',
-    top: 10, left: 10,
-    width: 250
+    top: '10dp', left: '10dp',
+    width: '250dp'
 });
 
 var cityTextField = Ti.UI.createTextField({
     value: Ti.App.Properties.getString(Ti.Locale.currentLanguage === 'ru' ? 'city_name_ru' : 'city_name_en'),
     borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
-    top: 10, left: 10,
-    width: 250
+    top: '10dp', left: '10dp',
+    width: '250dp'
 });
 
 

@@ -16,7 +16,7 @@ var predictionLabel = Ti.UI.createLabel({
     color: 'white',
     text: '',
     textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
-    top: 10, left: 10, right: 10,
+    top: '10dp', left: '10dp', right: '10dp',
 });
 
 globeWindow.add(globe);
