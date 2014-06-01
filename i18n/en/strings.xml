@@ -33,4 +33,5 @@
 	<string name="rainbow_predicted_afternoon">This afternoon, you have a high chance of encountering rainbows!</string>
 	<string name="rainbow_predicted_morning">This morning, you have a high chance of encountering rainbows!</string>
 	<string name="prediction_updated">Prediction updated</string>
+	<string name="rainbow_spotted_alt">Spotted: %1$s, %2$d km away</string>
 </resources>

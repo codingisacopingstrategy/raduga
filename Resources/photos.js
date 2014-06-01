@@ -12,10 +12,16 @@ var updatePhotos = function() {
             var photos = json._items;
             Ti.API.info('found on the internet ' + photos.length + ' photos');
             Raduga.photos = photos;
+            // fill the photo-tab
             tableView.setData(createTableData());
             // plot the photos in the webview
             // globe.evalJS('svg.append("path").datum(' + JSON.stringify(features2Photos())  + ').attr("d", path.pointRadius(14)).attr("class", "place");');
-
+            // display most recent rainbow in globe tab
+            var photo = Raduga.photos[0];
+            var spottedMessage = String.format(L('rainbow_spotted_alt'),
+                photo.custom_fields[Ti.Locale.currentLanguage === 'ru' ? 'name_ru' : 'name_en'],
+                distanceToHome(photo.custom_fields.coordinates[0][1], photo.custom_fields.coordinates[0][0]));
+            recentRainbowLabel.setText(spottedMessage);
         },
         onerror: function(error) {
             alertError('Failed loading photos through network: ' + JSON.stringify(error));

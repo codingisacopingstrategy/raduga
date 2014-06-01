@@ -33,4 +33,5 @@
 	<string name="rainbow_predicted_afternoon">Сегодня днем у вас есть большой шанс увидеть радугу!</string>
 	<string name="rainbow_predicted_morning">Сегодня утром у вас есть большой шанс увидеть радугу!</string>
 	<string name="prediction_updated">Прогноз обновляется</string>
+	<string name="rainbow_spotted_alt">Spotted: %1$s, %2$d km от вас</string>
 </resources>

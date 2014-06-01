@@ -1,8 +1,15 @@
 // Behaviour of globeWindow, The globe with the rainbows
 var u = Ti.Android != undefined ? 'dp' : 0;
 
+var recentRainbowLabel = Ti.UI.createLabel({
+    color: 'white',
+    text: '',
+    textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
+    top: '20dp', left: '10dp', right: '10dp',
+});
+
 var globe = Ti.UI.createWebView({
-    top: '20dp',
+    top: '10dp',
     backgroundImage: 'html/elektro_l_20140311_0530_rgb.png',
     url: 'html/globe.html',
     backgroundColor: 'transparent',
@@ -19,6 +26,7 @@ var predictionLabel = Ti.UI.createLabel({
     top: '10dp', left: '10dp', right: '10dp',
 });
 
+globeWindow.add(recentRainbowLabel);
 globeWindow.add(globe);
 globeWindow.add(predictionLabel);
 
