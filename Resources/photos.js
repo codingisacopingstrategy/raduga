@@ -98,65 +98,25 @@ var createTableData = function() {
         });
         row.add(rainbowImage);
 
-        tableData.push(row);
-
-        var row = Ti.UI.createTableViewRow({
-            className: 'rainbowUsername', // used to improve table performance
-            backgroundColor: 'transparent',
-            rowIndex: i, // custom property, useful for determining the row during events
-            height: '0dp',
-            layout:'horizontal',
-            height: Ti.UI.SIZE,
-        });
-
-        var labelUserName = Ti.UI.createLabel({
-            color: 'black',
-            text: photo.user.username,
-            width: Ti.UI.SIZE,
-            right: '10dp',
-            textAlign: Ti.UI.TEXT_ALIGNMENT_RIGHT,
-            width: '310dp'
-        });
-        row.add(labelUserName);
-
-        tableData.push(row);
-
-        var row = Ti.UI.createTableViewRow({
-            className: 'rainbowMeta', // used to improve table performance
-            backgroundColor: 'transparent',
-            rowIndex: i, // custom property, useful for determining the row during events
-            height: '20dp',
-            layout:'horizontal',
-            height: Ti.UI.SIZE,
-        });
-
-        var labelHour = Ti.UI.createLabel({
-            color: 'black',
-            text: Date2PonyHour(new Date(photo.created_at)),
-            width: Ti.UI.SIZE,
-            left: '10dp'
-        });
-        row.add(labelHour);
-
-        var labelDate = Ti.UI.createLabel({
-            color: 'black',
-            text: Date2PonyDate(new Date(photo.created_at)),
-            width: Ti.UI.SIZE,
-            left: '10dp'
-        });
-        row.add(labelDate);
-
         var labelCity = Ti.UI.createLabel({
-            color: 'black',
+            color: 'white',
             text: photo.custom_fields[Ti.Locale.currentLanguage === 'ru' ? 'name_ru' : 'name_en'],
             width: Ti.UI.SIZE,
+            top: '2dp',
             left: '10dp'
         });
         row.add(labelCity);
 
+        var labelUserAndDate = Ti.UI.createLabel({
+            color: 'white',
+            text: photo.user.username + " " + Date2PonyDate(new Date(photo.created_at)) + " — " + Date2PonyHour(new Date(photo.created_at)),
+            width: Ti.UI.SIZE,
+            top: '26dp',
+            left: '10dp'
+        });
+        row.add(labelUserAndDate);
+
         tableData.push(row);
-
-
 
 
     }
