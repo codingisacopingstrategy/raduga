@@ -57,7 +57,6 @@ var photosWindow = Ti.UI.createWindow({
 var globeWindow = Ti.UI.createWindow({
     backgroundColor: 'transparent',
     backgroundGradient: currentGradient(),
-    layout: 'vertical',
     navBarHidden: true,
 });
 
