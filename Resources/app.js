@@ -56,12 +56,7 @@ var photosWindow = Ti.UI.createWindow({
 
 var globeWindow = Ti.UI.createWindow({
     backgroundColor: 'transparent',
-    backgroundGradient: {
-        type: 'linear',
-        startPoint: { x: '50%', y: '0%' },
-        endPoint: { x: '50%', y: '100%' },
-        colors: [ { color: 'rgb(36,35,89)', offset: 0.0}, { color: 'rgb(104,174,135)', offset: 0.68 }, { color: 'rgb(67,29,88)', offset: 1.0 } ],
-    },
+    backgroundGradient: currentGradient(),
     layout: 'vertical',
     navBarHidden: true,
 });
@@ -83,7 +78,7 @@ var settingsWindow = Ti.UI.createWindow({
     right: 0,
     height: 'auto',
     top: 0,
-    backgroundColor: 'white',
+    backgroundGradient: currentSettingsGradient(),
     layout: 'vertical',
     navBarHidden: true,
 });

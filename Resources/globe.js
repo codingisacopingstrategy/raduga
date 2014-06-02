@@ -2,7 +2,7 @@
 var u = Ti.Android != undefined ? 'dp' : 0;
 
 var recentRainbowLabel = Ti.UI.createLabel({
-    color: 'white',
+    color: currentColour(),
     text: '',
     textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
     top: '20dp', left: '10dp', right: '10dp',
@@ -20,8 +20,8 @@ var globe = Ti.UI.createWebView({
 });
 
 var predictionLabel = Ti.UI.createLabel({
-    color: 'white',
     text: '',
+    color: currentColour(),
     textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
     top: '10dp', left: '10dp', right: '10dp',
 });
@@ -29,17 +29,6 @@ var predictionLabel = Ti.UI.createLabel({
 globeWindow.add(recentRainbowLabel);
 globeWindow.add(globe);
 globeWindow.add(predictionLabel);
-
-var d = new Date(); d.setSeconds(0); d.setMilliseconds(0);
-if (d.getMinutes() > 30) { d.setMinutes(30); } else { d.setMinutes(0); }
-var gradientSlug = zeroPad(d.getHours()) + ':' + zeroPad(d.getMinutes()); // "11:30"
-
-globeWindow.setBackgroundGradient({
-    type: 'linear',
-    startPoint: { x: '50%', y: '0%' },
-    endPoint: { x: '50%', y: '100%' },
-    colors: gradientStops[gradientSlug],
-});
 
 var rainbowCities;
 
