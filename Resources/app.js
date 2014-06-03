@@ -1,7 +1,12 @@
 var Raduga = {
     photos: [],
-    user: null
+    user: null,
+    Platform: {},
 };
+
+// From the docs: Set local variables to avoid calling native methods
+// http://docs.appcelerator.com/titanium/3.0/#!/guide/Coding_Best_Practices-section-30082362_CodingBestPractices-Setlocalvariablestoavoidcallingnativemethods
+Raduga.Platform.osname = Ti.Platform.osname;
 
 var deviceToken = null;
 
@@ -15,7 +20,7 @@ Cloud.sessionId = Ti.App.Properties.getString('sessionID');
 
 // this exports the function `setupPush(callback)`
 
-if (Ti.Platform.osname === 'android') {
+if (Raduga.Platform.osname === 'android') {
     Ti.include('push_android.js');
 } else {
     Ti.include('push_ios.js');
@@ -24,7 +29,7 @@ var initPush = function() {
     setupPush(function() {
         Cloud.PushNotifications.subscribe({
             channel: 'raduga_predictions',
-            type: Ti.Platform.osname === 'android' ? 'android' : 'ios',
+            type: Raduga.Platform.osname === 'android' ? 'android' : 'ios',
             device_token: deviceToken
         }, function (e) {
             if (e.success) {
@@ -82,7 +87,7 @@ var settingsWindow = Ti.UI.createWindow({
     navBarHidden: true,
 });
 
-if (Ti.Platform.osname === 'iphone') {
+if (Raduga.Platform.osname === 'iphone') {
     photosWindow.setStatusBarStyle(Ti.UI.iPhone.StatusBar.LIGHT_CONTENT);
     photosWindow.setExtendEdges([Ti.UI.EXTEND_EDGE_TOP, Ti.UI.EXTEND_EDGE_BOTTOM]);
     globeWindow.setStatusBarStyle(Ti.UI.iPhone.StatusBar.LIGHT_CONTENT);
