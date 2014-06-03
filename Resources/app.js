@@ -146,9 +146,7 @@ var cameraTab = Ti.UI.createTab({
     window: cameraWindow,
 });
 
-// For now, we directly try to upload the photo (using a test photo).
-// Once that works—with authentication and everything,
-// we switch to calling showCam—making the picture with the camera
+// Get the camera
 cameraTab.addEventListener("focus", showCam);
 
 var settingsTab = Ti.UI.createTab({
