@@ -130,5 +130,9 @@ var tableView = Ti.UI.createTableView({
     data: createTableData()
 });
 
+if (Raduga.Platform.osname !== "android") {
+    tableView.setSeparatorStyle(Ti.UI.iPhone.TableViewSeparatorStyle.NONE);
+}
+
 photosWindow.add(tableView);
 updatePhotos();
