@@ -43,7 +43,11 @@ var sunLine = Ti.UI.createView({
     }
 });
 
-var rainbowLinePercentage = function() {
+var rainbowLinePercentage = function(n) {
+    /**
+     * At 6 in the morning, the sun is completely in the east of the globe: at 79% of the total screen width
+     * At 18 in the evening, completely in the west: at 11% of the total screen width
+     */
     var hourHash = {
         0: 3,
         1: 3.75,
@@ -70,7 +74,8 @@ var rainbowLinePercentage = function() {
         22: 1.5,
         23: 2.25
     };
-    return parseInt(hourHash[12] / 6 * 80) + 10;
+    if (typeof n === "undefined") { n = new Date().getHours(); }
+    return (parseInt(hourHash[n] / 6 * 78) + 11) + "%";
 };
 
 var updateSunLine = function() {
