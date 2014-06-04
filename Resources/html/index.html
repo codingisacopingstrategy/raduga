@@ -5,9 +5,12 @@
 
     <title>Weather example</title>
 
+    <script src="../utils.js"></script>
+    <script src="../gradients.js"></script>
     <script src="js/cities_lookup_table.js"></script>
     <link rel="stylesheet" href="js/lib/leaflet.css" />
     <script src="js/lib/leaflet.js"></script>
+    <script src="js/lib/leaflet-dvf.js"></script>
     <script src="js/lib/jquery-1.11.1.min.js"></script>
     <meta name="viewport" content="width=320">
     <style>
@@ -58,19 +61,35 @@
         // map.addLayer(owmRainLayer);
 
         var rainbowStyle = {
-            "color": "#ff7800",
+            "color": "#fd297e",
             "opacity": 0.65,
             "weight": 0,
         };
 
         var initMap = function(cityName) {
+            var cityName = cityName || 'Moscow';
             var city = cityLookUpHash[cityName];
             map.setView(new L.LatLng(city.lat, city.lon), 8);
 
             $.getJSON("http://vps40616.public.cloudvps.com/latest/rainbows.json", function( data ){
                 L.geoJson(data.features, {
-                    style: rainbowStyle
-                }).addTo(map);
+                    style: rainbowStyle,
+                    gradient: {
+                            vector: [['0%', '50%'], ['100%', '50%']],
+                            stops: [{
+                            offset: '0%',
+                            style: {
+                                color: '#fd297e',
+                                opacity: 1
+                            }
+                        }, {
+                            offset: '80%',
+                            style: {
+                                color: '#cccccc',
+                                opacity: 1
+                            }
+                        }]}
+                    }).addTo(map);
             });
             $.getJSON("http://vps40616.public.cloudvps.com/latest/clouds.json", function( data ){
                 L.geoJson(data.features, {
@@ -79,7 +98,7 @@
                             "opacity": 0.65,
                             "weight": 0
                         };
-                    }
+                    },
                 }).addTo(map);
             });
         };
