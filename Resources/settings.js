@@ -55,7 +55,8 @@ var usernameLabel = Ti.UI.createLabel({
 var usernameTextField = Ti.UI.createTextField({
     borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
     top: '10dp', left: '10dp',
-    width: '250dp'
+    width: '250dp',
+    autocapitalization: Ti.UI.TEXT_AUTOCAPITALIZATION_NONE,
 });
 
 var passwordLabel = Ti.UI.createLabel({
