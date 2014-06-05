@@ -154,6 +154,8 @@ var logoutButton = Ti.UI.createButton({
    width: 100
 });
 
+logoutButton.addEventListener('click', logoutUser);
+
 var signupButton = Ti.UI.createButton({
    titleid: 'signup',
    top: 10,
@@ -165,9 +167,14 @@ var handleSignup = function() {
     createUser(usernameTextField.value, passwordTextField.value, passwordCheckTextField.value);
 };
 
+signupButton.addEventListener('click', handleSignup);
+
 var handleLogin = function() {
     loginUser(usernameTextField.value, passwordTextField.value);
 };
+
+loginButton.addEventListener('click', handleLogin);
+
 var updateUserDialog = function(view) {
     view.removeAllChildren(); //TODO: also remove event listeners
 
@@ -195,14 +202,11 @@ var updateUserDialog = function(view) {
             view.add(passwordCheckLabel);
             view.add(passwordCheckTextField);
             view.add(signupButton);
-            signupButton.addEventListener('click', handleSignup);
         } else {
             view.add(loginButton);
-            loginButton.addEventListener('click', handleLogin);
         }
     } else {
         view.add(logoutButton);
-        logoutButton.addEventListener('click', logoutUser);
     }
 
 };
