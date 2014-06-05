@@ -35,7 +35,11 @@ var createUser = function(username, password, password_confirmation) {
             alert('Welcome,' + '\n' +
                 'username: ' + user.username );
         } else {
-            alertError('Failed creating user: ' + (e.error && e.message) || JSON.stringify(e));
+            if (e.message.toLowerCase().indexOf("already taken") !== -1) {
+                loginUser(username, password);
+            } else {
+                alertError('Failed creating user: ' + (e.error && e.message) || JSON.stringify(e));
+            }
         }
         activityIndicator.hide();
     });
