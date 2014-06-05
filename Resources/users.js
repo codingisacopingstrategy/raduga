@@ -8,13 +8,16 @@ var loggedIn = function() {
 
 var createUser = function(username, password, password_confirmation) {
     if (!username) {
-        alert('Please enter username');
+        alert(L('username_blank'));
         return false;
     } else if (!password) {
-        alert('Please enter password');
+        alert(L('password_blank'));
         return false;
     } else if (password !== password_confirmation) {
-        alert('Passwords do not match');
+        alert(L('passwords_no_match'));
+        return false;
+    } else if (!cityTextField.value) {
+        alert(L('city_blank'));
         return false;
     }
 
@@ -22,7 +25,13 @@ var createUser = function(username, password, password_confirmation) {
     Cloud.Users.create({
         username: username,
         password: password,
-        password_confirmation: password_confirmation
+        password_confirmation: password_confirmation,
+        custom_fields: {
+            language: Ti.Locale.currentLanguage === 'ru' ? 'ru' : 'en',
+            notifications: notificationsSwitch.value,
+            name_en: Ti.App.Properties.getString('city_name_en'),
+            name_ru: Ti.App.Properties.getString('city_name_ru'),
+        }
     }, function (e) {
         if (e.success) {
             Raduga.user = e.users[0];
