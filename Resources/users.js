@@ -41,8 +41,11 @@ var createUser = function(username, password, password_confirmation) {
             Ti.App.Properties.setString('userid', user.id);
             settingsWindow.fireEvent('user_status_change');
             initPush();
-            alert('Welcome,' + '\n' +
-                'username: ' + user.username );
+            var dialog = Ti.UI.createAlertDialog({
+                message: L('username') + ': ' + user.username,
+                ok: 'OK',
+                title: L('welcome')
+            }).show();
         } else {
             if (e.message.toLowerCase().indexOf("already taken") !== -1) {
                 loginUser(username, password);
