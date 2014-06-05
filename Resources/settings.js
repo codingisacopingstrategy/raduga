@@ -140,12 +140,12 @@ var cityTextField = Ti.UI.createTextField({
 
 
 var settingsScrollView = Ti.UI.createScrollView({
-   contentWidth:'auto',
-   contentHeight:'auto',
-   top:0,
+   contentWidth: Raduga.Platform.width,
+   contentHeight: 'auto',
+   top: 0,
    layout: 'vertical',
-   showVerticalScrollIndicator:true,
-   showHorizontalScrollIndicator:true
+   showVerticalScrollIndicator: true,
+   showHorizontalScrollIndicator: false
 });
 
 settingsWindow.add(settingsScrollView);

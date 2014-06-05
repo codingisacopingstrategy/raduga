@@ -8,6 +8,9 @@ var Raduga = {
 // http://docs.appcelerator.com/titanium/3.0/#!/guide/Coding_Best_Practices-section-30082362_CodingBestPractices-Setlocalvariablestoavoidcallingnativemethods
 Raduga.Platform.osname = Ti.Platform.osname;
 
+Raduga.Platform.width = Ti.Platform.displayCaps.platformWidth;
+Raduga.Platform.height = Ti.Platform.displayCaps.platformHeight;
+
 var deviceToken = null;
 
 var Cloud = require('ti.cloud');
