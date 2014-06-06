@@ -126,6 +126,10 @@ var createTableData = function() {
         });
         row.add(photoShareButton);
 
+        if(Raduga.Platform.ios) {
+            row.setSelectionStyle(Ti.UI.iPhone.TableViewCellSelectionStyle.NONE);
+        }
+
         tableData.push(row);
 
 
