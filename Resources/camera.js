@@ -124,12 +124,14 @@ uploadButton.addEventListener('click', uploadPhoto);
 
 // from the example http://docs.appcelerator.com/titanium/3.0/#!/guide/Camera_and_Photo_Gallery_APIs :
 var showCam = function() {
+    Ti.API.info("showCam called");
     var close = function() {
-        if (Ti.Platform.osname === 'android') {
+        Ti.Media.hideCamera();
+        /*if (Raduga.Platform.osname === 'android') {
             cameraTab.close();
         } else {
             cameraTab.close(cameraWindow);
-        }
+        }*/
     };
 
     Ti.Media.showCamera({
@@ -139,11 +141,11 @@ var showCam = function() {
             } else {
                 alertError("Camera got the wrong type back: " + event.mediaType);
             }
-            close();
+            //close();
         },
         cancel:function() {
                 // called when user cancels taking a picture
-                close();
+                tabGroup.setActiveTab(photosTab);
         },
         error:function(error) {
             close();
