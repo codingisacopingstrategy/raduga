@@ -29,7 +29,8 @@ var resetCameraWindow = function() {
 var uploadPhoto = function(media) {
 
     if (!Ti.App.Properties.getString('sessionID')) {
-        alertError("You need to login to upload a photo");
+        alertError(L("signin_before_upload"));
+        tabGroup.setActiveTab(settingsTab);
         return false;
     }
 
