@@ -132,13 +132,22 @@ var createTableData = function() {
 
         tableData.push(row);
 
+        var row = Ti.UI.createTableViewRow({
+            className: 'separator', // used to improve table performance
+            backgroundColor: 'transparent',
+            rowIndex: -1, // custom property, useful for determining the row during events
+            height: '2dp'
+        });
+
+        tableData.push(row);
+
 
     }
     return tableData;
 };
 
 var tableView = Ti.UI.createTableView({
-    minRowHeight: '20dp',
+    minRowHeight: '0dp',
     separatorColor: 'transparent',
     backgroundColor: 'transparent',
     data: createTableData()
