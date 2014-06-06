@@ -11,24 +11,30 @@ password,Password,Пароль
 password_again,Password (again),Пароль (еще раз)
 password_blank,Please enter password,"Пожалуйста, введите пароль"
 username_blank,Please enter username,"Пожалуйста, введите имя пользователя"
+city_blank,Please enter your city,
 passwords_no_match,Passwords do not match,Два поля с паролями не совпадают
+username_or_password_incorrect,Username or password incorrect,
 username,Username,Имя пользователя
 signup,Sign up,Зарегистрироваться
 welcome,Welcome,Добро пожаловать
 error,Error,Ошибка
-username_taken,A user with that username already exists,Пользователь с таким именем уже существует
-photo_ready_for_upload,Uploading your photo of a rainbow at %1$s as user %2$s,Ваша фотография радуги загружается в %1$s как пользователь %2$s
-photo_uploaded_success,Succesfully uploaded your photo of a rainbow at %1$s,Ваша фотография радуги успешно загрузилась на %1$s
+username_taken,Username taken,Пользователь с таким именем уже существует
+photo_ready_for_upload,Uploading your rainbow at %1$s ,Ваша фотография радуги загружается в %1$s как пользователь %2$s
+photo_uploaded_success,Succesfully uploaded your rainbow at %1$s,Ваша фотография радуги успешно загрузилась на %1$s
 account_creation_success,Succesfully created your account %1$s,Учетная запись успешно создана  %1$s
-error_verbose,Can you tell the Raduga team about this error? Details:,Можете ли вы сообщить команде Радуги об этой ошибке? Подробности:
+error_verbose,Please report this error to the Raduga team. Details:,Можете ли вы сообщить команде Радуги об этой ошибке? Подробности:
 share,Share,Поделиться
-signin_before_upload,"Before uploading, you need to sign in","Перед выгрузкой, вы должны войти в систему"
-signup_before_upload,"Before uploading, you need to sign up",Перед загрузкой вы должны зарегистрироваться
-ready_for_upload,Ready to upload your photo of a rainbow at %1$s,Радуга готова к загрузке вашей фотографии радуги в городе %1$s
+signin_before_upload,Sign in to upload your photo,"Перед выгрузкой, вы должны войти в систему"
+signup_before_upload,Sign up to upload your photo,Перед загрузкой вы должны зарегистрироваться
+ready_for_upload,Raduga is ready to upload your rainbow at %1$s ,Радуга готова к загрузке вашей фотографии радуги в городе %1$s
 upload,Upload,Загружать
 prediction,"Rainbows predicted near %1$s, %2$s and %3$s.","Радуги предсказаны вблизи %1$s, %2$s и %$s."
-rainbow_spotted,User %1$s spotted a rainbow near %2$s,Пользователь %1$s увидел радугу вблизи %2$s
-rainbow_predicted_afternoon,"This afternoon, you have a high chance of encountering rainbows!",Сегодня днем у вас есть большой шанс увидеть радугу!
-rainbow_predicted_morning,"This morning, you have a high chance of encountering rainbows!",Сегодня утром у вас есть большой шанс увидеть радугу!
+rainbow_spotted,"Last spotted: %1$s, %2$d km away",Пользователь %1$s увидел радугу вблизи %2$s
+rainbow_predicted_afternoon,Increased chance of rainbows this afternoon!,Сегодня днем у вас есть большой шанс увидеть радугу!
+rainbow_predicted_morning,Increased chance of rainbows this morning!,Сегодня утром у вас есть большой шанс увидеть радугу!
 prediction_updated,Prediction updated,Прогноз обновляется
-rainbow_spotted_alt,"Spotted: %1$s, %2$d km away","Spotted: %1$s, %2$d km от вас"
+rainbow_spotted_alt,"Last spotted: %1$s, %2$d km away","Spotted rainbow: %1$s, %2$d km от вас"
+no_internet,Can not connect to metereological services. Raduga can only be used with internet access,
+ok,OK,
+alert,Alert,
+photo_caption,%1$s spotted a rainbow near %2$s,

@@ -117,6 +117,15 @@ var createTableData = function() {
         });
         row.add(labelUserAndDate);
 
+        var photoShareButton = Ti.UI.createImageView({
+            image: 'ui/icons/share.png',
+            width: '19dp',
+            height: '26dp',
+            bottom: '10dp',
+            left: '10dp'
+        });
+        row.add(photoShareButton);
+
         tableData.push(row);
 
 
@@ -130,6 +139,24 @@ var tableView = Ti.UI.createTableView({
     backgroundColor: 'transparent',
     data: createTableData()
 });
+
+tableView.addEventListener("click", function(e){
+    Ti.API.info("click registerd on share button");
+    var photo = Raduga.photos[e.row.rowIndex];
+    var city = photo.custom_fields[Ti.Locale.currentLanguage === 'ru' ? 'name_ru' : 'name_en'];
+    var username = photo.user.username;
+
+    if(Raduga.Platform.ios && Social.isActivityViewSupported()){
+        Ti.API.info("Social activity registered");
+        Social.activityView({
+            text: String.format(L('photo_caption'), username, city),
+            image: photo.urls.original,
+        });
+    } else {
+        //implement sharing Android
+    }
+});
+
 
 if (Raduga.Platform.osname !== "android") {
     tableView.setSeparatorStyle(Ti.UI.iPhone.TableViewSeparatorStyle.NONE);

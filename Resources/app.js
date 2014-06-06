@@ -7,6 +7,8 @@ var Raduga = {
 // From the docs: Set local variables to avoid calling native methods
 // http://docs.appcelerator.com/titanium/3.0/#!/guide/Coding_Best_Practices-section-30082362_CodingBestPractices-Setlocalvariablestoavoidcallingnativemethods
 Raduga.Platform.osname = Ti.Platform.osname;
+Raduga.Platform.ios = Titanium.Platform.name == 'iPhone OS';
+
 
 Raduga.Platform.width = Ti.Platform.displayCaps.platformWidth;
 Raduga.Platform.height = Ti.Platform.displayCaps.platformHeight;
@@ -18,6 +20,15 @@ var Cloud = require('ti.cloud');
 // Normally, this would use the setSessionId function but that didn’t
 // seem to be working.
 Cloud.sessionId = Ti.App.Properties.getString('sessionID');
+
+if (Raduga.Platform.ios) {
+    var Social = require('dk.napp.social');
+    Ti.API.info("module is => " + Social);
+
+    Ti.API.info("Facebook available: " + Social.isFacebookSupported());
+    Ti.API.info("Twitter available: " + Social.isTwitterSupported());
+    Ti.API.info("SinaWeibo available: " + Social.isSinaWeiboSupported());
+}
 
 //. Set up push notifications
 

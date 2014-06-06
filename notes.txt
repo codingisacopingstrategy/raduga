@@ -1,3 +1,12 @@
+
+Upload
+Push messages
+Regenboogindicator
+Sharing
+
+
+
+
 Photo view: go to individual photo.
             sharing options
 
@@ -97,3 +106,13 @@ http://retrodreamer.com/blog/2012/03/why-dont-we-have-paid-versions-on-the-andro
 http://www.planetary.org/blogs/guest-blogs/2013/20130723-beautiful-science-by-elektro-l.html
 
 This article started explaining stuff http://techslides.com/d3-globe-with-canvas-webgl-and-three-js/
+
+
+
+Hey.
+
+- when creating a user, store user language
+- body-text; preferences-text: function
+
+
+

@@ -13,7 +13,9 @@
 	<string name="password_again">Пароль (еще раз)</string>
 	<string name="password_blank">Пожалуйста, введите пароль</string>
 	<string name="username_blank">Пожалуйста, введите имя пользователя</string>
+	<string name="city_blank"></string>
 	<string name="passwords_no_match">Два поля с паролями не совпадают</string>
+	<string name="username_or_password_incorrect"></string>
 	<string name="username">Имя пользователя</string>
 	<string name="signup">Зарегистрироваться</string>
 	<string name="welcome">Добро пожаловать</string>
@@ -33,5 +35,9 @@
 	<string name="rainbow_predicted_afternoon">Сегодня днем у вас есть большой шанс увидеть радугу!</string>
 	<string name="rainbow_predicted_morning">Сегодня утром у вас есть большой шанс увидеть радугу!</string>
 	<string name="prediction_updated">Прогноз обновляется</string>
-	<string name="rainbow_spotted_alt">Spotted: %1$s, %2$d km от вас</string>
+	<string name="rainbow_spotted_alt">Spotted rainbow: %1$s, %2$d km от вас</string>
+	<string name="no_internet"></string>
+	<string name="ok"></string>
+	<string name="alert"></string>
+	<string name="photo_caption"></string>
 </resources>
