@@ -28,12 +28,6 @@ var resetCameraWindow = function() {
 
 var uploadPhoto = function(media) {
 
-    if (!Ti.App.Properties.getString('sessionID')) {
-        alertError(L("signin_before_upload"));
-        tabGroup.setActiveTab(settingsTab);
-        return false;
-    }
-
     var now = new Date().toISOString();
     var mime = media.mimeType;
     var extension = mime2extensionDict[mime];
@@ -126,6 +120,13 @@ uploadButton.addEventListener('click', uploadPhoto);
 // from the example http://docs.appcelerator.com/titanium/3.0/#!/guide/Camera_and_Photo_Gallery_APIs :
 var showCam = function() {
     Ti.API.info("showCam called");
+
+    if (!Ti.App.Properties.getString('sessionID')) {
+        alertError(L("signin_before_upload"));
+        tabGroup.setActiveTab(settingsTab);
+        return false;
+    }
+
     var close = function() {
         Ti.Media.hideCamera();
         /*if (Raduga.Platform.osname === 'android') {
