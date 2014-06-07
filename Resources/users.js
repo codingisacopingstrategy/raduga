@@ -46,6 +46,7 @@ var createUser = function(username, password, password_confirmation) {
                 ok: 'OK',
                 title: L('welcome')
             }).show();
+            tabGroup.setActiveTab(globeTab);
         } else {
             if (e.message.toLowerCase().indexOf("already taken") !== -1) {
                 loginUser(username, password);
@@ -78,6 +79,7 @@ var loginUser = function(username, password) {
             Ti.API.info("User " +  user.username + " logged in");
             settingsWindow.fireEvent('user_status_change');
             initPush();
+            tabGroup.setActiveTab(globeTab);
         } else {
             alert('Error for ' + username + ' and ' + password + ':\n' +
                 ((e.error && e.message) || JSON.stringify(e)));
