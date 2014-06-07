@@ -24,6 +24,9 @@
             top: 0;
             bottom: 0;
         }
+        .leaflet-bottom {
+            bottom: 50px;
+        }
     </style>
 </head>
 
@@ -32,19 +35,17 @@
 
     <script>
         osmLayer = new L.tileLayer("http://{s}.tile.stamen.com/toner-lite/{z}/{x}/{y}.png", {
-        	attribution: [
-                'Map tiles by <a href="http://stamen.com">Stamen Design</a>, ',
-                'under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. ',
-                'Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, ',
-                'under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.'
-            ].join(""),
+            attribution: 'Tiles by <a href="http://stamen.com">Stamen</a>, data by <a href="http://openstreetmap.org">OpenStreetMap</a>',
             minZoom: 3,
             maxZoom: 20,
             detectRetina: true
         });
 
-        var map = new L.Map('map');
+        var map = new L.Map('map', {
+            attributionControl: false,
+        });
         map.addLayer(osmLayer);
+        L.control.attribution({position: 'bottomleft', prefix: ''}).addTo(map);
 
         var owmCloudsLayer = L.tileLayer('http://{s}.tile.openweathermap.org/map/clouds_cls/{z}/{x}/{y}.png', {
             attribution: 'Map data &copy; <a href="http://openweathermap.org">OpenWeatherMap</a>',
