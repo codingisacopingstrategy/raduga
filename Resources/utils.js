@@ -7,7 +7,7 @@ var zeroPad = function(n) {
     return str.length === 1 ? '0' + str : str;
 };
 var Date2PonyDate = function(d) {
-    return zeroPad(d.getDay()) + '.' + zeroPad(d.getMonth()) + '.' + d.getFullYear();
+    return zeroPad(d.getDay() + 1) + '.' + zeroPad(d.getMonth()) + '.' + d.getFullYear();
 };
 
 var Date2PonyHour = function(d) {
