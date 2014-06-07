@@ -83,30 +83,25 @@ var passwordCheckTextField = Ti.UI.createTextField({
     passwordMask: true
 });
 
-var loginButton = Ti.UI.createButton({
-   titleid: 'login',
-   top: 10,
-   width: 100
-});
+var createRadugaButton = function(titleid) {
+    return Ti.UI.createButton({
+        titleid: titleid,
+        top: '10dp',
+        width: '100dp',
+        borderSize: '1dp',
+        borderColor: '#919191',
+        color: 'black',
+        borderRadius: '3dp',
+        height: '36dp',
+        backgroundColor: 'rgba(255,255,255,0.4)',
+        font: { fontSize: '20dp' },
+        style: Ti.UI.iPhone.SystemButtonStyle.PLAIN,
+    });
+};
 
-var logoutButton = Ti.UI.createButton({
-   titleid: 'logout',
-   top: 10,
-   width: 100
-});
-
-
-var signupButton = Ti.UI.createButton({
-   titleid: 'signup',
-   top: 10,
-   width: 100
-});
-
-if (Raduga.Platform.ios) {
-    loginButton.setStyle(Ti.UI.iPhone.SystemButtonStyle.BORDERED);
-    logoutButton.setStyle(Ti.UI.iPhone.SystemButtonStyle.BORDERED);
-    signupButton.setStyle(Ti.UI.iPhone.SystemButtonStyle.BORDERED);
-}
+var loginButton = createRadugaButton('login');
+var logoutButton = createRadugaButton('logout');
+var signupButton = createRadugaButton('signup');
 
 var notificationsLabel = Ti.UI.createLabel({
     color: 'black',
