@@ -35,7 +35,7 @@
 	<string name="rainbow_predicted_afternoon">Increased chance of rainbows this afternoon!</string>
 	<string name="rainbow_predicted_morning">Increased chance of rainbows this morning!</string>
 	<string name="prediction_updated">Prediction updated</string>
-	<string name="rainbow_spotted_alt">Last spotted: %1$s, %2$d km away</string>
+	<string name="rainbow_spotted_alt">Last spotted:\n %1$s, %2$d km away</string>
 	<string name="no_internet">Can not connect to metereological services. Raduga can only be used with internet access</string>
 	<string name="ok">OK</string>
 	<string name="alert">Alert</string>

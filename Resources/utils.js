@@ -14,6 +14,15 @@ var Date2PonyHour = function(d) {
     return zeroPad(d.getHours()) + ':' + zeroPad(d.getMinutes());
 };
 
+var getMonth = function(d) {
+    var months;
+    if (Raduga.Platform.currentLanguage == "ru") {
+        var months = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
+    } else {
+        var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    }
+    return months[d.getMonth()];
+};
 /* Geographical functions */
 
 // borrowed from http://www.geodatasource.com/developers/javascript

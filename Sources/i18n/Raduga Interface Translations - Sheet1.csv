@@ -33,7 +33,7 @@ rainbow_spotted,"Last spotted: %1$s, %2$d km away",Пользователь %1$s
 rainbow_predicted_afternoon,Increased chance of rainbows this afternoon!,Сегодня днем у вас есть большой шанс увидеть радугу!
 rainbow_predicted_morning,Increased chance of rainbows this morning!,Сегодня утром у вас есть большой шанс увидеть радугу!
 prediction_updated,Prediction updated,Прогноз обновляется
-rainbow_spotted_alt,"Last spotted: %1$s, %2$d km away","Spotted rainbow: %1$s, %2$d km от вас"
+rainbow_spotted_alt,"Last spotted:\n %1$s, %2$d km away","Spotted rainbow:\n %1$s, %2$d km от вас"
 no_internet,Can not connect to metereological services. Raduga can only be used with internet access,
 ok,OK,
 alert,Alert,

@@ -19,10 +19,12 @@ var updatePhotos = function() {
             // display most recent rainbow in globe tab
             if (Raduga.photos.length === 0) { return null; }
             var photo = Raduga.photos[0];
+            var latestRainbowDate = new Date(photo.created_at);
             var spottedMessage = String.format(L('rainbow_spotted_alt'),
                 photo.custom_fields[Raduga.Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en'],
                 distanceToHome(photo.custom_fields.coordinates[0][1], photo.custom_fields.coordinates[0][0]));
-            recentRainbowLabel.setText(spottedMessage);
+            var dateMessage = latestRainbowDate.getDay() + 1 + ' ' + getMonth(latestRainbowDate) + ' ' + Date2PonyHour(latestRainbowDate);
+            recentRainbowLabel.setText(spottedMessage + '\n' + dateMessage);
         },
         onerror: function(error) {
             alertError('Failed loading photos through network: ' + JSON.stringify(error));
