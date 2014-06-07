@@ -32,17 +32,13 @@ citiesSearch.addEventListener('cancel', function(e) {
 
 // Settings Form
 
-var topPadding = Ti.UI.createView({
-    width: '100%',
-    height: '20dp'
-});
-
 /* View code */
 var activityIndicator = Ti.UI.createActivityIndicator({
-    top: 0,
-    left: 0,
-    height: '10dp',
-    width: '10dp'
+    height: Ti.UI.SIZE,
+    width: Ti.UI.SIZE,
+    style: Raduga.Platform.ios ? Ti.UI.iPhone.ActivityIndicatorStyle.BIG : Ti.UI.ActivityIndicatorStyle.BIG,
+    backgroundColor: 'rbga(255,255,255,0.2)',
+    borderRadius: '5dp'
 });
 
 var usernameLabel = Ti.UI.createLabel({
@@ -142,13 +138,14 @@ var cityTextField = Ti.UI.createTextField({
 var settingsScrollView = Ti.UI.createScrollView({
    contentWidth: Raduga.Platform.width,
    contentHeight: 'auto',
-   top: 0,
+   top: '20dp',
    layout: 'vertical',
    showVerticalScrollIndicator: true,
    showHorizontalScrollIndicator: false
 });
 
 settingsWindow.add(settingsScrollView);
+settingsWindow.add(activityIndicator);
 
 //
 // Saving settings
@@ -255,7 +252,6 @@ var updateUserDialog = function(view) {
         usernameTextField.setEditable(true);
     }
 
-    view.add(activityIndicator);
     view.add(usernameLabel);
     view.add(usernameTextField);
 

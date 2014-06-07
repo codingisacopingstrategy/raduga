@@ -97,7 +97,6 @@ var settingsWindow = Ti.UI.createWindow({
     height: 'auto',
     top: 0,
     backgroundGradient: currentSettingsGradient(),
-    layout: 'vertical',
     navBarHidden: true,
 });
 
