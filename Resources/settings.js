@@ -6,7 +6,7 @@ var citiesWindow = Ti.UI.createWindow({
 
 var tableData = [];
 
-var cityNameField = Ti.Locale.currentLanguage === 'ru' ? 'name_ru' : 'name_en';
+var cityNameField = Raduga.Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en';
 for (var i = 0; i < cities.length; i++) {
     var city = cities[i];
     tableData.push({ title: city[cityNameField], val: city });
@@ -123,7 +123,7 @@ var cityLabel = Ti.UI.createLabel({
 });
 
 var cityTextField = Ti.UI.createTextField({
-    value: Ti.App.Properties.getString(Ti.Locale.currentLanguage === 'ru' ? 'city_name_ru' : 'city_name_en'),
+    value: Ti.App.Properties.getString(Raduga.Platform.currentLanguage === 'ru' ? 'city_name_ru' : 'city_name_en'),
     borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
     top: '10dp', left: '10dp',
     width: '250dp'

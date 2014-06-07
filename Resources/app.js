@@ -9,6 +9,7 @@ var Raduga = {
 Raduga.Platform.osname = Ti.Platform.osname;
 Raduga.Platform.ios = Titanium.Platform.name == 'iPhone OS';
 
+Raduga.Platform.currentLanguage = Ti.Locale.currentLanguage;
 
 Raduga.Platform.width = Ti.Platform.displayCaps.platformWidth;
 Raduga.Platform.height = Ti.Platform.displayCaps.platformHeight;

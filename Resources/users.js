@@ -27,7 +27,7 @@ var createUser = function(username, password, password_confirmation) {
         password: password,
         password_confirmation: password_confirmation,
         custom_fields: {
-            language: Ti.Locale.currentLanguage === 'ru' ? 'ru' : 'en',
+            language: Raduga.Platform.currentLanguage === 'ru' ? 'ru' : 'en',
             notifications: notificationsSwitch.value,
             name_en: Ti.App.Properties.getString('city_name_en'),
             name_ru: Ti.App.Properties.getString('city_name_ru'),

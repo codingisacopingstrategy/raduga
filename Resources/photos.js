@@ -20,7 +20,7 @@ var updatePhotos = function() {
             if (Raduga.photos.length === 0) { return null; }
             var photo = Raduga.photos[0];
             var spottedMessage = String.format(L('rainbow_spotted_alt'),
-                photo.custom_fields[Ti.Locale.currentLanguage === 'ru' ? 'name_ru' : 'name_en'],
+                photo.custom_fields[Raduga.Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en'],
                 distanceToHome(photo.custom_fields.coordinates[0][1], photo.custom_fields.coordinates[0][0]));
             recentRainbowLabel.setText(spottedMessage);
         },
@@ -46,7 +46,7 @@ var features2Photos = function() {
             continue;
         }
 
-        var name = photo.custom_fields[Ti.Locale.currentLanguage === 'ru' ? 'name_ru' : 'name_en'];
+        var name = photo.custom_fields[Raduga.Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en'];
         var lon  = photo.custom_fields.coordinates[0][0];
         var lat  = photo.custom_fields.coordinates[0][1];
         var feature = {
@@ -101,7 +101,7 @@ var createTableData = function() {
 
         var labelCity = Ti.UI.createLabel({
             color: 'white',
-            text: photo.custom_fields[Ti.Locale.currentLanguage === 'ru' ? 'name_ru' : 'name_en'],
+            text: photo.custom_fields[Raduga.Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en'],
             width: Ti.UI.SIZE,
             top: '2dp',
             left: '10dp'
@@ -156,7 +156,7 @@ var tableView = Ti.UI.createTableView({
 tableView.addEventListener("click", function(e){
     Ti.API.info("click registerd on share button");
     var photo = Raduga.photos[e.row.rowIndex];
-    var city = photo.custom_fields[Ti.Locale.currentLanguage === 'ru' ? 'name_ru' : 'name_en'];
+    var city = photo.custom_fields[Raduga.Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en'];
     var username = photo.user.username;
 
     if(Raduga.Platform.ios && Social.isActivityViewSupported()){
