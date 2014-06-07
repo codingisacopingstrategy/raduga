@@ -154,6 +154,9 @@ var showCam = function() {
             var a = Ti.UI.createAlertDialog({title:L('camera')});
             if (error.code == Ti.Media.NO_CAMERA) {
                 a.setMessage('Please run this test on device');
+                // if one wants to test uploading photos from the simulator, enable this code:
+                // var photo = Ti.Filesystem.getFile('ui/upload_test_photo.jpg');
+                // uploadPhoto(photo.read.blob);
             } else {
                 a.setMessage(L('error') + ': ' + error.code);
             }
