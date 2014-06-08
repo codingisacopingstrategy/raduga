@@ -30,12 +30,14 @@
 	<string name="signup_before_upload">Перед загрузкой вы должны зарегистрироваться</string>
 	<string name="ready_for_upload">Радуга готова к загрузке вашей фотографии радуги в городе %1$s</string>
 	<string name="upload">Загружать</string>
-	<string name="prediction">Радуги предсказаны вблизи %1$s, %2$s и %$s.</string>
+	<string name="prediction">Радуги предсказаны вблизи %1$s, %2$s и %3$s</string>
+	<string name="prediction_two">Радуги предсказаны вблизи %1$s и %2$s</string>
+	<string name="prediction_one">Радуги предсказаны вблизи %1$s</string>
 	<string name="rainbow_spotted">Пользователь %1$s увидел радугу вблизи %2$s</string>
 	<string name="rainbow_predicted_afternoon">Сегодня днем у вас есть большой шанс увидеть радугу!</string>
 	<string name="rainbow_predicted_morning">Сегодня утром у вас есть большой шанс увидеть радугу!</string>
 	<string name="prediction_updated">Прогноз обновляется</string>
-	<string name="rainbow_spotted_alt">Spotted rainbow:\n %1$s, %2$d km от вас</string>
+	<string name="rainbow_spotted_alt">Spotted rainbow: %1$s, %2$d km от вас</string>
 	<string name="no_internet"></string>
 	<string name="ok"></string>
 	<string name="alert"></string>

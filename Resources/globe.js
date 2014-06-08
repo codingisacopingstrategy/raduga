@@ -121,10 +121,43 @@ var updateRainbowCities = function() {
                     } else {
                         predictionLabel.setText(L('rainbow_predicted_afternoon'));
                     }
-                    break;
+                    return true; // we don’t want to go on setting the rainbow cities—this is more important!
                 }
             }
 
+            ////////////////////////////////////////////////////////////////
+            // display three closest rainbow-predicted areas underneath ////
+            ////////////////////////////////////////////////////////////////
+
+            Raduga.rainbowCities = rainbowCities.map(function(city) {
+                city.distance = distanceToHome(city.lat, city.lon);
+                return city;
+            });
+
+            Raduga.rainbowCities.sort(function(a,b) {
+                if (a.distance < b.distance)
+                    return -1;
+                if (a.distance > b.distance)
+                    return 1;
+                return 0;
+            });
+
+            Raduga.rainbowCities = Raduga.rainbowCities.slice(0,3);
+
+            Ti.API.info(Raduga.rainbowCities);
+
+            var cityNames = Raduga.rainbowCities.map(function (city) {
+                return Raduga.Platform.currentLanguage === 'ru' ? city.name_ru : city.name_en;
+            });
+            if (cityNames.length === 3) {
+                predictionLabel.setText(String.format(L('prediction'), cityNames[0], cityNames[1], cityNames[2]));
+            }
+            if (cityNames.length === 2) {
+                predictionLabel.setText(String.format(L('prediction_two'), cityNames[0], cityNames[1]));
+            }
+            if (cityNames.length === 1) {
+                predictionLabel.setText(String.format(L('prediction_one'), cityNames[0]));
+            }
         },
         onerror: function(error) {
             alertError('Failed loading rainbow cities through network: ' + JSON.stringify(error));

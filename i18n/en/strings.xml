@@ -30,8 +30,10 @@
 	<string name="signup_before_upload">Sign up to upload your photo</string>
 	<string name="ready_for_upload">Raduga is ready to upload your rainbow at %1$s </string>
 	<string name="upload">Upload</string>
-	<string name="prediction">Rainbows predicted near %1$s, %2$s and %3$s.</string>
-	<string name="rainbow_spotted">Last spotted: %1$s, %2$d km away</string>
+	<string name="prediction">Rainbows predicted near %1$s, %2$s and %3$s</string>
+	<string name="prediction_two">Rainbows predicted near %1$s and %2$s</string>
+	<string name="prediction_one">Rainbows predicted near %1$s</string>
+	<string name="rainbow_spotted">Last spotted:\n %1$s, %2$d km away</string>
 	<string name="rainbow_predicted_afternoon">Increased chance of rainbows this afternoon!</string>
 	<string name="rainbow_predicted_morning">Increased chance of rainbows this morning!</string>
 	<string name="prediction_updated">Prediction updated</string>

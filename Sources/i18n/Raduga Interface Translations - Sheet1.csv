@@ -28,12 +28,14 @@ signin_before_upload,Sign in to upload your photo,"Перед выгрузкой
 signup_before_upload,Sign up to upload your photo,Перед загрузкой вы должны зарегистрироваться
 ready_for_upload,Raduga is ready to upload your rainbow at %1$s ,Радуга готова к загрузке вашей фотографии радуги в городе %1$s
 upload,Upload,Загружать
-prediction,"Rainbows predicted near %1$s, %2$s and %3$s.","Радуги предсказаны вблизи %1$s, %2$s и %$s."
-rainbow_spotted,"Last spotted: %1$s, %2$d km away",Пользователь %1$s увидел радугу вблизи %2$s
+prediction,"Rainbows predicted near %1$s, %2$s and %3$s","Радуги предсказаны вблизи %1$s, %2$s и %3$s"
+prediction_two,Rainbows predicted near %1$s and %2$s,Радуги предсказаны вблизи %1$s и %2$s
+prediction_one,Rainbows predicted near %1$s,Радуги предсказаны вблизи %1$s
+rainbow_spotted,"Last spotted:\n %1$s, %2$d km away",Пользователь %1$s увидел радугу вблизи %2$s
 rainbow_predicted_afternoon,Increased chance of rainbows this afternoon!,Сегодня днем у вас есть большой шанс увидеть радугу!
 rainbow_predicted_morning,Increased chance of rainbows this morning!,Сегодня утром у вас есть большой шанс увидеть радугу!
 prediction_updated,Prediction updated,Прогноз обновляется
-rainbow_spotted_alt,"Last spotted:\n %1$s, %2$d km away","Spotted rainbow:\n %1$s, %2$d km от вас"
+rainbow_spotted_alt,"Last spotted:\n %1$s, %2$d km away","Spotted rainbow: %1$s, %2$d km от вас"
 no_internet,Can not connect to metereological services. Raduga can only be used with internet access,
 ok,OK,
 alert,Alert,
