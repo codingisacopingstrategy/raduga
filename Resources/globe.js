@@ -11,7 +11,7 @@ var recentRainbowLabel = Ti.UI.createLabel({
     color: currentColour(),
     text: '',
     textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
-    top: '20dp', left: '10dp', right: '10dp',
+    top: '22dp', left: '10dp', right: '10dp',
 });
 
 var globe = Ti.UI.createWebView({

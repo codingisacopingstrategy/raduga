@@ -71,6 +71,15 @@ var features2Photos = function() {
 var createTableData = function() {
     var tableData = [];
 
+    var row = Ti.UI.createTableViewRow({
+        className: 'separator', // used to improve table performance
+        backgroundColor: 'transparent',
+        rowIndex: -1, // custom property, useful for determining the row during events
+        height: '20dp'
+    });
+
+    tableData.push(row);
+
     for (var i = 0; i < Raduga.photos.length; i++) {
         var photo = Raduga.photos[i];
 
@@ -149,6 +158,7 @@ var createTableData = function() {
 };
 
 var tableView = Ti.UI.createTableView({
+    top: '0dp',
     minRowHeight: '0dp',
     separatorColor: 'transparent',
     backgroundColor: 'transparent',
