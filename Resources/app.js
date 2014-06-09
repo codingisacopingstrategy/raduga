@@ -241,3 +241,28 @@ Ti.Network.addEventListener('change', function(e) {
     }
 });
 
+var updateColours = function() {
+    Ti.API.info("Checking if colours need to be updated");
+    if (Raduga.currentGradientSlug === gradientSlug()) {
+        return null;
+    }
+    Ti.API.info("colours need to be updated");
+    globeWindow        .setBackgroundGradient(currentGradient());
+    settingsWindow     .setBackgroundGradient(currentSettingsGradient());
+    predictionLabel    .setColor(currentColour());
+    recentRainbowLabel .setColor(currentColour());
+    usernameLabel      .setColor(currentColour());
+    passwordLabel      .setColor(currentColour());
+    passwordCheckLabel .setColor(currentColour());
+    notificationsLabel .setColor(currentColour());
+    cityLabel          .setColor(currentColour());
+    usernameTextField  .setColor(currentColour());
+    passwordTextField  .setColor(currentColour());
+    passwordCheckTextField .setColor(currentColour());
+    cityTextField      .setColor(currentColour());
+    Raduga.currentGradientslug = gradientSlug();
+};
+
+var colourTimer = setInterval(updateColours, 300000);
+updateColours();
+
