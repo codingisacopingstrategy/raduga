@@ -17,7 +17,10 @@ var updatePhotos = function() {
             // plot the photos in the webview
             // globe.evalJS('svg.append("path").datum(' + JSON.stringify(features2Photos())  + ').attr("d", path.pointRadius(14)).attr("class", "place");');
             // display most recent rainbow in globe tab
-            if (Raduga.photos.length === 0) { return null; }
+            if (Raduga.photos.length === 0) {
+                recentRainbowLabel.setText('');
+                return null;
+            }
             var photo = Raduga.photos[0];
             var latestRainbowDate = new Date(photo.created_at);
             var spottedMessage = String.format(L('rainbow_spotted_alt'),
@@ -188,4 +191,3 @@ if (Raduga.Platform.osname !== "android") {
 }
 
 photosWindow.add(tableView);
-updatePhotos();

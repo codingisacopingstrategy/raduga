@@ -14,10 +14,9 @@ var recentRainbowLabel = Ti.UI.createLabel({
     top: '22dp', left: '10dp', right: '10dp',
 });
 
-var globe = Ti.UI.createWebView({
+var globe = Ti.UI.createImageView({
     top: '10dp',
-    backgroundImage: 'html/elektro_l_20140311_0530_rgb.png',
-    url: 'html/globe.html',
+    image: 'html/elektro_l_130502_0030_10.png',
     backgroundColor: 'transparent',
     width: Ti.Platform.displayCaps.platformWidth * .8 + u,
     height: Ti.Platform.displayCaps.platformWidth * .8 + u,
@@ -104,11 +103,25 @@ var rainbowCities;
 
 // Check if we are in an area with heightened rainbow chance and update the display accordingly
 
+var updateElektroL = function() {
+    var d = new Date();
+    d.setSeconds(0);
+    d.setMilliseconds(0);
+    if (d.getMinutes() > 30) { d.setMinutes(30); } else { d.setMinutes(0); }
+    var elektro_slug = '13' + zeroPad(d.getUTCMonth()) + zeroPad(d.getUTCDate()) + '_' + zeroPad(d.getUTCHours()) + zeroPad(d.getUTCMinutes());
+    var elektro_url = 'http://vps40616.public.cloudvps.com/static/elektro/' + elektro_slug + '_RGB.png';
+
+    Ti.API.info("loading Elektro L " + elektro_url);
+    globe.setImage(elektro_url);
+};
+
 var updateRainbowCities = function() {
     var url = "http://vps40616.public.cloudvps.com/latest/rainbow_cities.json";
 
     var xhr = Ti.Network.createHTTPClient({
         onload: function() {
+            predictionLabel.setText('');
+
             var json = JSON.parse(this.responseText);
             rainbowCities = json;
             Ti.API.info('found on the internet ' + rainbowCities.length + ' cities with heightened chance of rainbows');
@@ -144,8 +157,6 @@ var updateRainbowCities = function() {
 
             Raduga.rainbowCities = Raduga.rainbowCities.slice(0,3);
 
-            Ti.API.info(Raduga.rainbowCities);
-
             var cityNames = Raduga.rainbowCities.map(function (city) {
                 return Raduga.Platform.currentLanguage === 'ru' ? city.name_ru : city.name_en;
             });
@@ -166,5 +177,3 @@ var updateRainbowCities = function() {
     xhr.open("GET", url);
     xhr.send();
 };
-
-updateRainbowCities();

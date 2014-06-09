@@ -184,30 +184,60 @@ tabGroup.addTab(settingsTab);
 // Initialise app
 //
 
-tabGroup.open();
-if (!Ti.App.Properties.getString('sessionID')) {
-    tabGroup.setActiveTab(settingsTab);
-}
+var updateUser = function() {
+    Cloud.Users.showMe(function (e) {
+        if (e.success) {
+            Raduga.user = e.users[0];
+            var user = Raduga.user;
 
-Cloud.Users.showMe(function (e) {
-    if (e.success) {
-        Raduga.user = e.users[0];
-        var user = Raduga.user;
+            Ti.API.info("User " +  user.username + " " + user.id + " logged in at " +
+            Ti.App.Properties.getString('city_name_en') + '/' + Ti.App.Properties.getString('city_name_ru') +
+            ' (' + parseFloat(Ti.App.Properties.getString('city_lon')) + ', ' +
+            parseFloat(Ti.App.Properties.getString('city_lat')) + ')' );
 
-        Ti.API.info("User " +  user.username + " " + user.id + " logged in at " +
-        Ti.App.Properties.getString('city_name_en') + '/' + Ti.App.Properties.getString('city_name_ru') +
-        ' (' + parseFloat(Ti.App.Properties.getString('city_lon')) + ', ' +
-        parseFloat(Ti.App.Properties.getString('city_lat')) + ')' );
+            Ti.App.Properties.setString('sessionID', Cloud.sessionId);
+            Ti.App.Properties.setString('username', user.username);
+            Ti.App.Properties.setString('userid', user.id);
+            initPush();
+        } else {
+            // this way the will know we need to log in.
+            Ti.API.info("No user logged in");
+            Ti.App.Properties.setString('sessionID', '');
+            settingsWindow.fireEvent('user_status_change');
+            tabGroup.setActiveTab(settingsTab);
+        }
+    });
+};
 
-        Ti.App.Properties.setString('sessionID', Cloud.sessionId);
-        Ti.App.Properties.setString('username', user.username);
-        Ti.App.Properties.setString('userid', user.id);
-        initPush();
-    } else {
-        // this way the will know we need to log in.
-        Ti.API.info("No user logged in");
-        Ti.App.Properties.setString('sessionID', '');
-        settingsWindow.fireEvent('user_status_change');
+var initWithNetwork = function() {
+    updateUser();
+    updateElektroL();
+    updatePhotos();
+    updateRainbowCities();
+    if (!Ti.App.Properties.getString('sessionID')) {
         tabGroup.setActiveTab(settingsTab);
     }
+    tabGroup.open();
+};
+
+var initSansNetwork = function() {
+    predictionLabel.setText(L('no_internet'));
+    globeWindow.open();
+};
+
+if (Titanium.Network.networkType === Titanium.Network.NETWORK_NONE) {
+    initSansNetwork();
+} else {
+    initWithNetwork();
+}
+
+// If connection drops or becomes available FIXME doesn’t seem to work yet
+Ti.Network.addEventListener('change', function(e) {
+    Ti.API.info("detected change in network connectivity");
+    if (e.online) {
+        initWithNetwork();
+    } else {
+        initSansNetwork();
+    }
 });
+
