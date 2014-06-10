@@ -106,8 +106,8 @@ var uploadPhoto = function(media) {
     });
 
     // Here we upload the metadata
-//    xhr.open('POST','http://127.0.0.1:5000/photos/');
-    xhr.open('POST','http://vps40616.public.cloudvps.com/photos/');
+    xhr.open('POST','http://192.168.0.10:5000/photos/');
+//    xhr.open('POST','http://vps40616.public.cloudvps.com/photos/');
     xhr.setRequestHeader("Content-Type","application/json; charset=utf-8");
     xhr.setRequestHeader('Authorization', authstr);
     xhr.send(JSON.stringify(photoData));

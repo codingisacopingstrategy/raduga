@@ -49,6 +49,7 @@ var usernameLabel = Ti.UI.createLabel({
 });
 
 var usernameTextField = Ti.UI.createTextField({
+    color: 'rgb(103,103,113)',
     borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
     top: '10dp', left: '10dp',
     width: '250dp',
@@ -63,6 +64,7 @@ var passwordLabel = Ti.UI.createLabel({
 });
 
 var passwordTextField = Ti.UI.createTextField({
+    color: 'rgb(103,103,113)',
     borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
     top: '10dp', left: '10dp',
     width: '250dp',
@@ -77,6 +79,7 @@ var passwordCheckLabel = Ti.UI.createLabel({
 });
 
 var passwordCheckTextField = Ti.UI.createTextField({
+    color: 'rgb(103,103,113)',
     borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
     top: '10dp', left: '10dp',
     width: '250dp',
@@ -90,7 +93,7 @@ var createRadugaButton = function(titleid) {
         width: '100dp',
         borderSize: '1dp',
         borderColor: '#919191',
-        color: 'black',
+        color: 'rgb(103,103,113)',
         borderRadius: '3dp',
         height: '36dp',
         backgroundColor: 'rgba(255,255,255,0.4)',
@@ -123,6 +126,7 @@ var cityLabel = Ti.UI.createLabel({
 });
 
 var cityTextField = Ti.UI.createTextField({
+    color: 'rgb(103,103,113)',
     value: Ti.App.Properties.getString(Raduga.Platform.currentLanguage === 'ru' ? 'city_name_ru' : 'city_name_en'),
     borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
     top: '10dp', left: '10dp',
@@ -238,8 +242,8 @@ var updateUserDialog = function(view) {
     if (signedUp()) {
         usernameTextField.value = Ti.App.Properties.getString('username');
         if (loggedIn()) {
-            usernameTextField.setEnabled(false); // Android only
-            usernameTextField.setEditable(false);
+            //usernameTextField.setEnabled(false); // Android only
+            //usernameTextField.setEditable(false);
         }
     } else {
         usernameTextField.value = '';

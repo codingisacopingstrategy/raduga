@@ -247,19 +247,19 @@ var updateColours = function() {
         return null;
     }
     Ti.API.info("colours need to be updated");
-    globeWindow        .setBackgroundGradient(currentGradient());
-    settingsWindow     .setBackgroundGradient(currentSettingsGradient());
-    predictionLabel    .setColor(currentColour());
-    recentRainbowLabel .setColor(currentColour());
-    usernameLabel      .setColor(currentColour());
-    passwordLabel      .setColor(currentColour());
-    passwordCheckLabel .setColor(currentColour());
-    notificationsLabel .setColor(currentColour());
-    cityLabel          .setColor(currentColour());
-    usernameTextField  .setColor(currentColour());
-    passwordTextField  .setColor(currentColour());
-    passwordCheckTextField .setColor(currentColour());
-    cityTextField      .setColor(currentColour());
+
+    var slug; //= '16:00'; set a slug by hand for debugging purposes
+
+    globeWindow        .setBackgroundGradient(currentGradient(slug));
+    settingsWindow     .setBackgroundGradient(currentSettingsGradient(slug));
+    predictionLabel    .setColor(currentColour(slug));
+    recentRainbowLabel .setColor(currentColour(slug));
+    usernameLabel      .setColor(currentColour(slug));
+    passwordLabel      .setColor(currentColour(slug));
+    passwordCheckLabel .setColor(currentColour(slug));
+    notificationsLabel .setColor(currentColour(slug));
+    cityLabel          .setColor(currentColour(slug));
+
     Raduga.currentGradientslug = gradientSlug();
 };
 

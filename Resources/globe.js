@@ -11,6 +11,9 @@ var recentRainbowLabel = Ti.UI.createLabel({
     color: currentColour(),
     text: '',
     textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
+    /*font: {
+        fontFamily: 'PT Sans Regular'//Raduga.Platform.ios ? 'PT Sans' : 'PT_Sans-Web-Regular',
+    },*/
     top: '22dp', left: '10dp', right: '10dp',
 });
 
