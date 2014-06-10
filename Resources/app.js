@@ -252,6 +252,7 @@ var updateColours = function() {
 
     globeWindow        .setBackgroundGradient(currentGradient(slug));
     settingsWindow     .setBackgroundGradient(currentSettingsGradient(slug));
+    cameraWindow       .setBackgroundGradient(currentGradient(slug));
     predictionLabel    .setColor(currentColour(slug));
     recentRainbowLabel .setColor(currentColour(slug));
     usernameLabel      .setColor(currentColour(slug));

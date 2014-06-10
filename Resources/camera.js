@@ -85,6 +85,8 @@ var uploadPhoto = function(media) {
                     // We are done here!
                     // switch to the tab that shows the photos
                     tabGroup.setActiveTab(photosTab);
+                    Ti.Media.hideCamera();
+                    cameraAvailable = true;
                 },
                 onerror: function(e) {
                     Ti.API.info(this.responseText);
@@ -106,8 +108,8 @@ var uploadPhoto = function(media) {
     });
 
     // Here we upload the metadata
-    xhr.open('POST','http://192.168.0.10:5000/photos/');
-//    xhr.open('POST','http://vps40616.public.cloudvps.com/photos/');
+//    xhr.open('POST','http://192.168.0.10:5000/photos/');
+    xhr.open('POST','http://vps40616.public.cloudvps.com/photos/');
     xhr.setRequestHeader("Content-Type","application/json; charset=utf-8");
     xhr.setRequestHeader('Authorization', authstr);
     xhr.send(JSON.stringify(photoData));
@@ -118,8 +120,12 @@ uploadButton.addEventListener('click', uploadPhoto);
 // Camera Behaviour
 
 // from the example http://docs.appcelerator.com/titanium/3.0/#!/guide/Camera_and_Photo_Gallery_APIs :
+var cameraAvailable = true;
 var showCam = function() {
     Ti.API.info("showCam called");
+    if (!cameraAvailable) {
+        return false;
+    }
 
     if (!Ti.App.Properties.getString('sessionID')) {
         alertError(L("signin_before_upload"));
@@ -127,13 +133,11 @@ var showCam = function() {
         return false;
     }
 
+    cameraAvailable = false;
+
     var close = function() {
         Ti.Media.hideCamera();
-        /*if (Raduga.Platform.osname === 'android') {
-            cameraTab.close();
-        } else {
-            cameraTab.close(cameraWindow);
-        }*/
+        cameraAvailable = true;
     };
 
     Ti.Media.showCamera({
@@ -143,11 +147,11 @@ var showCam = function() {
             } else {
                 alertError("Camera got the wrong type back: " + event.mediaType);
             }
-            //close();
         },
         cancel:function() {
                 // called when user cancels taking a picture
                 tabGroup.setActiveTab(photosTab);
+                close();
         },
         error:function(error) {
             close();
