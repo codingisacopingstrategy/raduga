@@ -186,7 +186,7 @@ tableView.addEventListener("click", function(e){
 });
 
 
-if (Raduga.Platform.osname !== "android") {
+if (Raduga.Platform.ios) {
     tableView.setSeparatorStyle(Ti.UI.iPhone.TableViewSeparatorStyle.NONE);
 }
 

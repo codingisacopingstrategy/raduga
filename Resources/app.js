@@ -24,7 +24,6 @@ Cloud.sessionId = Ti.App.Properties.getString('sessionID');
 
 if (Raduga.Platform.ios) {
     var Social = require('dk.napp.social');
-    Ti.API.info("module is => " + Social);
 
     Ti.API.info("Facebook available: " + Social.isFacebookSupported());
     Ti.API.info("Twitter available: " + Social.isTwitterSupported());
@@ -65,34 +64,40 @@ Ti.include('gradients.js');    // `exposes gradient_stops`
 
 // this sets the background color of the master UIView (when there are no windows/tab groups on it)
 Ti.UI.setBackgroundColor('#ffffff');
-
+// launch in portrait mode
+Ti.UI.orientation = Ti.UI.PORTRAIT;
 //
 // Create the Windows
 //
 var photosWindow = Ti.UI.createWindow({
+    orientationModes: [Ti.UI.PORTRAIT],
     backgroundColor: 'white',
     navBarHidden: true,
 });
 
 var globeWindow = Ti.UI.createWindow({
+    orientationModes: [Ti.UI.PORTRAIT],
     backgroundColor: 'transparent',
     backgroundGradient: currentGradient(),
     navBarHidden: true,
 });
 
 var mapWindow = Ti.UI.createWindow({
+    orientationModes: [Ti.UI.PORTRAIT],
     backgroundColor: 'white',
     layout: 'vertical',
     navBarHidden: true,
 });
 
 var cameraWindow = Ti.UI.createWindow({
+    orientationModes: [Ti.UI.PORTRAIT],
     backgroundColor: 'white',
     layout: 'vertical',
     navBarHidden: true,
 });
 
 var settingsWindow = Ti.UI.createWindow({
+    orientationModes: [Ti.UI.PORTRAIT],
     left: 0,
     right: 0,
     height: 'auto',
@@ -101,7 +106,7 @@ var settingsWindow = Ti.UI.createWindow({
     navBarHidden: true,
 });
 
-if (Raduga.Platform.osname === 'iphone') {
+if (Raduga.Platform.ios) {
     photosWindow.setStatusBarStyle(Ti.UI.iPhone.StatusBar.DARK_CONTENT);
     photosWindow.setExtendEdges([Ti.UI.EXTEND_EDGE_TOP, Ti.UI.EXTEND_EDGE_BOTTOM]);
     globeWindow.setStatusBarStyle(Ti.UI.iPhone.StatusBar.LIGHT_CONTENT);
