@@ -266,6 +266,9 @@ var updateColours = function() {
     notificationsLabel .setColor(currentColour(slug));
     cityLabel          .setColor(currentColour(slug));
 
+    updateElektroL();
+    updateSunLine();
+
     Raduga.currentGradientslug = gradientSlug();
 };
 
