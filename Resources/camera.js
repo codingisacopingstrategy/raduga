@@ -91,6 +91,7 @@ var uploadPhoto = function(media) {
                 onerror: function(e) {
                     Ti.API.info(this.responseText);
                     alertError('Failed uploading photo file: ' + e.error + '\n\n' + this.responseText);
+                    Raduga.callingCamera = false;
                 }
             });
             secondXhr.open('PATCH', 'http://' + response._links.self.href);
@@ -104,6 +105,7 @@ var uploadPhoto = function(media) {
         },
         onerror: function(e) {
             alertError('Failed uploading metadata camera: ' + e.error);
+            Raduga.callingCamera = false;
         }
     });
 
