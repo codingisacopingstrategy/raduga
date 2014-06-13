@@ -242,8 +242,10 @@ var updateUserDialog = function(view) {
     if (signedUp()) {
         usernameTextField.value = Ti.App.Properties.getString('username');
         if (loggedIn()) {
-            //usernameTextField.setEnabled(false); // Android only
-            //usernameTextField.setEditable(false);
+            // comment these two ligns to be able to change user after logging out—
+            // mainly useful for development
+            usernameTextField.setEnabled(false); // Android only
+            usernameTextField.setEditable(false);
         }
     } else {
         usernameTextField.value = '';
