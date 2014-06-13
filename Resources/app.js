@@ -135,7 +135,7 @@ Ti.include('settings.js');
 //
 
 var tabGroup = Ti.UI.createTabGroup({
-    tabsBackgroundImage: 'ui/backgrounds/semi-transparant-pixel-40.png',
+    tabsBackgroundImage: 'ui/backgrounds/semi-transparant-pixel-60.png',
     // I want to not have the default tab icons be coloured grey. Both of these have no effect:
     // cf http://developer.appcelerator.com/question/163061/tab-group-grey-icons-in-io7
     // tabsBackgroundColor: 'white',
