@@ -19,6 +19,7 @@ var recentRainbowLabel = Ti.UI.createLabel({
 
 var globe = Ti.UI.createImageView({
     top: '10dp',
+    backgroundImage: 'html/elektro_l_130502_0030_10.png',
     image: 'html/elektro_l_130502_0030_10.png',
     backgroundColor: 'transparent',
     width: Ti.Platform.displayCaps.platformWidth * .8 + u,
