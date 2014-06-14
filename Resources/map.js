@@ -1,10 +1,8 @@
-var u = Ti.Android != undefined ? 'dp' : 0;
-
 var mapWebView = Ti.UI.createWebView({
     url : 'html/index.html',
     width: '100%',
-    width: Ti.Platform.displayCaps.platformWidth + u,
-    height: Ti.Platform.displayCaps.platformHeight + u,
+    width: Raduga.Platform.width,
+    height: Raduga.Platform.height,
     disableBounce: true
 });
 

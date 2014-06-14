@@ -2,8 +2,8 @@
 var u = Ti.Android != undefined ? 'dp' : 0;
 
 var globeContainer = Ti.UI.createView({
-    width: Ti.Platform.displayCaps.platformWidth + u,
-    height: Ti.Platform.displayCaps.platformHeight + u,
+    width: Raduga.Platform.width,
+    height: Raduga.Platform.height,
     layout: 'vertical'
 });
 
@@ -11,9 +11,6 @@ var recentRainbowLabel = Ti.UI.createLabel({
     color: currentColour(),
     text: '',
     textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
-    /*font: {
-        fontFamily: 'PT Sans Regular'//Raduga.Platform.ios ? 'PT Sans' : 'PT_Sans-Web-Regular',
-    },*/
     top: '22dp', left: '10dp', right: '10dp',
 });
 
@@ -22,8 +19,8 @@ var globe = Ti.UI.createImageView({
     backgroundImage: 'html/elektro_l_130502_0030_10.png',
     image: 'html/elektro_l_130502_0030_10.png',
     backgroundColor: 'transparent',
-    width: Ti.Platform.displayCaps.platformWidth * .8 + u,
-    height: Ti.Platform.displayCaps.platformWidth * .8 + u,
+    width: Raduga.Platform.width * .8,
+    height: Raduga.Platform.width * .8,
     touchEnabled: false,
     disableBounce: true
 });
@@ -37,7 +34,7 @@ var predictionLabel = Ti.UI.createLabel({
 
 var sunLine = Ti.UI.createView({
     width: '1dp',
-    height: Ti.Platform.displayCaps.platformHeight + u,
+    height:  Raduga.Platform.height,
     backgroundGradient: {
         type: 'linear',
         startPoint: { x: '50%', y: '0%' },

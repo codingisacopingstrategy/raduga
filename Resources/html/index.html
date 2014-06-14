@@ -37,19 +37,19 @@
     <div id="map"> </div>
 
     <script>
-        osmLayer = new L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        /*osmLayer = new L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
             minZoom: 3,
             maxZoom: 20,
             detectRetina: true
-        }); //.addTo(map);
-/*
+        });*/
+
         osmLayer = new L.tileLayer("http://{s}.tile.stamen.com/toner-lite/{z}/{x}/{y}.png", {
             attribution: 'Tiles by <a href="http://stamen.com">Stamen</a>, data by <a href="http://openstreetmap.org">OpenStreetMap</a>',
             minZoom: 3,
             maxZoom: 20,
             detectRetina: true
-        });*/
+        });
 
         var map = new L.Map('map', {
             attributionControl: false,
