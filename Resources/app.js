@@ -138,15 +138,19 @@ var tabGroup = Ti.UI.createTabGroup({
     tabsBackgroundImage: 'ui/backgrounds/semi-transparant-pixel-60.png',
     // I want to not have the default tab icons be coloured grey. Both of these have no effect:
     // cf http://developer.appcelerator.com/question/163061/tab-group-grey-icons-in-io7
-    // tabsBackgroundColor: 'white',
+    tabsBackgroundColor: 'transparent',
     // tabsBackgroundDisabledColor: 'white',
-    tintColor: '#929292'
+    tintColor: '#929292',
+    navBarHidden: true,
+
 });
 
 var photosTab = Ti.UI.createTab({
     icon: 'ui/icons/wall.png',
     activeIcon: 'ui/icons/wall_hi.png',
     window: photosWindow,
+    width: '20%',
+    height: '50dp'
 });
 
 photosTab.addEventListener("focus", updatePhotos);
@@ -155,12 +159,16 @@ var globeTab = Ti.UI.createTab({
     icon: 'ui/icons/earth.png',
     activeIcon: 'ui/icons/earth_hi.png',
     window: globeWindow,
+    width: '20%',
+    height: '50dp'
 });
 
 var mapTab = Ti.UI.createTab({
     icon: 'ui/icons/map.png',
     activeIcon: 'ui/icons/map_hi.png',
     window: mapWindow,
+    width: '20%',
+    height: '50dp'
 });
 
 // for now we add it as a tab, but it will probably be a seperate button on the top of the screen
@@ -168,6 +176,8 @@ var cameraTab = Ti.UI.createTab({
     icon: 'ui/icons/camera.png',
     activeIcon: 'ui/icons/camera_hi.png',
     window: cameraWindow,
+    width: '20%',
+    height: '50dp'
 });
 
 // Get the camera
@@ -176,13 +186,15 @@ cameraTab.addEventListener("focus", showCam);
 var settingsTab = Ti.UI.createTab({
     icon: 'ui/icons/settings.png',
     activeIcon: 'ui/icons/settings_hi.png',
-    window: settingsWindow
+    window: settingsWindow,
+    width: '20%',
+    height: '50dp'
 });
 
 tabGroup.addTab(globeTab);
-tabGroup.addTab(photosTab);
 tabGroup.addTab(mapTab);
 tabGroup.addTab(cameraTab);
+tabGroup.addTab(photosTab);
 tabGroup.addTab(settingsTab);
 
 //
