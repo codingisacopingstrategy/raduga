@@ -71,10 +71,53 @@
 
         // map.addLayer(owmRainLayer);
 
+        var stops2gradient = function (stops) {
+            return {
+                vector: [
+                    ['0%', '50%'],
+                    ['100%', '50%']
+                ],
+                stops: [{
+                    'offset': '0%',
+                        'style': {
+                        'color': stops[0],
+                            'opacity': 1
+                    }
+                }, {
+                    'offset': '100%',
+                        'style': {
+                        'color': stops[1],
+                            'opacity': 1
+                    }
+                }]
+            };
+        };
+
         var rainbowStyle = {
             "color": "#fd297e",
             "opacity": 1,
             "weight": 0,
+        };
+
+        var insertRainbows = function( data ){
+            console.log("inserting rainbows");
+            var dataLayer = new L.ChoroplethDataLayer(data, {
+                recordsField: 'features',
+                locationMode: L.LocationModes.GEOJSON,
+                layerOptions: {
+                    color: "#000000",
+                    fillOpacity: 0.7,
+                    opacity: 1,
+                    weight: 0
+                },
+                showLegendTooltips: false,
+                displayOptions: {
+                    "properties.gradient_stops": {
+                        gradient: stops2gradient
+                    }
+                }
+            });
+            map.addLayer(dataLayer);
         };
 
         var initMap = function(cityName) {
@@ -82,57 +125,6 @@
             var city = cityLookUpHash[cityName];
             map.setView(new L.LatLng(city.lat, city.lon), 5);
 
-            var insertRainbows = function( data ){
-                L.geoJson(data.features, {
-                    style: rainbowStyle,
-                    gradient: {
-                            vector: [['0%', '50%'], ['100%', '50%']],
-                            stops: [{
-                                'offset': '0%',
-                                'style': {
-                                    'color': 'rgb(255, 0, 0)',
-                                    'opacity': 1
-                                }
-                            }, {
-                                'offset': '16%',
-                                'style': {
-                                    'color': 'rgb(255, 127, 0)',
-                                    'opacity': 1
-                                }
-                            }, {
-                                'offset': '33%',
-                                'style': {
-                                    'color': 'rgb(255, 255, 0)',
-                                    'opacity': 1
-                                }
-                            }, {
-                                'offset': '49%',
-                                'style': {
-                                    'color': 'rgb(0, 255, 0)',
-                                    'opacity': 1
-                                }
-                            }, {
-                                'offset': '66%',
-                                'style': {
-                                    'color': 'rgb(0, 0, 255)',
-                                    'opacity': 1
-                                }
-                            }, {
-                                'offset': '83%',
-                                'style': {
-                                    'color': 'rgb(75, 0, 130)',
-                                    'opacity': 1
-                                }
-                            }, {
-                                'offset': '99%',
-                                'style': {
-                                    'color': 'rgb(143, 0, 255)',
-                                    'opacity': 1
-                                }
-                            }]
-}
-                    }).addTo(map);
-            };
 
             $.getJSON("http://vps40616.public.cloudvps.com/latest/clouds.json", function( data ){
                 L.geoJson(data.features, {
