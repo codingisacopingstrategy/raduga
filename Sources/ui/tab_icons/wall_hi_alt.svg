@@ -16,8 +16,8 @@
    x="0px"
    y="0px"
    width="64"
-   height="45"
-   viewBox="0 0 64 45"
+   height="42"
+   viewBox="0 0 64 42"
    enable-background="new 0 0 64 50"
    xml:space="preserve"><metadata
    id="metadata3677"><rdf:RDF><cc:Work
@@ -58,19 +58,19 @@
 </sodipodi:namedview>
 <g
    id="layer1"
-   transform="translate(-93.916536,-90.58403)"
+   transform="translate(-93.916536,-93.58403)"
    inkscape:groupmode="layer"
    inkscape:label="Layer 1">
 	<path
    id="path8497"
    inkscape:connector-curvature="0"
    sodipodi:nodetypes="ccc"
-   d="m 129.41654,105.08406 h -19 v 19"
+   d="m 129.41654,108.08406 h -19 v 19"
    style="fill:none;stroke:#ffffff" />
 	<rect
    id="rect8499"
    x="112.41699"
-   y="107.08403"
+   y="110.08403"
    width="19"
    height="19"
    style="fill:none;stroke:#ffffff" />

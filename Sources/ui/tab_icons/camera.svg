@@ -16,8 +16,8 @@
    x="0px"
    y="0px"
    width="64"
-   height="45"
-   viewBox="-7 0 64 45"
+   height="42"
+   viewBox="-7 0 64 42"
    enable-background="new -7 0 64 50"
    xml:space="preserve"><metadata
    id="metadata3817"><rdf:RDF><cc:Work
@@ -32,7 +32,7 @@
    fit-margin-top="0"
    borderopacity="1.0"
    inkscape:cy="23.39727"
-   inkscape:window-y="0"
+   inkscape:window-y="22"
    inkscape:window-height="852"
    inkscape:pageshadow="2"
    inkscape:document-units="px"
@@ -42,7 +42,7 @@
    fit-margin-right="0"
    showgrid="true"
    inkscape:window-width="1440"
-   inkscape:window-x="8"
+   inkscape:window-x="-2"
    inkscape:cx="16.78742"
    inkscape:zoom="11.313709"
    inkscape:window-maximized="0"
@@ -58,12 +58,12 @@
 </sodipodi:namedview>
 <g
    id="layer1"
-   transform="translate(-93.916536,-90.58403)"
+   transform="translate(-93.916536,-93.58403)"
    inkscape:groupmode="layer"
    inkscape:label="Layer 1">
 	<g
    id="g3683"
-   transform="matrix(1.0195896,0,0,0.99713827,-156.05117,-646.47618)">
+   transform="matrix(1.0195896,0,0,0.99713827,-156.05117,-643.47618)">
 		
 			<rect
    id="rect3685"
@@ -75,7 +75,7 @@
 	</g>
 	<g
    id="g3687"
-   transform="translate(-151.45425,-649.38247)">
+   transform="translate(-151.45425,-646.38247)">
 		<path
    id="rect3689"
    inkscape:connector-curvature="0"
@@ -85,16 +85,16 @@
 	<line
    id="line3691"
    x1="108.421"
-   y1="114.08286"
+   y1="117.08286"
    x2="120.543"
-   y2="114.08286"
+   y2="117.08286"
    style="fill:none;stroke:#ffffff;stroke-width:1" />
 	<line
    id="line3693"
    x1="130.85699"
-   y1="114.08286"
+   y1="117.08286"
    x2="137.384"
-   y2="114.08286"
+   y2="117.08286"
    style="fill:none;stroke:#ffffff;stroke-width:1" />
 	
 		<circle
@@ -108,7 +108,7 @@
    r="6"
    d="m 131.461,112.108 c 0,3.31371 -2.68629,6 -6,6 -3.31371,0 -6,-2.68629 -6,-6 0,-3.31371 2.68629,-6 6,-6 3.31371,0 6,2.68629 6,6 z"
    style="fill:none;stroke:#ffffff;stroke-width:0.98650002"
-   transform="translate(0,4.9998595)">
+   transform="translate(0,7.999859)">
 	</circle>
 </g>
 </svg>

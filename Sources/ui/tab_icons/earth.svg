@@ -16,8 +16,8 @@
    x="0px"
    y="0px"
    width="64"
-   height="45"
-   viewBox="0 0 64 45"
+   height="42"
+   viewBox="0 0 64 42"
    enable-background="new 0 0 64 50"
    xml:space="preserve"><metadata
    id="metadata3566"><rdf:RDF><cc:Work
@@ -31,8 +31,8 @@
    fit-margin-left="0"
    fit-margin-top="0"
    borderopacity="1.0"
-   inkscape:cy="25.727323"
-   inkscape:window-y="53"
+   inkscape:cy="33.009979"
+   inkscape:window-y="11"
    inkscape:window-height="825"
    inkscape:pageshadow="2"
    inkscape:document-units="px"
@@ -42,8 +42,8 @@
    fit-margin-right="0"
    showgrid="true"
    inkscape:window-width="1119"
-   inkscape:window-x="483"
-   inkscape:cx="39.017142"
+   inkscape:window-x="282"
+   inkscape:cx="34.507372"
    inkscape:zoom="9.3343587"
    inkscape:window-maximized="0">
 	<inkscape:grid
@@ -57,7 +57,7 @@
 </sodipodi:namedview>
 <g
    id="layer1"
-   transform="translate(-93.916536,-90.58403)"
+   transform="translate(-93.916536,-93.58403)"
    inkscape:groupmode="layer"
    inkscape:label="Layer 1">
 	
@@ -72,21 +72,21 @@
    r="11.541"
    d="m 140.92,110.144 c 0,6.37392 -5.16708,11.541 -11.541,11.541 -6.37392,0 -11.541,-5.16708 -11.541,-11.541 0,-6.37392 5.16708,-11.541003 11.541,-11.541003 6.37392,0 11.541,5.167083 11.541,11.541003 z"
    style="fill:none;stroke:#ffffff"
-   transform="translate(0,5.0000324)">
+   transform="translate(5.9995386,8.0000324)">
 	</circle>
 	<line
    id="line3677"
-   x1="117.839"
-   y1="115.14403"
-   x2="140.92"
-   y2="115.14403"
+   x1="123.83854"
+   y1="118.14403"
+   x2="146.91954"
+   y2="118.14403"
    style="fill:none;stroke:#ffffff" />
 	<line
    id="line3679"
-   x1="129.379"
-   y1="103.76803"
-   x2="129.379"
-   y2="126.51903"
+   x1="135.37854"
+   y1="106.76803"
+   x2="135.37854"
+   y2="129.51903"
    style="fill:none;stroke:#ffffff" />
 	
 		<ellipse
@@ -101,7 +101,7 @@
    ry="11.541"
    d="m 136.4,110.144 c 0,6.37392 -3.14341,11.541 -7.021,11.541 -3.87759,0 -7.021,-5.16708 -7.021,-11.541 0,-6.37392 3.14341,-11.541003 7.021,-11.541003 3.87759,0 7.021,5.167083 7.021,11.541003 z"
    style="fill:none;stroke:#ffffff"
-   transform="translate(0,5.0000324)">
+   transform="translate(5.9995386,8.0000324)">
 	</ellipse>
 </g>
 </svg>
