@@ -89,15 +89,16 @@ var passwordCheckTextField = Ti.UI.createTextField({
 var createRadugaButton = function(titleid) {
     return Ti.UI.createButton({
         titleid: titleid,
+        left: '10dp',
         top: '10dp',
         width: '100dp',
         borderSize: '1dp',
         borderColor: '#919191',
         color: 'rgb(103,103,113)',
         borderRadius: '3dp',
-        height: '36dp',
+ //       height: 'Ti.UI.SIZE',
         backgroundColor: 'rgba(255,255,255,0.4)',
-        font: { fontSize: '20dp' },
+//        font: { fontSize: '20dp' },
         style: Ti.UI.iPhone.SystemButtonStyle.PLAIN,
     });
 };
