@@ -1,32 +1,30 @@
 // Set up screen
 
-var cameraScrollView = Ti.UI.createScrollView({
-  contentWidth: 'auto',
-  contentHeight: 'auto',
-  height: '80%',
-  width: '100%'
+var cameraProgressBar = Ti.UI.createProgressBar({
+    width:200,
+    height:50,
+    min:0,
+    max:1,
+    value:0,
+    top:10,
+    message:'Uploading image',
+    color: 'rgb(103,103,113)',
 });
 
+cameraWindow.add(cameraProgressBar);
 
-var cameraLabel = Ti.UI.createLabel({
-    color: 'black',
-    top: '10dp', left: '10dp', right: '10dp'
-});
-var uploadButton = Ti.UI.createButton({
-   titleid: 'upload',
-   top: 10,
-   width: 100
-});
-
-Raduga.callingCamera = false;
-Raduga.tempFile = null;
-
-var resetCameraWindow = function() {
-    cameraScrollView.removeAllChildren(); //TODO: also remove event listeners
-    Raduga.callingCamera = false;
+var cameraAvailable = true;
+var close = function() {
+    cameraWindow.setBackgroundGradient({});
+    Ti.Media.hideCamera();
+    cameraAvailable = true;
+    cameraProgressBar.hide();
+    cameraProgressBar.value = 0;
 };
 
 var uploadPhoto = function(media) {
+    cameraWindow.setBackgroundGradient(currentGradient());
+    cameraProgressBar.show();
 
     var now = new Date().toISOString();
     var mime = media.mimeType;
@@ -85,15 +83,19 @@ var uploadPhoto = function(media) {
                     // We are done here!
                     // switch to the tab that shows the photos
                     tabGroup.setActiveTab(photosTab);
-                    Ti.Media.hideCamera();
-                    cameraAvailable = true;
+                    close();
                 },
                 onerror: function(e) {
                     Ti.API.info(this.responseText);
                     alertError('Failed uploading photo file: ' + e.error + '\n\n' + this.responseText);
-                    Raduga.callingCamera = false;
+                    close();
+                },
+                onsendstream: function(e) {
+                    cameraProgressBar.value = e.progress ;
+                    Ti.API.info('ONSENDSTREAM - PROGRESS: ' + e.progress);
                 }
             });
+
             secondXhr.open('PATCH', 'http://' + response._links.self.href);
             secondXhr.setRequestHeader('If-Match', response._etag);
             secondXhr.setRequestHeader('Authorization', authstr);
@@ -105,7 +107,7 @@ var uploadPhoto = function(media) {
         },
         onerror: function(e) {
             alertError('Failed uploading metadata camera: ' + e.error);
-            Raduga.callingCamera = false;
+            close();
         }
     });
 
@@ -117,12 +119,9 @@ var uploadPhoto = function(media) {
     xhr.send(JSON.stringify(photoData));
 };
 
-uploadButton.addEventListener('click', uploadPhoto);
-
 // Camera Behaviour
 
 // from the example http://docs.appcelerator.com/titanium/3.0/#!/guide/Camera_and_Photo_Gallery_APIs :
-var cameraAvailable = true;
 var showCam = function() {
     Ti.API.info("showCam called");
     if (!cameraAvailable) {
@@ -136,11 +135,6 @@ var showCam = function() {
     }
 
     cameraAvailable = false;
-
-    var close = function() {
-        Ti.Media.hideCamera();
-        cameraAvailable = true;
-    };
 
     Ti.Media.showCamera({
         success:function(event) {
