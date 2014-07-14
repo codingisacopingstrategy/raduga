@@ -1,8 +1,8 @@
 // photosWindow behaviour
 
 var updatePhotos = function() {
-    var url = 'http://vps40616.public.cloudvps.com/photos/?projection={"image":0}';
-    // var url = 'http://127.0.0.1:5000/photos/?projection={"image":0}';
+    var url = 'http://vps40616.public.cloudvps.com/photos/?where={"processed":true}&projection={"image":0}';
+    // var url = 'http://127.0.0.1:5000/photos/?where={"processed":true}&projection={"image":0}';
     var json;
 
     var xhr = Ti.Network.createHTTPClient({
