@@ -95,7 +95,9 @@ var uploadPhoto = function(media) {
                 }
             });
 
-            secondXhr.open('PATCH', 'http://' + response._links.self.href);
+            secondXhr.open('POST', 'http://' + response._links.self.href);
+            secondXhr.setRequestHeader('X-HTTP-Method-Override', 'PATCH');  // in iOS we can sent a PATCH request directly,
+                                                                            // but in (Titanium’s implementation of) Android we can’t
             secondXhr.setRequestHeader('If-Match', response._etag);
             secondXhr.setRequestHeader('Authorization', authstr);
             secondXhr.send({
