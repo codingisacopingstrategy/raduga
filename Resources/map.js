@@ -10,7 +10,7 @@ mapWebView.addEventListener('load', function() {
     // If someone clicks on the map before they set up their location; center on Moscow
     var city = Ti.App.Properties.getString('city_name_en') ? Ti.App.Properties.getString('city_name_en') : 'Moscow';
     Ti.API.info("Centering map on " + city);
-    mapWebView.evalJS('initMap("' + city +'");');
+    mapWebView.evalJS('initMap("' + city +'", ' + JSON.stringify(photos2Features()) + ');');
 });
 
 mapWindow.add(mapWebView);

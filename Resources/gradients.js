@@ -4,7 +4,6 @@ var currentColour = function(slug) {
     }
     // "05:30" -> 5
     var hour = parseInt(slug.split(":")[0], 10);
-    console.log(hour);
     if (0 <= hour && hour < 7) { return 'rgb(196,201,211)'; }
     if (7 <= hour && hour < 12) { return 'rgb(104,102,113)'; }
     if (12 <= hour && hour < 17) { return 'rgb(103,103,113)'; }

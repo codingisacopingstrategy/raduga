@@ -15,7 +15,7 @@ var updatePhotos = function() {
             // fill the photo-tab
             tableView.setData(createTableData());
             // plot the photos in the webview
-            // globe.evalJS('svg.append("path").datum(' + JSON.stringify(features2Photos())  + ').attr("d", path.pointRadius(14)).attr("class", "place");');
+            // globe.evalJS('svg.append("path").datum(' + JSON.stringify(photos2Features())  + ').attr("d", path.pointRadius(14)).attr("class", "place");');
             // display most recent rainbow in globe tab
             if (Raduga.photos.length === 0) {
                 recentRainbowLabel.setText('');
@@ -38,18 +38,27 @@ var updatePhotos = function() {
     xhr.send();
 };
 
-var features2Photos = function() {
+var photos2Features = function() {
     var geoJSON = {};
     geoJSON.type = "FeatureCollection";
     geoJSON.features = [];
+
+    console.log("trying to add " + Raduga.photos.length + " photos as features");
     for (var i = 0; i < Raduga.photos.length; i++) {
         var photo = Raduga.photos[i];
 
         // Skip photo’s without sufficient metadata
-        if (typeof photo.custom_fields === 'undefined' || typeof photo.custom_fields.name_en === 'undefined' || typeof photo.custom_fields.name_ru === 'undefined' || typeof photo.custom_fields.coordinates === 'undefined') {
+        if (typeof photo.created_at === 'undefined' || typeof photo.custom_fields === 'undefined' || typeof photo.custom_fields.name_en === 'undefined' || typeof photo.custom_fields.name_ru === 'undefined' || typeof photo.custom_fields.coordinates === 'undefined') {
             Ti.API.info('Photo ' + photo._id + ' does not have sufficient metadata to locate on map');
             continue;
         }
+
+        if (new Date(photo.created_at).toDateString() !== new Date().toDateString()) {
+            Ti.API.info('Photo ' + photo._id + ' is not of today, and does not warrant a marker on the map');
+            continue;
+        }
+
+        Ti.API.info('Photo ' + photo._id + ' will in due time be plotted on the map');
 
         var name = photo.custom_fields[Raduga.Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en'];
         var lon  = photo.custom_fields.coordinates[0][0];

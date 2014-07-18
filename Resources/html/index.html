@@ -100,7 +100,6 @@
         };
 
         var insertRainbows = function( data ){
-            console.log("inserting rainbows");
             var dataLayer = new L.ChoroplethDataLayer(data, {
                 recordsField: 'features',
                 locationMode: L.LocationModes.GEOJSON,
@@ -120,12 +119,29 @@
             map.addLayer(dataLayer);
         };
 
-        var initMap = function(cityName) {
+        var showSpottedRainbows = function (data) {
+            L.geoJson(data, {
+                pointToLayer: function (feature, latlng) {
+                    return L.circleMarker(latlng, {
+                        radius: 8,
+                        fillColor: "#00ff00",
+                        color: "transparent",
+                        weight: 0,
+                        opacity: 1,
+                        fillOpacity: 1
+                    });
+                }
+
+            }).addTo(map);
+        };
+
+        var initMap = function(cityName, spottedRainbowFeatures) {
             var cityName = cityName || 'Moscow';
+            var spottedRainbowFeatures = spottedRainbowFeatures || {};
             var city = cityLookUpHash[cityName];
             map.setView(new L.LatLng(city.lat, city.lon), 5);
 
-
+            showSpottedRainbows(spottedRainbowFeatures);
             $.getJSON("http://vps40616.public.cloudvps.com/latest/clouds.json", function( data ){
                 L.geoJson(data.features, {
                     style: function(feature) {

@@ -91,8 +91,7 @@ var uploadPhoto = function(media) {
                     close();
                 },
                 onsendstream: function(e) {
-                    cameraProgressBar.value = e.progress ;
-                    Ti.API.info('ONSENDSTREAM - PROGRESS: ' + e.progress);
+                    cameraProgressBar.value = e.progress ; // continously sends values from 0 until 1
                 }
             });
 
