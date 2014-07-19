@@ -11,12 +11,13 @@ password,Password,Пароль
 password_again,Password (again),Пароль (еще раз)
 password_blank,Please enter password,"Пожалуйста, введите пароль"
 username_blank,Please enter username,"Пожалуйста, введите имя пользователя"
-city_blank,Please enter your city,
+city_blank,Please enter your city,"Пожалуйста, введите ваше местонахождение "
 passwords_no_match,Passwords do not match,Два поля с паролями не совпадают
-username_or_password_incorrect,Username or password incorrect,
+username_or_password_incorrect,Username or password incorrect,Имя пользователя или пароль ошибочны 
 username,Username,Имя пользователя
 signup,Sign up,Зарегистрироваться
 welcome,Welcome,Добро пожаловать
+welcome_user,"Welcome, %1$s","Добро пожаловать, %1$s"
 error,Error,Ошибка
 username_taken,Username taken,Пользователь с таким именем уже существует
 photo_ready_for_upload,Uploading your rainbow at %1$s ,Ваша фотография радуги загружается в %1$s как пользователь %2$s
@@ -31,12 +32,15 @@ upload,Upload,Загружать
 prediction,"Rainbows predicted near %1$s, %2$s and %3$s","Радуги предсказаны вблизи %1$s, %2$s и %3$s"
 prediction_two,Rainbows predicted near %1$s and %2$s,Радуги предсказаны вблизи %1$s и %2$s
 prediction_one,Rainbows predicted near %1$s,Радуги предсказаны вблизи %1$s
-rainbow_spotted,"Last spotted:\n %1$s, %2$d km away",Пользователь %1$s увидел радугу вблизи %2$s
+rainbow_spotted,"Rainbow spotted:\n %1$s, %2$d km away",Пользователь %1$s увидел радугу вблизи %2$s
 rainbow_predicted_afternoon,Increased chance of rainbows this afternoon!,Сегодня днем у вас есть большой шанс увидеть радугу!
 rainbow_predicted_morning,Increased chance of rainbows this morning!,Сегодня утром у вас есть большой шанс увидеть радугу!
 prediction_updated,Prediction updated,Прогноз обновляется
-rainbow_spotted_alt,"Last spotted:\n %1$s, %2$d km away","Spotted rainbow: %1$s, %2$d km от вас"
-no_internet,Can not connect to metereological services. Raduga can only be used with internet access,
-ok,OK,
-alert,Alert,
-photo_caption,%1$s spotted a rainbow near %2$s,
+rainbow_spotted_alt,"Rainbow spotted:\n %1$s, %2$d km from you","Радуга обнаружена: \n %1$s, %2$d км от вас"
+photo_caption,%1$s spotted a rainbow near %2$s,%1$s обнаружил радугу возле %2$s
+ok,OK,о'кей 
+alert,Alert,сигнал 
+no_internet,Raduga cannot connect to the internet. Please check your settings. ,"Радуга не может соединиться с интернетом. Пожалуйста, проверьте настройки. "
+where_rainbow,Where is the rainbow?,Где находится радуга?
+where_rainbow_explanation,"You can spot a rainbow when your back is facing the sun. In front of you, rain is falling, usually from a cloud. Sunlight falls on the raindrops, causing some of them to take on beautiful colors. The droplets must be plump and round, in order to refract the light so that a rainbow appears.Additionally, the sun should be positioned low on the horizon. This is why you mostly encounter rainbows in the morning, and in the early evening.","Чтобы увидеть радугу, встаньте спиной к солнцу. Перед вами льется дождь, часто стеной. Солнечный свет падает на капли дождя, окрашивая некоторые из них яркими цветами. Эти капли должны быть круглой формы, тогда свет будет отражаться таким
+образом, что возникнет радуга. К тому же, солнце не должно стоять слишком высоко над горизонтом. Именно поэтому радугу можно увидеть чаще всего утром или в конце дня."

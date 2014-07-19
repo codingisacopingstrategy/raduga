@@ -13,12 +13,13 @@
 	<string name="password_again">Пароль (еще раз)</string>
 	<string name="password_blank">Пожалуйста, введите пароль</string>
 	<string name="username_blank">Пожалуйста, введите имя пользователя</string>
-	<string name="city_blank"></string>
+	<string name="city_blank">Пожалуйста, введите ваше местонахождение </string>
 	<string name="passwords_no_match">Два поля с паролями не совпадают</string>
-	<string name="username_or_password_incorrect"></string>
+	<string name="username_or_password_incorrect">Имя пользователя или пароль ошибочны </string>
 	<string name="username">Имя пользователя</string>
 	<string name="signup">Зарегистрироваться</string>
 	<string name="welcome">Добро пожаловать</string>
+	<string name="welcome_user">Добро пожаловать, %1$s</string>
 	<string name="error">Ошибка</string>
 	<string name="username_taken">Пользователь с таким именем уже существует</string>
 	<string name="photo_ready_for_upload">Ваша фотография радуги загружается в %1$s как пользователь %2$s</string>
@@ -37,9 +38,12 @@
 	<string name="rainbow_predicted_afternoon">Сегодня днем у вас есть большой шанс увидеть радугу!</string>
 	<string name="rainbow_predicted_morning">Сегодня утром у вас есть большой шанс увидеть радугу!</string>
 	<string name="prediction_updated">Прогноз обновляется</string>
-	<string name="rainbow_spotted_alt">Spotted rainbow: %1$s, %2$d km от вас</string>
-	<string name="no_internet"></string>
-	<string name="ok"></string>
-	<string name="alert"></string>
-	<string name="photo_caption"></string>
+	<string name="rainbow_spotted_alt">Радуга обнаружена: \n %1$s, %2$d км от вас</string>
+	<string name="photo_caption">%1$s обнаружил радугу возле %2$s</string>
+	<string name="ok">о'кей </string>
+	<string name="alert">сигнал </string>
+	<string name="no_internet">Радуга не может соединиться с интернетом. Пожалуйста, проверьте настройки. </string>
+	<string name="where_rainbow">Где находится радуга?</string>
+	<string name="where_rainbow_explanation">Чтобы увидеть радугу, встаньте спиной к солнцу. Перед вами льется дождь, часто стеной. Солнечный свет падает на капли дождя, окрашивая некоторые из них яркими цветами. Эти капли должны быть круглой формы, тогда свет будет отражаться таким
+образом, что возникнет радуга. К тому же, солнце не должно стоять слишком высоко над горизонтом. Именно поэтому радугу можно увидеть чаще всего утром или в конце дня.</string>
 </resources>

@@ -19,6 +19,7 @@
 	<string name="username">Username</string>
 	<string name="signup">Sign up</string>
 	<string name="welcome">Welcome</string>
+	<string name="welcome_user">Welcome, %1$s</string>
 	<string name="error">Error</string>
 	<string name="username_taken">Username taken</string>
 	<string name="photo_ready_for_upload">Uploading your rainbow at %1$s </string>
@@ -33,13 +34,15 @@
 	<string name="prediction">Rainbows predicted near %1$s, %2$s and %3$s</string>
 	<string name="prediction_two">Rainbows predicted near %1$s and %2$s</string>
 	<string name="prediction_one">Rainbows predicted near %1$s</string>
-	<string name="rainbow_spotted">Last spotted:\n %1$s, %2$d km away</string>
+	<string name="rainbow_spotted">Rainbow spotted:\n %1$s, %2$d km away</string>
 	<string name="rainbow_predicted_afternoon">Increased chance of rainbows this afternoon!</string>
 	<string name="rainbow_predicted_morning">Increased chance of rainbows this morning!</string>
 	<string name="prediction_updated">Prediction updated</string>
-	<string name="rainbow_spotted_alt">Last spotted:\n %1$s, %2$d km away</string>
-	<string name="no_internet">Can not connect to metereological services. Raduga can only be used with internet access</string>
+	<string name="rainbow_spotted_alt">Rainbow spotted:\n %1$s, %2$d km from you</string>
+	<string name="photo_caption">%1$s spotted a rainbow near %2$s</string>
 	<string name="ok">OK</string>
 	<string name="alert">Alert</string>
-	<string name="photo_caption">%1$s spotted a rainbow near %2$s</string>
+	<string name="no_internet">Raduga cannot connect to the internet. Please check your settings. </string>
+	<string name="where_rainbow">Where is the rainbow?</string>
+	<string name="where_rainbow_explanation">You can spot a rainbow when your back is facing the sun. In front of you, rain is falling, usually from a cloud. Sunlight falls on the raindrops, causing some of them to take on beautiful colors. The droplets must be plump and round, in order to refract the light so that a rainbow appears.Additionally, the sun should be positioned low on the horizon. This is why you mostly encounter rainbows in the morning, and in the early evening.</string>
 </resources>
