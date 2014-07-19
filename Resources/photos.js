@@ -26,7 +26,7 @@ var updatePhotos = function() {
             var spottedMessage = String.format(L('rainbow_spotted_alt'),
                 photo.custom_fields[Raduga.Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en'],
                 distanceToHome(photo.custom_fields.coordinates[0][1], photo.custom_fields.coordinates[0][0]));
-            var dateMessage = latestRainbowDate.getDay() + 1 + ' ' + getMonth(latestRainbowDate) + ' ' + Date2PonyHour(latestRainbowDate);
+            var dateMessage = latestRainbowDate.getDate() + ' ' + getMonth(latestRainbowDate) + ' ' + Date2PonyHour(latestRainbowDate);
             recentRainbowLabel.setText(spottedMessage + '\n' + dateMessage);
         },
         onerror: function(error) {
