@@ -122,7 +122,7 @@ var createTableData = function() {
         });
         row.add(rainbowImage);
 
-        var labelCity = Ti.UI.createLabel({
+        var labelCity = Raduga.UI.createLabel({
             color: 'white',
             text: photo.custom_fields[Raduga.Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en'],
             width: Ti.UI.SIZE,
@@ -131,7 +131,7 @@ var createTableData = function() {
         });
         row.add(labelCity);
 
-        var labelUserAndDate = Ti.UI.createLabel({
+        var labelUserAndDate = Raduga.UI.createLabel({
             color: 'white',
             text: photo.user.username + " " + Date2PonyDate(new Date(photo.created_at)) + " — " + Date2PonyHour(new Date(photo.created_at)),
             width: Ti.UI.SIZE,

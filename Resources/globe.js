@@ -7,7 +7,7 @@ var globeContainer = Ti.UI.createView({
     layout: 'vertical'
 });
 
-var recentRainbowLabel = Ti.UI.createLabel({
+var recentRainbowLabel = Raduga.UI.createLabel({
     color: currentColour(),
     text: '',
     textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
@@ -25,7 +25,7 @@ var globe = Ti.UI.createImageView({
     disableBounce: true
 });
 
-var predictionLabel = Ti.UI.createLabel({
+var predictionLabel = Raduga.UI.createLabel({
     text: '',
     color: currentColour(),
     textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,

@@ -41,7 +41,7 @@ var activityIndicator = Ti.UI.createActivityIndicator({
     borderRadius: '5dp'
 });
 
-var usernameLabel = Ti.UI.createLabel({
+var usernameLabel = Raduga.UI.createLabel({
     color: 'black',
     textid: 'username',
     top: '10dp', left: '10dp',
@@ -56,7 +56,7 @@ var usernameTextField = Ti.UI.createTextField({
     autocapitalization: Ti.UI.TEXT_AUTOCAPITALIZATION_NONE,
 });
 
-var passwordLabel = Ti.UI.createLabel({
+var passwordLabel = Raduga.UI.createLabel({
     color: 'black',
     textid: 'password',
     top: '10dp', left: '10dp',
@@ -71,7 +71,7 @@ var passwordTextField = Ti.UI.createTextField({
     passwordMask: true
 });
 
-var passwordCheckLabel = Ti.UI.createLabel({
+var passwordCheckLabel = Raduga.UI.createLabel({
     color: 'black',
     textid: 'password_again',
     top: '10dp', left: '10dp',
@@ -107,7 +107,7 @@ var loginButton = createRadugaButton('login');
 var logoutButton = createRadugaButton('logout');
 var signupButton = createRadugaButton('signup');
 
-var notificationsLabel = Ti.UI.createLabel({
+var notificationsLabel = Raduga.UI.createLabel({
     color: 'black',
     textid: 'notifications',
     top: '10dp', left: '10dp',
@@ -119,7 +119,7 @@ var notificationsSwitch = Ti.UI.createSwitch({
     top: '10dp', left: '10dp',
 });
 
-var cityLabel = Ti.UI.createLabel({
+var cityLabel = Raduga.UI.createLabel({
     color: 'black',
     textid: 'city',
     top: '10dp', left: '10dp',

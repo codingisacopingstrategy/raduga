@@ -1,5 +1,20 @@
 /* Utility Functions */
 
+/* User Interface */
+
+Raduga.UI = {};
+
+Raduga.UI.createLabel = function(options) {
+    /**
+     * As Titianium doesn’t allow to set a default fontSize, we create our own method for
+     * initiating labels that allows us to add default settings
+     */
+    if (Raduga.Platform.osname === 'android') {
+        options.font = { fontSize: "16dp" };
+    }
+    return Ti.UI.createLabel(options);
+};
+
 /* Date Formatting */
 
 var zeroPad = function(n) {
