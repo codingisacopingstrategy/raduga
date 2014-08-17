@@ -11,7 +11,7 @@ var recentRainbowLabel = Raduga.UI.createLabel({
     color: currentColour(),
     text: '',
     textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
-    top: '22dp', left: '10dp', right: '10dp',
+    top: Raduga.Platform.android ? '52dp' : '22dp', left: '10dp', right: '10dp', // On Android, we need to make space for the tab bar which is on top
 });
 
 var globe = Ti.UI.createImageView({
