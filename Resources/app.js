@@ -225,7 +225,10 @@ var updateUser = function() {
     });
 };
 
+tabGroup.open();
+
 var initWithNetwork = function() {
+    Ti.API.info("initialising app, presuming network connectivity");
     updateUser();
     updateElektroL();
     updatePhotos();
@@ -233,15 +236,15 @@ var initWithNetwork = function() {
     if (!Ti.App.Properties.getString('sessionID')) {
         tabGroup.setActiveTab(settingsTab);
     }
-    tabGroup.open();
 };
 
 var initSansNetwork = function() {
+    Ti.API.info("initialising app, presuming no network connectivity");
+    tabGroup.setActiveTab(globeTab);
     predictionLabel.setText(L('no_internet'));
-    globeWindow.open();
 };
 
-if (Titanium.Network.networkType === Titanium.Network.NETWORK_NONE) {
+if (Ti.Network.getNetworkTypeName() === "NONE") {
     initSansNetwork();
 } else {
     initWithNetwork();

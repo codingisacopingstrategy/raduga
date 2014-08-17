@@ -30,6 +30,11 @@ var updatePhotos = function() {
             recentRainbowLabel.setText(spottedMessage + '\n' + dateMessage);
         },
         onerror: function(error) {
+            if (Ti.Network.getNetworkTypeName() === "NONE") {
+                /** If the telephone is not connected to the internet, this is not actually an error */
+                Ti.API.info("tried to request photos while not connected to the internet");
+                return;
+            }
             alertError('Failed loading photos through network: ' + JSON.stringify(error));
         }
     });
