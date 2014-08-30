@@ -127,20 +127,24 @@ var createTableData = function() {
         });
         row.add(rainbowImage);
 
+        // with an almost transparent background that helps to keep text readable on white photos
+        // and some very low tech padding with space " " ( thanks https://developer.appcelerator.com/question/50441/padding-on-a-label#answer-237825 )
         var labelCity = Raduga.UI.createLabel({
+            backgroundColor: 'rgba(0,0,0,0.1)',
             color: 'white',
-            text: photo.custom_fields[Raduga.Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en'],
+            text: " " + photo.custom_fields[Raduga.Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en'] + " ",
             width: Ti.UI.SIZE,
-            top: '2dp',
+            top: '3dp',
             left: '10dp'
         });
         row.add(labelCity);
 
         var labelUserAndDate = Raduga.UI.createLabel({
+            backgroundColor: 'rgba(0,0,0,0.1)',
             color: 'white',
-            text: photo.user.username + " " + Date2PonyDate(new Date(photo.created_at)) + " — " + Date2PonyHour(new Date(photo.created_at)),
+            text: " " + photo.user.username + " " + Date2PonyDate(new Date(photo.created_at)) + " — " + Date2PonyHour(new Date(photo.created_at)) + " ",
             width: Ti.UI.SIZE,
-            top: '26dp',
+            top: '27dp',
             left: '10dp'
         });
         row.add(labelUserAndDate);
