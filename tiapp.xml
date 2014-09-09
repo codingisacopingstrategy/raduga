@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
+    <property name="acs-oauth-secret-development" type="string">ADDHERE</property>
+    <property name="acs-oauth-key-development" type="string">ADDHERE</property>
+    <property name="acs-api-key-development" type="string">ADDHERE</property>
+    <property name="acs-oauth-secret-production" type="string">ADDHERE</property>
+    <property name="acs-oauth-key-production" type="string">ADDHERE</property>
+    <property name="acs-api-key-production" type="string">ADDHERE</property>
     <id>nl.pinkponyexpress.raduga</id>
     <name>raduga</name>
     <version>1.0</version>
