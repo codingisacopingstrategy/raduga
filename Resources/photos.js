@@ -68,10 +68,12 @@ var photos2Features = function() {
             continue;
         }
 
+        /* This code will only plot rainbows of today:
         if (new Date(photo.created_at).toDateString() !== new Date().toDateString()) {
             Ti.API.info('Photo ' + photo._id + ' is not of today, and does not warrant a marker on the map');
             continue;
-        }
+        } */
+
 
         Ti.API.info('Photo ' + photo._id + ' will in due time be plotted on the map');
 
