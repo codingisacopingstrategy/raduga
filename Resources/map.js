@@ -13,4 +13,7 @@ mapWebView.addEventListener('load', function() {
     mapWebView.evalJS('initMap("' + city +'", ' + JSON.stringify(photos2Features()) + ');');
 });
 
-mapWindow.add(mapWebView);
+var updateMap = function() {
+    mapWindow.add(mapWebView);
+};
+

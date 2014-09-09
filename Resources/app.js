@@ -234,6 +234,7 @@ var initWithNetwork = function() {
     updateElektroL();
     updatePhotos();
     updateRainbowCities();
+    updateMap();
     if (!Ti.App.Properties.getString('sessionID')) {
         tabGroup.setActiveTab(settingsTab);
     }

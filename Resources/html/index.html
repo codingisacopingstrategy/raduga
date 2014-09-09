@@ -37,39 +37,21 @@
     <div id="map"> </div>
 
     <script>
-        /*osmLayer = new L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-            minZoom: 3,
-            maxZoom: 20,
-            detectRetina: true
-        });*/
 
-        osmLayer = new L.tileLayer("http://{s}.tile.stamen.com/toner-lite/{z}/{x}/{y}.png", {
+        osmLayer = new L.tileLayer("osm/{z}/{x}/{y}.png", {
             attribution: 'Tiles by <a href="http://stamen.com">Stamen</a>, data by <a href="http://openstreetmap.org">OpenStreetMap</a>',
-            minZoom: 3,
-            maxZoom: 20,
-            detectRetina: true
+            detectRetina: true,
+            updateWhenIdle: false,
         });
 
         var map = new L.Map('map', {
             attributionControl: false,
+            minZoom: 3, // looks for tiles with z of 4
+            maxZoom: 7, // looks for tiles with z of 8
+            maxBounds: [[34.196091, 19.62726], [81.851929, 191.010254]]
         });
         map.addLayer(osmLayer);
         L.control.attribution({position: 'bottomleft', prefix: ''}).addTo(map);
-
-        var owmCloudsLayer = L.tileLayer('http://{s}.tile.openweathermap.org/map/clouds_cls/{z}/{x}/{y}.png', {
-            attribution: 'Map data &copy; <a href="http://openweathermap.org">OpenWeatherMap</a>',
-            maxZoom: 18,
-            detectRetina: true,
-        });
-
-        var owmRainLayer = L.tileLayer('http://{s}.tile.openweathermap.org/map/precipitation_cls/{z}/{x}/{y}.png', {
-            attribution: 'Map data &copy; <a href="http://openweathermap.org">OpenWeatherMap</a>',
-            maxZoom: 18,
-            detectRetina: true,
-        });
-
-        // map.addLayer(owmRainLayer);
 
         var stops2gradient = function (stops) {
             return {
@@ -97,6 +79,14 @@
             "color": "#fd297e",
             "opacity": 1,
             "weight": 0,
+            "stroke": false
+        };
+
+        var cloudStyle = {
+            "color": "#cccccc",
+            "opacity": 0.65,
+            "weight": 0,
+            "stroke": false
         };
 
         var insertRainbows = function( data ){
@@ -146,16 +136,14 @@
             showSpottedRainbows(spottedRainbowFeatures);
             $.getJSON("http://vps40616.public.cloudvps.com/latest/clouds.json", function( data ){
                 L.geoJson(data.features, {
-                    style: function(feature) {
-                        return { "color": feature.properties.colour,
-                            "opacity": 0.65,
-                            "stroke": false,
-                            "weight": 0
-                        };
-                    },
-                }).addTo(map);
+                    style: cloudStyle }).addTo(map);
 
-                $.getJSON("http://vps40616.public.cloudvps.com/latest/rainbows.json", insertRainbows);
+                $.getJSON("http://vps40616.public.cloudvps.com/latest/rainbows.json", function( data ) {
+                    L.geoJson(data.features,
+                        {
+                            style: rainbowStyle
+                        }).addTo(map);
+                });
             });
         };
 
