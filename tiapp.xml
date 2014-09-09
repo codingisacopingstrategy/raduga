@@ -29,10 +29,20 @@
         <manifest>
             <uses-sdk targetSdkVersion="19"/>
             <application android:theme="@style/Light">
-                <activity android:name="org.appcelerator.titanium.TiActivity" android:configChanges="keyboardHidden|screenSize" android:screenOrientation="portrait" />
-                <activity android:name="org.appcelerator.titanium.TiTranslucentActivity" android:configChanges="keyboardHidden|screenSize" android:theme="@style/Theme.AppCompat.Translucent" android:screenOrientation="portrait" />
-                <activity android:name="ti.modules.titanium.ui.android.TiPreferencesActivity" android:configChanges="screenSize"/>
-                <activity android:name="ti.modules.titanium.media.TiCameraActivity" android:configChanges="keyboardHidden|screenSize" android:theme="@style/Theme.AppCompat.Translucent.NoTitleBar.Fullscreen" android:screenOrientation="portrait" />
+                <activity
+                    android:configChanges="keyboardHidden|screenSize"
+                    android:name="org.appcelerator.titanium.TiActivity" android:screenOrientation="portrait"/>
+                <activity
+                    android:configChanges="keyboardHidden|screenSize"
+                    android:name="org.appcelerator.titanium.TiTranslucentActivity"
+                    android:screenOrientation="portrait" android:theme="@style/Theme.AppCompat.Translucent"/>
+                <activity android:configChanges="screenSize" android:name="ti.modules.titanium.ui.android.TiPreferencesActivity"/>
+                <activity
+                    android:configChanges="keyboardHidden|screenSize"
+                    android:name="ti.modules.titanium.media.TiCameraActivity"
+                    android:screenOrientation="portrait" android:theme="@style/Theme.AppCompat.Translucent.NoTitleBar.Fullscreen"/>
+                <meta-data
+                    android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyBhYCHEoCfbDPNsSTEJajFOc4tmT8Gjvb4"/>
             </application>
         </manifest>
     </android>
