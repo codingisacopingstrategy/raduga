@@ -241,6 +241,7 @@ var initWithNetwork = function() {
 
 var initSansNetwork = function() {
     Ti.API.info("initialising app, presuming no network connectivity");
+    globe.setImage('html/elektro_l_130502_0030_10.png'); // globe error image
     tabGroup.setActiveTab(globeTab);
     predictionLabel.setText(L('no_internet'));
 };

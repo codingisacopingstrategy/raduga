@@ -16,8 +16,8 @@ var recentRainbowLabel = Raduga.UI.createLabel({
 
 var globe = Ti.UI.createImageView({
     top: '10dp',
-    backgroundImage: 'html/elektro_l_130502_0030_10.png',
-    image: 'html/elektro_l_130502_0030_10.png',
+    backgroundImage: 'ui/transparant_pixel.png',
+    image: 'ui/transparant_pixel.png',
     backgroundColor: 'transparent',
     width: Raduga.Platform.width * .8,
     height: Raduga.Platform.width * .8,
@@ -112,8 +112,10 @@ var updateElektroL = function() {
     var elektro_slug = '13' + zeroPad(d.getUTCMonth()) + zeroPad(d.getUTCDate()) + '_' + zeroPad(d.getUTCHours()) + zeroPad(d.getUTCMinutes());
     var elektro_url = 'http://vps40616.public.cloudvps.com/static/elektro/' + elektro_slug + '_RGB.png';
 
-    Ti.API.info("loading Elektro L " + elektro_url);
-    globe.setImage(elektro_url);
+    if (globe.getImage() !== elektro_url) {
+        Ti.API.info("loading Elektro L " + elektro_url);
+        globe.setImage(elektro_url);
+    }
 };
 
 var updateRainbowCities = function() {
