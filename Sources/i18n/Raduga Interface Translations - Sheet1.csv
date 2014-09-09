@@ -37,6 +37,7 @@ rainbow_predicted_afternoon,Increased chance of rainbows this afternoon!,Сег�
 rainbow_predicted_morning,Increased chance of rainbows this morning!,Сегодня утром у вас есть большой шанс увидеть радугу!
 prediction_updated,Prediction updated,Прогноз обновляется
 rainbow_spotted_alt,"Rainbow spotted:\n %1$s, %2$d km from you","Радуга обнаружена: \n %1$s, %2$d км от вас"
+rainbow_spotted_no_from_you,Rainbow spotted:\n %1$s,"Радуга обнаружена: \n %1$s, %2$d км от вас"
 photo_caption,%1$s spotted a rainbow near %2$s,%1$s обнаружил радугу возле %2$s
 ok,OK,о'кей 
 alert,Alert,сигнал 

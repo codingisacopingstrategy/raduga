@@ -39,6 +39,7 @@
 	<string name="rainbow_predicted_morning">Сегодня утром у вас есть большой шанс увидеть радугу!</string>
 	<string name="prediction_updated">Прогноз обновляется</string>
 	<string name="rainbow_spotted_alt">Радуга обнаружена: \n %1$s, %2$d км от вас</string>
+	<string name="rainbow_spotted_no_from_you">Радуга обнаружена: \n %1$s, %2$d км от вас</string>
 	<string name="photo_caption">%1$s обнаружил радугу возле %2$s</string>
 	<string name="ok">о'кей </string>
 	<string name="alert">сигнал </string>

@@ -79,6 +79,9 @@ var loginUser = function(username, password) {
             Ti.API.info("User " +  user.username + " logged in");
             settingsWindow.fireEvent('user_status_change');
             initPush();
+            if (Raduga.photos.length > 0) {
+                updateSpottedMessage();
+            }
             tabGroup.setActiveTab(globeTab);
         } else {
             alert('Error for ' + username + ' and ' + password + ':\n' +

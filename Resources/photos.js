@@ -1,5 +1,25 @@
 // photosWindow behaviour
 
+var updateSpottedMessage = function() {
+     // display most recent rainbow in globe tab
+    if (Raduga.photos.length === 0) {
+        recentRainbowLabel.setText('');
+        return null;
+    }
+    var photo = Raduga.photos[0];
+    var latestRainbowDate = new Date(photo.created_at);
+    if (loggedIn()) {
+        var spottedMessage = String.format(L('rainbow_spotted_alt'),
+            photo.custom_fields[Raduga.Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en'],
+            distanceToHome(photo.custom_fields.coordinates[0][1], photo.custom_fields.coordinates[0][0]));
+    } else {
+        var spottedMessage = String.format(L('rainbow_spotted_no_from_you'),
+        photo.custom_fields[Raduga.Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en']);
+    }
+    var dateMessage = latestRainbowDate.getDate() + ' ' + getMonth(latestRainbowDate) + ' ' + Date2PonyHour(latestRainbowDate);
+    recentRainbowLabel.setText(spottedMessage + '\n' + dateMessage);
+};
+
 var updatePhotos = function() {
     var url = 'http://vps40616.public.cloudvps.com/photos/?where={"processed":true}&projection={"image":0}';
     // var url = 'http://127.0.0.1:5000/photos/?where={"processed":true}&projection={"image":0}';
@@ -16,18 +36,8 @@ var updatePhotos = function() {
             tableView.setData(createTableData());
             // plot the photos in the webview
             // globe.evalJS('svg.append("path").datum(' + JSON.stringify(photos2Features())  + ').attr("d", path.pointRadius(14)).attr("class", "place");');
-            // display most recent rainbow in globe tab
-            if (Raduga.photos.length === 0) {
-                recentRainbowLabel.setText('');
-                return null;
-            }
-            var photo = Raduga.photos[0];
-            var latestRainbowDate = new Date(photo.created_at);
-            var spottedMessage = String.format(L('rainbow_spotted_alt'),
-                photo.custom_fields[Raduga.Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en'],
-                distanceToHome(photo.custom_fields.coordinates[0][1], photo.custom_fields.coordinates[0][0]));
-            var dateMessage = latestRainbowDate.getDate() + ' ' + getMonth(latestRainbowDate) + ' ' + Date2PonyHour(latestRainbowDate);
-            recentRainbowLabel.setText(spottedMessage + '\n' + dateMessage);
+
+            updateSpottedMessage();
         },
         onerror: function(error) {
             if (Ti.Network.getNetworkTypeName() === "NONE") {
