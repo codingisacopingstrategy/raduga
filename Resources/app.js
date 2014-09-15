@@ -197,6 +197,27 @@ tabGroup.addTab(cameraTab);
 tabGroup.addTab(photosTab);
 tabGroup.addTab(settingsTab);
 
+
+/*
+ * ATTENTION: extremely inelegant way of making sure the mapTab background
+ * is more opaque
+ *
+ */
+var standardOp = function() {
+    tabGroup.setTabsBackgroundImage('ui/backgrounds/semi-transparant-pixel-60.png');
+};
+var highOp = function() {
+    tabGroup.setTabsBackgroundImage('ui/backgrounds/semi-transparant-pixel-80.png');
+};
+
+cameraTab.addEventListener("focus", standardOp);
+photosTab.addEventListener("focus", updatePhotos);
+globeTab.addEventListener("focus", standardOp);
+mapTab.addEventListener("focus", highOp);
+cameraTab.addEventListener("focus", standardOp);
+settingsTab.addEventListener("focus", standardOp);
+
+
 //
 // Initialise app
 //
