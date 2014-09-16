@@ -274,17 +274,21 @@ if (Ti.Network.getNetworkTypeName() === "NONE") {
     initWithNetwork();
 }
 
-// If connection drops or becomes available FIXME doesn’t seem to work yet
+// If connection drops or becomes available
 Ti.Network.addEventListener('change', function(e) {
     Ti.API.info("detected change in network connectivity");
-    if (e.online) {
-        initWithNetwork();
-    } else {
+    if (Ti.Network.getNetworkTypeName() === "NONE") {
         initSansNetwork();
+    } else {
+        initWithNetwork();
     }
 });
 
 var updateColours = function() {
+    if (Ti.Network.getNetworkTypeName() === "NONE") {
+        // no internet access, no updates
+        return;
+    }
     Ti.API.info("Checking if colours need to be updated");
     if (Raduga.currentGradientSlug === gradientSlug()) {
         return null;
