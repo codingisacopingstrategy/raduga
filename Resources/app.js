@@ -237,17 +237,18 @@ var updateUser = function() {
             Ti.App.Properties.setString('username', user.username);
             Ti.App.Properties.setString('userid', user.id);
             initPush();
+            tabGroup.open();
         } else {
             // this way the will know we need to log in.
             Ti.API.info("No user logged in");
             Ti.App.Properties.setString('sessionID', '');
             settingsWindow.fireEvent('user_status_change');
             tabGroup.setActiveTab(settingsTab);
+            tabGroup.open();
         }
     });
 };
 
-tabGroup.open();
 
 var initWithNetwork = function() {
     Ti.API.info("initialising app, presuming network connectivity");
@@ -265,6 +266,7 @@ var initSansNetwork = function() {
     Ti.API.info("initialising app, presuming no network connectivity");
     globe.setImage('html/elektro_l_130502_0030_10.png'); // globe error image
     tabGroup.setActiveTab(globeTab);
+    tabGroup.open();
     predictionLabel.setText(L('no_internet'));
 };
 
