@@ -16,8 +16,8 @@ var recentRainbowLabel = Raduga.UI.createLabel({
 
 var globe = Ti.UI.createImageView({
     top: '10dp',
-    backgroundImage: 'ui/transparant_pixel.png',
-    image: 'ui/transparant_pixel.png',
+    defaultImage: 'ui/transparant_pixel.png',
+    image: 'html/elektro_l_20140311_0530_rgb.png',
     backgroundColor: 'transparent',
     width: Raduga.Platform.width * .8,
     height: Raduga.Platform.width * .8,
@@ -113,6 +113,14 @@ var updateElektroL = function() {
     var elektro_url = 'http://vps40616.public.cloudvps.com/static/elektro/' + elektro_slug + '_RGB.png';
 
     if (globe.getImage() !== elektro_url) {
+        /*var newGlobeImage = Ti.UI.createImageView(elektro_url);
+        Ti.API.info("the image will be replaced by " + elektro_url + ", started to load");
+        newGlobeImage.addEventListener('load', function(e) {
+            Ti.API.info(elektro_url + " has now loaded, replacing old image");
+            globeWindow.remove(globe);
+            globeWindow.add(newGlobeImage);
+            globe = newGlobeImage;
+        });*/
         Ti.API.info("loading Elektro L " + elektro_url);
         globe.setImage(elektro_url);
     }
