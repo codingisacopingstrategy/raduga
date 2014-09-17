@@ -163,8 +163,8 @@ var createTableData = function() {
 
         var photoShareButton = Ti.UI.createImageView({
             image: 'ui/icons/share.png',
-            width: '19dp',
-            height: '26dp',
+            width: '27dp',
+            height: '30dp',
             bottom: '10dp',
             left: '10dp'
         });
