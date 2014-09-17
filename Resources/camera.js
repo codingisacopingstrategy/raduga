@@ -47,7 +47,8 @@ var uploadPhoto = function(media) {
             "coordinates": [ [parseFloat(Ti.App.Properties.getString('city_lon')), parseFloat(Ti.App.Properties.getString('city_lat'))] ]
         },
         user: {
-            username: Ti.App.Properties.getString('username')
+            username: Ti.App.Properties.getString('username'),
+            id: Ti.App.Properties.getString('userid')
         },
         created_at: now,
         updated_at: now,
