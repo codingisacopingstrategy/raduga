@@ -45,3 +45,7 @@ no_internet,Raduga cannot connect to the internet. Please check your settings. ,
 where_rainbow,Where is the rainbow?,Где находится радуга?
 where_rainbow_explanation,"You can spot a rainbow when your back is facing the sun. In front of you, rain is falling, usually from a cloud. Sunlight falls on the raindrops, causing some of them to take on beautiful colors. The droplets must be plump and round, in order to refract the light so that a rainbow appears.Additionally, the sun should be positioned low on the horizon. This is why you mostly encounter rainbows in the morning, and in the early evening.","Чтобы увидеть радугу, встаньте спиной к солнцу. Перед вами льется дождь, часто стеной. Солнечный свет падает на капли дождя, окрашивая некоторые из них яркими цветами. Эти капли должны быть круглой формы, тогда свет будет отражаться таким
 образом, что возникнет радуга. К тому же, солнце не должно стоять слишком высоко над горизонтом. Именно поэтому радугу можно увидеть чаще всего утром или в конце дня."
+confirm,Confirm,
+cancel,Cancel,
+delete_confirm_message,Would you like to delete this Rainbow photo?,
+delete,Delete,

@@ -21,6 +21,7 @@ var updateSpottedMessage = function() {
 };
 
 var updatePhotos = function() {
+    Ti.API.info('updating photos');
     var url = 'http://vps40616.public.cloudvps.com/photos/?where={"processed":true}&projection={"image":0}';
     // var url = 'http://127.0.0.1:5000/photos/?where={"processed":true}&projection={"image":0}';
     var json;
@@ -125,6 +126,10 @@ var createTableData = function() {
         // The Z is another way of saying GMT.
         photo.created_at = photo.created_at.replace('+0000','Z');
 
+        if (photo.user.username === Ti.App.Properties.getString('username') && loggedIn()) {
+            photo.owned = true;
+        }
+
         var row = Ti.UI.createTableViewRow({
             className: 'rainbowPhoto', // used to improve table performance
             backgroundColor: 'transparent',
@@ -170,6 +175,18 @@ var createTableData = function() {
         });
         row.add(photoShareButton);
 
+        if (photo.owned) {
+            var photoDeleteButton = Ti.UI.createImageView({
+                id :"delete_"+ i,
+                image: 'ui/icons/delete.png',
+                width: '18dp',
+                height: '25dp',
+                bottom: '10dp',
+                right: '10dp'
+            });
+            row.add(photoDeleteButton);
+        }
+
         if(Raduga.Platform.ios) {
             row.setSelectionStyle(Ti.UI.iPhone.TableViewCellSelectionStyle.NONE);
         }
@@ -199,19 +216,41 @@ var tableView = Ti.UI.createTableView({
 });
 
 tableView.addEventListener("click", function(e){
-    Ti.API.info("click registerd on share button");
-    var photo = Raduga.photos[e.row.rowIndex];
-    var city = photo.custom_fields[Raduga.Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en'];
-    var username = photo.user.username;
+    // only the delete button has an id, in other cases we show the share dialog:
+    if ( e.source.id === undefined ) {
+        Ti.API.info("click registerd on share button");
+        var photo = Raduga.photos[e.row.rowIndex];
+        var city = photo.custom_fields[Raduga.Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en'];
+        var username = photo.user.username;
 
-    if(Raduga.Platform.ios && Social.isActivityViewSupported()){
-        Ti.API.info("Social activity registered");
-        Social.activityView({
-            text: String.format(L('photo_caption'), username, city),
-            image: photo.urls.original,
-        });
+        if(Raduga.Platform.ios && Social.isActivityViewSupported()){
+            Ti.API.info("Social activity registered");
+            Social.activityView({
+                text: String.format(L('photo_caption'), username, city),
+                image: photo.urls.original,
+            });
+        } else {
+            //implement sharing Android
+        }
     } else {
-        //implement sharing Android
+        Ti.API.info("click registerd on delete button");
+        var photo = Raduga.photos[e.row.rowIndex];
+
+        var dialog = Ti.UI.createAlertDialog({
+            cancel : 1,
+            buttonNames : [L('confirm'), L('cancel')],
+            message : L('delete_confirm_message'),
+            title : L('delete')
+        });
+        dialog.addEventListener('click', function(e) {
+            if (e.index === e.source.cancel) {
+                Ti.API.info('The cancel button was clicked');
+                return;
+            }
+            Ti.API.info("Trying to delete");
+        });
+        dialog.show();
+
     }
 });
 

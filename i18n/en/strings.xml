@@ -46,4 +46,8 @@
 	<string name="no_internet">Raduga cannot connect to the internet. Please check your settings. </string>
 	<string name="where_rainbow">Where is the rainbow?</string>
 	<string name="where_rainbow_explanation">You can spot a rainbow when your back is facing the sun. In front of you, rain is falling, usually from a cloud. Sunlight falls on the raindrops, causing some of them to take on beautiful colors. The droplets must be plump and round, in order to refract the light so that a rainbow appears.Additionally, the sun should be positioned low on the horizon. This is why you mostly encounter rainbows in the morning, and in the early evening.</string>
+	<string name="confirm">Confirm</string>
+	<string name="cancel">Cancel</string>
+	<string name="delete_confirm_message">Would you like to delete this Rainbow photo?</string>
+	<string name="delete">Delete</string>
 </resources>
