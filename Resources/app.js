@@ -299,15 +299,17 @@ var updateColours = function() {
 
     var slug; //= '16:00'; set a slug by hand for debugging purposes
 
-    globeWindow        .setBackgroundGradient(currentGradient(slug));
-    settingsWindow     .setBackgroundGradient(currentSettingsGradient(slug));
-    predictionLabel    .setColor(currentColour(slug));
-    recentRainbowLabel .setColor(currentColour(slug));
-    usernameLabel      .setColor(currentColour(slug));
-    passwordLabel      .setColor(currentColour(slug));
-    passwordCheckLabel .setColor(currentColour(slug));
-    notificationsLabel .setColor(currentColour(slug));
-    cityLabel          .setColor(currentColour(slug));
+    globeWindow                     .setBackgroundGradient(currentGradient(slug));
+    settingsWindow                  .setBackgroundGradient(currentSettingsGradient(slug));
+    predictionLabel                 .setColor(currentColour(slug));
+    recentRainbowLabel              .setColor(currentColour(slug));
+    usernameLoggedInLabel           .setColor(currentColour(slug));
+    usernameLoggedInLabel           .setColor(currentColour(slug));
+    rainbowExplanationHeadingLabel  .setColor(currentColour(slug));
+    rainbowExplanationLabel         .setColor(currentColour(slug));
+    usernameNewUserLabel            .setColor(currentColour(slug));
+    usernameNewUserLabelUnderLine   .setBackgroundColor(currentColour(slug));
+    notificationsLabel              .setColor(currentColour(slug));
 
     updateElektroL();
     updateSunLine();

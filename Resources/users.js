@@ -35,6 +35,7 @@ var createUser = function(username, password, password_confirmation) {
     }, function (e) {
         if (e.success) {
             passwordTextField.value = '';
+            passwordCheckTextField.value = '';
             Raduga.user = e.users[0];
             var user = Raduga.user;
             Ti.App.Properties.setString('sessionID', Cloud.sessionId);
@@ -73,6 +74,7 @@ var loginUser = function(username, password) {
     }, function (e) {
         if (e.success) {
             passwordTextField.value = '';
+            passwordCheckTextField.value = '';
             Raduga.user = e.users[0];
             var user = Raduga.user;
             Ti.App.Properties.setString('sessionID', Cloud.sessionId);
@@ -107,3 +109,11 @@ var logoutUser = function() {
     });
 };
 
+var newUser = function() {
+    Ti.App.Properties.setString('username', '');
+    if (loggedIn) {
+        logoutUser();
+    } else {
+        settingsWindow.fireEvent('user_status_change');
+    }
+};

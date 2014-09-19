@@ -41,64 +41,88 @@ var activityIndicator = Ti.UI.createActivityIndicator({
     borderRadius: '5dp'
 });
 
-var usernameLabel = Raduga.UI.createLabel({
-    color: 'black',
-    textid: 'username',
-    top: '10dp', left: '10dp',
-    width: '250dp'
+var rainbowExplanationHeadingLabel = Raduga.UI.createLabel({
+    font: { fontSize: "12dp", fontWeight:  "bold", },
+    top: '10dp',
+    left: '30dp',
+    width: '260dp',
+    text: L('where_rainbow')
+});
+var rainbowExplanationLabel = Raduga.UI.createLabel({
+    font: { fontSize: "12dp" },
+    top: '0dp',
+    left: '30dp',
+    width: '260dp',
+    text: L('where_rainbow_explanation')
 });
 
+var usernameLoggedInLabel = Raduga.UI.createLabel({
+    font: { fontSize: "14dp" },
+    color: 'black',
+    text: L('username') + ': ',
+    top: '10dp', left: '40dp',
+    width: '260dp'
+});
+
+var usernameNewUserLabel = Raduga.UI.createLabel({
+    font: { fontSize: "14dp" },
+    color: 'black',
+    text: L('sign_in_as_new_user'),
+    top: '10dp', left: '40dp',
+    width: '260dp'
+});
+
+var usernameNewUserLabelUnderLine = Ti.UI.createView({
+    backgroundColor: 'black',
+    height: '1dp',
+    left: '34dp',
+    width: '127dp'
+});
+
+
 var usernameTextField = Ti.UI.createTextField({
+    hintText: L('username'),
+    font: { fontSize: "14dp" },
     color: 'rgb(103,103,113)',
     borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
-    top: '10dp', left: '10dp',
-    width: '250dp',
+    top: '10dp', left: '30dp',
+    width: '260dp',
     autocapitalization: Ti.UI.TEXT_AUTOCAPITALIZATION_NONE,
 });
 
-var passwordLabel = Raduga.UI.createLabel({
-    color: 'black',
-    textid: 'password',
-    top: '10dp', left: '10dp',
-    width: '250dp'
-});
-
 var passwordTextField = Ti.UI.createTextField({
+    hintText: L('password'),
+    font: { fontSize: "14dp" },
     color: 'rgb(103,103,113)',
     borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
-    top: '10dp', left: '10dp',
-    width: '250dp',
+    top: '10dp', left: '30dp',
+    width: '260dp',
     passwordMask: true
 });
 
-var passwordCheckLabel = Raduga.UI.createLabel({
-    color: 'black',
-    textid: 'password_again',
-    top: '10dp', left: '10dp',
-    width: '250dp'
-});
-
 var passwordCheckTextField = Ti.UI.createTextField({
+    hintText: L('password_again'),
+    font: { fontSize: "14dp" },
     color: 'rgb(103,103,113)',
     borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
-    top: '10dp', left: '10dp',
-    width: '250dp',
+    top: '10dp', left: '30dp',
+    width: '260dp',
     passwordMask: true
 });
 
 var createRadugaButton = function(titleid) {
     return Ti.UI.createButton({
         titleid: titleid,
-        left: '10dp',
+        left: '30dp',
         top: '10dp',
-        width: '100dp',
-        borderSize: '1dp',
-        borderColor: '#919191',
-        color: 'rgb(103,103,113)',
-        borderRadius: '3dp',
+        width: '260dp',
+        borderSize: '0',
+        color: 'rgb(0,255,0)',
+        borderRadius: '0dp',
  //       height: 'Ti.UI.SIZE',
-        backgroundColor: 'rgba(255,255,255,0.4)',
+        backgroundColor: 'rgba(0,0,0)',
 //        font: { fontSize: '20dp' },
+        font: { fontSize: "14dp", fontWeight: "bold", },
         style: Ti.UI.iPhone.SystemButtonStyle.PLAIN,
     });
 };
@@ -107,37 +131,40 @@ var loginButton = createRadugaButton('login');
 var logoutButton = createRadugaButton('logout');
 var signupButton = createRadugaButton('signup');
 
+var notificationsView = Ti.UI.createView({
+    top: '10dp',
+    height: '20dp'
+});
+
 var notificationsLabel = Raduga.UI.createLabel({
     color: 'black',
     textid: 'notifications',
-    top: '10dp', left: '10dp',
-    width: '250dp'
+    font: { fontSize: "14dp" },
+    left: '40dp',
 });
 
 var notificationsSwitch = Ti.UI.createSwitch({
     value: Ti.App.Properties.getString('notifications') !== 'false',
-    top: '10dp', left: '10dp',
+    right: '30dp',
 });
 
-var cityLabel = Raduga.UI.createLabel({
-    color: 'black',
-    textid: 'city',
-    top: '10dp', left: '10dp',
-    width: '250dp'
-});
+notificationsView.add(notificationsLabel);
+notificationsView.add(notificationsSwitch);
 
 var cityTextField = Ti.UI.createTextField({
+    hintText: L('city'),
     color: 'rgb(103,103,113)',
     value: Ti.App.Properties.getString(Raduga.Platform.currentLanguage === 'ru' ? 'city_name_ru' : 'city_name_en'),
     borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
-    top: '10dp', left: '10dp',
-    width: '250dp'
+    top: '10dp', left: '30dp',
+    width: '260dp'
 });
 
 
 var settingsScrollView = Ti.UI.createScrollView({
    contentWidth: Raduga.Platform.width,
    contentHeight: 'auto',
+   left: '0',
    top: '20dp',
    layout: 'vertical',
    showVerticalScrollIndicator: true,
@@ -227,10 +254,13 @@ var handleSignup = function() {
 signupButton.addEventListener('click', handleSignup);
 
 var handleLogin = function() {
-    loginUser(usernameTextField.value, passwordTextField.value);
+    // if the username is known there is no textField:
+    var username = usernameTextField.value ? usernameTextField.value : Ti.App.Properties.getString('username');
+    loginUser(username, passwordTextField.value);
 };
 loginButton.addEventListener('click', handleLogin);
 
+usernameNewUserLabel.addEventListener('click', newUser);
 
 // handle settings refresh
 settingsWindow.addEventListener('user_status_change', function() {
@@ -240,36 +270,30 @@ settingsWindow.addEventListener('user_status_change', function() {
 var updateUserDialog = function(view) {
     view.removeAllChildren(); //TODO: also remove event listeners
 
-    if (signedUp()) {
-        usernameTextField.value = Ti.App.Properties.getString('username');
-    } else {
-        usernameTextField.value = '';
-    }
-    if (loggedIn()) {
-        usernameTextField.setEnabled(false); // Android only
-        usernameTextField.setEditable(false);
-        } else {
-        usernameTextField.setEnabled(true); // Android only
-        usernameTextField.setEditable(true);
-    }
+    view.add(rainbowExplanationHeadingLabel);
+    view.add(rainbowExplanationLabel);
 
-    view.add(usernameLabel);
-    view.add(usernameTextField);
+    if (signedUp()) {
+        usernameLoggedInLabel.setText(L('username') + ': ' + Ti.App.Properties.getString('username'));
+        view.add(usernameLoggedInLabel);
+        view.add(usernameNewUserLabel);
+        view.add(usernameNewUserLabelUnderLine);
+    } else {
+
+        usernameTextField.value = '';
+        view.add(usernameTextField);
+    };
 
     if (!loggedIn()) {
         // We are not logged in. Add the pass
-        view.add(passwordLabel);
         view.add(passwordTextField);
         if (!signedUp()) {
-            view.add(passwordCheckLabel);
             view.add(passwordCheckTextField);
         }
     }
 
-    view.add(cityLabel);
     view.add(cityTextField);
-    view.add(notificationsLabel);
-    view.add(notificationsSwitch);
+    view.add(notificationsView);
 
 
     if (loggedIn()) {
