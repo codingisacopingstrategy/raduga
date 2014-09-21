@@ -54,6 +54,35 @@ var updatePhotos = function() {
     xhr.send();
 };
 
+var deletePhoto = function(photo) {
+    var url = 'http://vps40616.public.cloudvps.com/photos/' + photo.id;
+//    var url = 'http://127.0.0.1:5000/photos/' + photo.id;
+    var authstr = 'Basic ' + Ti.Utils.base64encode(Ti.App.Properties.getString('userid') + ':');
+
+    var delXhr = Ti.Network.createHTTPClient({
+        onload: function() {
+            updatePhotos();
+        },
+        onerror: function(error) {
+            if (Ti.Network.getNetworkTypeName() === "NONE") {
+                /** If the telephone is not connected to the internet, this is not actually an error */
+                Ti.API.info("tried to delete photos while not connected to the internet");
+                return;
+            }
+            alertError('Failed deleting photo: ' + JSON.stringify(error));
+        }
+    });
+
+    delXhr.open("DELETE", url);
+    //delXhr.setRequestHeader('X-HTTP-Method-Override', 'DELETE');  // in iOS we can send a DELETE request directly,
+                                                                // but in (Titanium’s implementation of) Android we can’t
+//    Concurrency checking disabled for now, because of https://github.com/nicolaiarocci/eve/issues/369 (is going to be available in 0.5)
+//    delXhr.setRequestHeader('If-Match', photo._etag);
+    console.log(photo._etag);
+    delXhr.setRequestHeader('Authorization', authstr);
+    delXhr.send();
+};
+
 var photos2Features = function() {
     var geoJSON = {};
     geoJSON.type = "FeatureCollection";
@@ -248,9 +277,9 @@ tableView.addEventListener("click", function(e){
                 return;
             }
             Ti.API.info("Trying to delete");
+            deletePhoto(photo);
         });
         dialog.show();
-
     }
 });
 
