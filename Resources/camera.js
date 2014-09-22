@@ -13,17 +13,15 @@ var cameraProgressBar = Ti.UI.createProgressBar({
 
 cameraWindow.add(cameraProgressBar);
 
-var cameraAvailable = true;
 var close = function() {
     cameraWindow.setBackgroundGradient({});
-    Ti.Media.hideCamera();
-    cameraAvailable = true;
     cameraProgressBar.hide();
     cameraProgressBar.value = 0;
 };
 
 var uploadPhoto = function(media) {
     cameraWindow.setBackgroundGradient(currentGradient());
+    Ti.Media.hideCamera();
     cameraProgressBar.show();
 
     var now = new Date().toISOString();
@@ -127,17 +125,12 @@ var uploadPhoto = function(media) {
 // from the example http://docs.appcelerator.com/titanium/3.0/#!/guide/Camera_and_Photo_Gallery_APIs :
 var showCam = function() {
     Ti.API.info("showCam called");
-    if (!cameraAvailable) {
-        return false;
-    }
 
     if (!Ti.App.Properties.getString('sessionID')) {
         alertError(L("signin_before_upload"));
         tabGroup.setActiveTab(settingsTab);
         return false;
     }
-
-    cameraAvailable = false;
 
     Ti.Media.showCamera({
         success:function(event) {

@@ -173,6 +173,7 @@ var mapTab = Ti.UI.createTab({
 
 // for now we add it as a tab, but it will probably be a seperate button on the top of the screen
 var cameraTab = Ti.UI.createTab({
+    id: 'cameraTab',
     icon: 'ui/icons/camera.png',
     activeIcon: 'ui/icons/camera_hi.png',
     window: cameraWindow,
@@ -181,7 +182,13 @@ var cameraTab = Ti.UI.createTab({
 });
 
 // Get the camera
-cameraTab.addEventListener("focus", showCam);
+cameraTab.addEventListener("focus", function(e){
+    Ti.API.info("focus on the cameraTab");
+    if (e.source.id === 'cameraTab') {
+        Ti.API.info("focus on the cameraTab tab");
+        showCam();
+    }
+});
 
 var settingsTab = Ti.UI.createTab({
     icon: 'ui/icons/settings.png',
