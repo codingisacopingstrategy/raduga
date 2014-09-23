@@ -182,6 +182,11 @@ var updateRainbowCities = function() {
             }
         },
         onerror: function(error) {
+            if (Ti.Network.getNetworkTypeName() === "NONE") {
+                /** If the telephone is not connected to the internet, this is not actually an error */
+                Ti.API.info("tried to request rainbow cities while not connected to the internet");
+                return;
+            }
             alertError('Failed loading rainbow cities through network: ' + JSON.stringify(error));
         }
     });
