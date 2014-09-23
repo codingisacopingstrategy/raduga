@@ -20,8 +20,8 @@ var close = function() {
 };
 
 var uploadPhoto = function(media) {
+    Ti.API.info("uploadPhoto called");
     cameraWindow.setBackgroundGradient(currentGradient());
-    Ti.Media.hideCamera();
     cameraProgressBar.show();
 
     var now = new Date().toISOString();
@@ -124,6 +124,12 @@ var uploadPhoto = function(media) {
 
 // from the example http://docs.appcelerator.com/titanium/3.0/#!/guide/Camera_and_Photo_Gallery_APIs :
 var showCam = function() {
+    // this is to prevent the bug noted a bit further down
+    if (!Raduga.cameraAvailable) {
+        Ti.API.info('tried to trigger showCam while still locked');
+        return;
+    }
+
     Ti.API.info("showCam called");
 
     if (!Ti.App.Properties.getString('sessionID')) {
@@ -135,7 +141,13 @@ var showCam = function() {
     Ti.Media.showCamera({
         success:function(event) {
             if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {
-               uploadPhoto(event.media);
+                // there is a bug with the tab getting focus whenever a picture
+                // is taken, which triggers the camera, causing a loop
+                // this is a really crude way around it: lock the camera,
+                // and make it available after a second.
+                Raduga.cameraAvailable = false;
+                setTimeout(function() { Raduga.cameraAvailable = true; }, 1000);
+                uploadPhoto(event.media);
             } else {
                 alertError("Camera got the wrong type back: " + event.mediaType);
             }

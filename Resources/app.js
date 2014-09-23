@@ -2,6 +2,7 @@ var Raduga = {
     photos: [],
     user: null,
     Platform: {},
+    cameraAvailable: true,
 };
 
 // From the docs: Set local variables to avoid calling native methods
