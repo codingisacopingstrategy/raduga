@@ -31,6 +31,7 @@ var createUser = function(username, password, password_confirmation) {
             notifications: notificationsSwitch.value,
             name_en: Ti.App.Properties.getString('city_name_en'),
             name_ru: Ti.App.Properties.getString('city_name_ru'),
+            language: Raduga.Platform.currentLanguage
         }
     }, function (e) {
         if (e.success) {

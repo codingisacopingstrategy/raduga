@@ -191,6 +191,7 @@ citiesTable.addEventListener('click', function(e) {
                 name_en: e.rowData.val.name_en,
                 name_ru: e.rowData.val.name_ru,
                 coordinates: [[e.rowData.val.lon, e.rowData.val.lat]],
+                language: Raduga.Platform.currentLanguage,
             }
         }, function (e) {
             if (e.success) {
@@ -211,6 +212,7 @@ notificationsSwitch.addEventListener('change', function() {
             username: usernameTextField.value,
             custom_fields: {
                 notifications: notificationsSwitch.value,
+                language: Raduga.Platform.currentLanguage,
             }
         }, function (e) {
             if (e.success) {
