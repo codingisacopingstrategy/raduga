@@ -197,6 +197,8 @@ var createTableData = function() {
         row.add(labelUserAndDate);
 
         var photoShareButton = Ti.UI.createImageView({
+            id :"share_"+ i,
+            backgroundColor: 'rgba(0,0,0,0.1)',
             image: 'ui/icons/share.png',
             width: '27dp',
             height: '30dp',
@@ -207,6 +209,7 @@ var createTableData = function() {
 
         if (photo.owned) {
             var photoDeleteButton = Ti.UI.createImageView({
+                backgroundColor: 'rgba(0,0,0,0.1)',
                 id :"delete_"+ i,
                 image: 'ui/icons/delete.png',
                 width: '18dp',
@@ -247,7 +250,7 @@ var tableView = Ti.UI.createTableView({
 
 tableView.addEventListener("click", function(e){
     // only the delete button has an id, in other cases we show the share dialog:
-    if ( e.source.id === undefined ) {
+    if ( e.source.id.match(/^share_/) ) {
         Ti.API.info("click registerd on share button");
         var photo = Raduga.photos[e.row.rowIndex];
         var city = photo.custom_fields[Raduga.Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en'];
@@ -262,7 +265,7 @@ tableView.addEventListener("click", function(e){
         } else {
             //implement sharing Android
         }
-    } else {
+    } else if ( e.source.id.match(/^delete_/) ) {
         Ti.API.info("click registerd on delete button");
         var photo = Raduga.photos[e.row.rowIndex];
 
