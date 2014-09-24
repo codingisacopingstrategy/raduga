@@ -166,6 +166,7 @@ var createTableData = function() {
         });
 
         var rainbowImage = Ti.UI.createImageView({
+            defaultImage: 'ui/transparant_pixel.png',
             image: photo.urls.medium_640,
             left: 0,
             top: 0,
