@@ -248,24 +248,20 @@ cityTextField.addEventListener('focus', function(e) {
     citiesSearch.focus();
 });
 
-// setup user actions
-logoutButton.addEventListener('click', logoutUser);
+// setup actions for the various user labels
 
-var handleSignup = function() {
+usernameNewUserLabel.addEventListener('click', newUser);
+signupButton.addEventListener('click', function(){
     createUser(usernameTextField.value, passwordTextField.value, passwordCheckTextField.value);
-};
-signupButton.addEventListener('click', handleSignup);
-
-var handleLogin = function() {
+});
+loginButton.addEventListener('click', function() {
     // if the username is known there is no textField:
     var username = usernameTextField.value ? usernameTextField.value : Ti.App.Properties.getString('username');
     loginUser(username, passwordTextField.value);
-};
-loginButton.addEventListener('click', handleLogin);
+});
+logoutButton.addEventListener('click', logoutUser);
 
-usernameNewUserLabel.addEventListener('click', newUser);
-
-// handle settings refresh
+// handle refreshing the whole of the settings screen
 settingsWindow.addEventListener('user_status_change', function() {
     updateUserDialog(settingsScrollView);
 });
@@ -282,7 +278,6 @@ var updateUserDialog = function(view) {
         view.add(usernameNewUserLabel);
         view.add(usernameNewUserLabelUnderLine);
     } else {
-
         usernameTextField.value = '';
         view.add(usernameTextField);
     };

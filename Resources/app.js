@@ -99,10 +99,6 @@ var cameraWindow = Ti.UI.createWindow({
 
 var settingsWindow = Ti.UI.createWindow({
     orientationModes: [Ti.UI.PORTRAIT],
-    left: 0,
-    right: 0,
-    height: 'auto',
-    top: 0,
     backgroundGradient: currentSettingsGradient(),
     navBarHidden: true,
 });
