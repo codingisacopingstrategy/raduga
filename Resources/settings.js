@@ -75,7 +75,7 @@ var usernameNewUserLabel = Raduga.UI.createLabel({
 var usernameNewUserLabelUnderLine = Ti.UI.createView({
     backgroundColor: 'black',
     height: '1dp',
-    left: '34dp',
+    left: '40dp',
     width: '127dp'
 });
 
@@ -153,6 +153,7 @@ notificationsView.add(notificationsSwitch);
 
 var cityTextField = Ti.UI.createTextField({
     hintText: L('city'),
+    font: { fontSize: "14dp" },
     color: 'rgb(103,103,113)',
     value: Ti.App.Properties.getString(Raduga.Platform.currentLanguage === 'ru' ? 'city_name_ru' : 'city_name_en'),
     borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
