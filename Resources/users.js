@@ -112,6 +112,13 @@ var logoutUser = function() {
 
 var newUser = function() {
     Ti.App.Properties.setString('username', '');
+    Ti.App.Properties.setString('city_name_en', '');
+    Ti.App.Properties.setString('city_name_ru', '');
+    Ti.App.Properties.setString('city_lat', '');
+    Ti.App.Properties.setString('city_lon', '');
+    Ti.App.Properties.setString('notifications', '');
+    cityTextField.value = '';
+    notificationsSwitch.setValue(true);
     if (loggedIn) {
         logoutUser();
     } else {
