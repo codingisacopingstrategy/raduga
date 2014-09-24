@@ -69,7 +69,7 @@ var usernameNewUserLabel = Raduga.UI.createLabel({
     color: 'black',
     text: L('sign_in_as_new_user'),
     top: '10dp', left: '40dp',
-    width: '260dp'
+    width: Ti.UI.SIZE,
 });
 
 var usernameNewUserLabelUnderLine = Ti.UI.createView({
@@ -119,9 +119,7 @@ var createRadugaButton = function(titleid) {
         borderSize: '0',
         color: 'rgb(0,255,0)',
         borderRadius: '0dp',
- //       height: 'Ti.UI.SIZE',
         backgroundColor: 'rgba(0,0,0)',
-//        font: { fontSize: '20dp' },
         font: { fontSize: "14dp", fontWeight: "bold", },
         style: Ti.UI.iPhone.SystemButtonStyle.PLAIN,
     });
@@ -145,7 +143,7 @@ var notificationsLabel = Raduga.UI.createLabel({
 
 var notificationsSwitch = Ti.UI.createSwitch({
     value: Ti.App.Properties.getString('notifications') !== 'false',
-    right: '30dp',
+    left: '239dp',
 });
 
 notificationsView.add(notificationsLabel);
@@ -161,6 +159,20 @@ var cityTextField = Ti.UI.createTextField({
     width: '260dp'
 });
 
+
+// for Android, where the toolbar is on top
+var settingsTopSpace = Ti.UI.createView({
+    width: Raduga.Platform.width,
+    height: '30dp',
+    top: 0, bottom: 0,
+});
+
+// for iOS, where the toolbar is below
+var settingsBottomSpace = Ti.UI.createView({
+    width: Raduga.Platform.width,
+    height: '50dp',
+    top: '10dp',
+});
 
 var settingsScrollView = Ti.UI.createScrollView({
    contentWidth: Raduga.Platform.width,
@@ -268,10 +280,11 @@ settingsWindow.addEventListener('user_status_change', function() {
 
 var updateUserDialog = function(view) {
     view.removeAllChildren(); //TODO: also remove event listeners
-
+    if (Raduga.Platform.android) {
+        view.add(settingsTopSpace);
+    }
     view.add(rainbowExplanationHeadingLabel);
     view.add(rainbowExplanationLabel);
-
     if (signedUp()) {
         usernameLoggedInLabel.setText(L('username') + ': ' + Ti.App.Properties.getString('username'));
         view.add(usernameLoggedInLabel);
@@ -281,7 +294,6 @@ var updateUserDialog = function(view) {
         usernameTextField.value = '';
         view.add(usernameTextField);
     };
-
     if (!loggedIn()) {
         // We are not logged in. Add the pass
         view.add(passwordTextField);
@@ -289,21 +301,13 @@ var updateUserDialog = function(view) {
             view.add(passwordCheckTextField);
         }
     }
-
     view.add(cityTextField);
     view.add(notificationsView);
-
-
-    if (loggedIn()) {
-        view.add(logoutButton);
-    } else {
-        if (!signedUp()) {
-            view.add(signupButton);
-        } else {
-            view.add(loginButton);
-        }
+    // if a: x else if b: y else: z
+    view.add(loggedIn() ? logoutButton : signedUp() ? loginButton : signupButton );
+    if (Raduga.Platform.ios) {
+        view.add(settingsBottomSpace);
     }
-
 };
 
 updateUserDialog(settingsScrollView);

@@ -167,10 +167,10 @@ var createTableData = function() {
 
         var rainbowImage = Ti.UI.createImageView({
             defaultImage: 'ui/transparant_pixel.png',
-            image: photo.urls.medium_640,
+            image: Raduga.Platform.width < 640 ? photo.urls.medium_640 : photo.urls.large_1024,
             left: 0,
             top: 0,
-            width: '320dp'
+            width: Raduga.Platform.width
         });
         row.add(rainbowImage);
 

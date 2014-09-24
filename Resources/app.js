@@ -16,6 +16,10 @@ Raduga.Platform.currentLanguage = Ti.Locale.currentLanguage;
 Raduga.Platform.width = Ti.Platform.displayCaps.platformWidth;
 Raduga.Platform.height = Ti.Platform.displayCaps.platformHeight;
 
+Ti.API.info(["OS:       " + Raduga.Platform.osname,
+             "Language: " + Raduga.Platform.currentLanguage,
+             "Screen:   " + Raduga.Platform.width + "*" + Raduga.Platform.height].join("\n"));
+
 var deviceToken = null;
 
 var Cloud = require('ti.cloud');
