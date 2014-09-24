@@ -42,14 +42,14 @@ var activityIndicator = Ti.UI.createActivityIndicator({
 });
 
 var rainbowExplanationHeadingLabel = Raduga.UI.createLabel({
-    font: { fontSize: "12dp", fontWeight:  "bold", },
+    font: { fontSize: "16dp" },
     top: '10dp',
     left: '30dp',
     width: '260dp',
     text: L('where_rainbow')
 });
 var rainbowExplanationLabel = Raduga.UI.createLabel({
-    font: { fontSize: "12dp" },
+    font: { fontSize: "16dp" },
     top: '0dp',
     left: '30dp',
     width: '260dp',
