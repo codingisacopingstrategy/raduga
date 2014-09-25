@@ -172,7 +172,6 @@ var showCam = function() {
             a.show();
         },
         saveToPhotoGallery: true,
-        allowEditing: true,
         autoHide: true,
         mediaTypes:[Ti.Media.MEDIA_TYPE_PHOTO]
     });
