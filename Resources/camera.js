@@ -138,6 +138,12 @@ var showCam = function() {
         return false;
     }
 
+    if (Ti.Network.getNetworkTypeName() === "NONE") {
+        alertError(L("camera_no_internet"));
+        tabGroup.setActiveTab(photosTab);
+        return false;
+    }
+
     Ti.Media.showCamera({
         success:function(event) {
             if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {
