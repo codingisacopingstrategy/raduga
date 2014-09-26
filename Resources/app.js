@@ -318,6 +318,10 @@ var updateColours = function() {
     usernameNewUserLabel            .setColor(currentColour(slug));
     usernameNewUserLabelUnderLine   .setBackgroundColor(currentColour(slug));
     notificationsLabel              .setColor(currentColour(slug));
+    linkAboutLabel                  .setColor(currentColour(slug));
+    linkTermsLabel                  .setColor(currentColour(slug));
+    linkAboutLabelUnderLine         .setBackgroundColor(currentColour(slug));
+    linkTermsLabelUnderLine         .setBackgroundColor(currentColour(slug));
 
     updateElektroL();
     updateSunLine();

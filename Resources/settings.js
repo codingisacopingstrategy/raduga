@@ -63,7 +63,6 @@ var usernameLoggedInLabel = Raduga.UI.createLabel({
     top: '10dp', left: '40dp',
     width: '260dp'
 });
-
 var usernameNewUserLabel = Raduga.UI.createLabel({
     font: { fontSize: "14dp" },
     color: 'black',
@@ -71,15 +70,12 @@ var usernameNewUserLabel = Raduga.UI.createLabel({
     top: '10dp', left: '40dp',
     width: Ti.UI.SIZE,
 });
-
 var usernameNewUserLabelUnderLine = Ti.UI.createView({
     backgroundColor: 'black',
     height: '1dp',
     left: '40dp',
     width: '127dp'
 });
-
-
 var usernameTextField = Ti.UI.createTextField({
     hintText: L('username'),
     font: { fontSize: "14dp" },
@@ -89,7 +85,6 @@ var usernameTextField = Ti.UI.createTextField({
     width: '260dp',
     autocapitalization: Ti.UI.TEXT_AUTOCAPITALIZATION_NONE,
 });
-
 var passwordTextField = Ti.UI.createTextField({
     hintText: L('password'),
     font: { fontSize: "14dp" },
@@ -99,7 +94,6 @@ var passwordTextField = Ti.UI.createTextField({
     width: '260dp',
     passwordMask: true
 });
-
 var passwordCheckTextField = Ti.UI.createTextField({
     hintText: L('password_again'),
     font: { fontSize: "14dp" },
@@ -124,7 +118,6 @@ var createRadugaButton = function(titleid) {
         style: Ti.UI.iPhone.SystemButtonStyle.PLAIN,
     });
 };
-
 var loginButton = createRadugaButton('login');
 var logoutButton = createRadugaButton('logout');
 var signupButton = createRadugaButton('signup');
@@ -133,19 +126,16 @@ var notificationsView = Ti.UI.createView({
     top: '10dp',
     height: '20dp'
 });
-
 var notificationsLabel = Raduga.UI.createLabel({
     color: 'black',
     textid: 'notifications',
     font: { fontSize: "14dp" },
     left: '40dp',
 });
-
 var notificationsSwitch = Ti.UI.createSwitch({
     value: Ti.App.Properties.getString('notifications') !== 'false',
     left: '239dp',
 });
-
 notificationsView.add(notificationsLabel);
 notificationsView.add(notificationsSwitch);
 
@@ -159,6 +149,40 @@ var cityTextField = Ti.UI.createTextField({
     width: '260dp'
 });
 
+var linkTermsLabel = Raduga.UI.createLabel({
+    font: { fontSize: "12dp" },
+    color: 'black',
+    text: L('terms'),
+    left: '30dp', bottom: '1dp',
+    width: Ti.UI.SIZE
+});
+var linkTermsLabelUnderLine = Ti.UI.createView({
+    backgroundColor: 'black',
+    height: '1dp',
+    left: '30dp', bottom: '0dp',
+    width: '101dp'
+});
+var linkAboutLabel = Raduga.UI.createLabel({
+    font: { fontSize: "12dp" },
+    color: 'black',
+    text: L('about'),
+    left: '208dp', bottom: '1dp',
+    width: Ti.UI.SIZE
+});
+var linkAboutLabelUnderLine = Ti.UI.createView({
+    backgroundColor: 'black',
+    height: '1dp',
+    left: '208dp', bottom: '0dp',
+    width: '82dp'
+});
+var linksView = Ti.UI.createView({
+    top: '10dp',
+    height: '20dp'
+});
+linksView.add(linkTermsLabel);
+linksView.add(linkTermsLabelUnderLine);
+linksView.add(linkAboutLabel);
+linksView.add(linkAboutLabelUnderLine);
 
 // for Android, where the toolbar is on top
 var settingsTopSpace = Ti.UI.createView({
@@ -261,7 +285,6 @@ cityTextField.addEventListener('focus', function(e) {
 });
 
 // setup actions for the various user labels
-
 usernameNewUserLabel.addEventListener('click', newUser);
 signupButton.addEventListener('click', function(){
     createUser(usernameTextField.value, passwordTextField.value, passwordCheckTextField.value);
@@ -272,6 +295,14 @@ loginButton.addEventListener('click', function() {
     loginUser(username, passwordTextField.value);
 });
 logoutButton.addEventListener('click', logoutUser);
+
+// external links
+linkTermsLabel.addEventListener('click', function(){
+    Ti.Platform.openURL("http://pinkponyexpress.nl/#63");
+});
+linkAboutLabel.addEventListener('click', function(){
+    Ti.Platform.openURL("http://pinkponyexpress.nl/#63");
+});
 
 // handle refreshing the whole of the settings screen
 settingsWindow.addEventListener('user_status_change', function() {
@@ -305,6 +336,7 @@ var updateUserDialog = function(view) {
     view.add(notificationsView);
     // if a: x else if b: y else: z
     view.add(loggedIn() ? logoutButton : signedUp() ? loginButton : signupButton );
+    view.add(linksView);
     if (Raduga.Platform.ios) {
         view.add(settingsBottomSpace);
     }

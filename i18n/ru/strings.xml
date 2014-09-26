@@ -52,4 +52,8 @@
 	<string name="delete_confirm_message"></string>
 	<string name="delete"></string>
 	<string name="sign_in_as_new_user"></string>
+	<string name="terms"></string>
+	<string name="about"></string>
+	<string name="copyright"></string>
+	<string name="camera_no_internet"></string>
 </resources>

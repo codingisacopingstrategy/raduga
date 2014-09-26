@@ -51,4 +51,8 @@
 	<string name="delete_confirm_message">Would you like to delete this Rainbow photo?</string>
 	<string name="delete">Delete</string>
 	<string name="sign_in_as_new_user">Sign in as new user</string>
+	<string name="terms">Privacy and Terms</string>
+	<string name="about">About Raduga</string>
+	<string name="copyright">© Pink Pony Express 2014</string>
+	<string name="camera_no_internet">Please connect to the internet before uploading</string>
 </resources>
