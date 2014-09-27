@@ -160,6 +160,15 @@ linksView.add(linkTermsLabel);
 linksView.add(linkTermsLabelUnderLine);
 linksView.add(linkAboutLabel);
 linksView.add(linkAboutLabelUnderLine);
+var copyrightLabel = Raduga.UI.createLabel({
+    font: { fontSize: "12dp" },
+    color: 'black',
+    text: L('copyright'),
+    top: '10dp',
+    width: Ti.UI.SIZE,
+});
+
+
 
 // for Android, where the toolbar is on top
 var settingsTopSpace = Ti.UI.createView({
@@ -313,6 +322,7 @@ var updateUserDialog = function(view) {
     // if a: x else if b: y else: z
     view.add(loggedIn() ? logoutButton : signedUp() ? loginButton : signupButton );
     view.add(linksView);
+    view.add(copyrightLabel);
     if (Raduga.Platform.ios) {
         view.add(settingsBottomSpace);
     }

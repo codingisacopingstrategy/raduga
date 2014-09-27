@@ -322,6 +322,7 @@ var updateColours = function() {
     linkTermsLabel                  .setColor(currentColour(slug));
     linkAboutLabelUnderLine         .setBackgroundColor(currentColour(slug));
     linkTermsLabelUnderLine         .setBackgroundColor(currentColour(slug));
+    copyrightLabel                  .setColor(currentColour(slug));
 
     updateElektroL();
     updateSunLine();
