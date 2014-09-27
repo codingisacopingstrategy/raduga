@@ -44,15 +44,13 @@ var activityIndicator = Ti.UI.createActivityIndicator({
 var rainbowExplanationHeadingLabel = Raduga.UI.createLabel({
     font: { fontSize: "16dp" },
     top: '10dp',
-    left: '30dp',
-    width: '260dp',
+    width: Raduga.Platform.width * .8125,
     text: L('where_rainbow')
 });
 var rainbowExplanationLabel = Raduga.UI.createLabel({
     font: { fontSize: "16dp" },
     top: '0dp',
-    left: '30dp',
-    width: '260dp',
+    width: Raduga.Platform.width * .8125,
     text: L('where_rainbow_explanation')
 });
 
@@ -60,124 +58,103 @@ var usernameLoggedInLabel = Raduga.UI.createLabel({
     font: { fontSize: "14dp" },
     color: 'black',
     text: L('username') + ': ',
-    top: '10dp', left: '40dp',
-    width: '260dp'
+    top: '10dp',
+    width: Raduga.Platform.width * .75,
 });
 var usernameNewUserLabel = Raduga.UI.createLabel({
     font: { fontSize: "14dp" },
     color: 'black',
     text: L('sign_in_as_new_user'),
-    top: '10dp', left: '40dp',
+    bottom: '1dp',
+    left: 0,
     width: Ti.UI.SIZE,
 });
 var usernameNewUserLabelUnderLine = Ti.UI.createView({
     backgroundColor: 'black',
     height: '1dp',
-    left: '40dp',
-    width: '127dp'
+    left: '0',
+    width: '127dp',
+    bottom: 0,
 });
-var usernameTextField = Ti.UI.createTextField({
+var usernameNewUserView = Ti.UI.createView({
+    top: '10dp',
+    height: '20dp',
+    width: Raduga.Platform.width * .75,
+});
+usernameNewUserView.add(usernameNewUserLabel);
+usernameNewUserView.add(usernameNewUserLabelUnderLine);
+
+
+var usernameTextField = Raduga.UI.createTextField({
     hintText: L('username'),
-    font: { fontSize: "14dp" },
-    color: 'rgb(103,103,113)',
-    borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
-    top: '10dp', left: '30dp',
-    width: '260dp',
     autocapitalization: Ti.UI.TEXT_AUTOCAPITALIZATION_NONE,
 });
-var passwordTextField = Ti.UI.createTextField({
+var passwordTextField = Raduga.UI.createTextField({
     hintText: L('password'),
-    font: { fontSize: "14dp" },
-    color: 'rgb(103,103,113)',
-    borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
-    top: '10dp', left: '30dp',
-    width: '260dp',
     passwordMask: true
 });
-var passwordCheckTextField = Ti.UI.createTextField({
+var passwordCheckTextField = Raduga.UI.createTextField({
     hintText: L('password_again'),
-    font: { fontSize: "14dp" },
-    color: 'rgb(103,103,113)',
-    borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
-    top: '10dp', left: '30dp',
-    width: '260dp',
     passwordMask: true
 });
 
-var createRadugaButton = function(titleid) {
-    return Ti.UI.createButton({
-        titleid: titleid,
-        left: '30dp',
-        top: '10dp',
-        width: '260dp',
-        borderSize: '0',
-        color: 'rgb(0,255,0)',
-        borderRadius: '0dp',
-        backgroundColor: 'rgba(0,0,0)',
-        font: { fontSize: "14dp", fontWeight: "bold", },
-        style: Ti.UI.iPhone.SystemButtonStyle.PLAIN,
-    });
-};
-var loginButton = createRadugaButton('login');
-var logoutButton = createRadugaButton('logout');
-var signupButton = createRadugaButton('signup');
+var loginButton  = Raduga.UI.createButton('login');
+var logoutButton = Raduga.UI.createButton('logout');
+var signupButton = Raduga.UI.createButton('signup');
 
 var notificationsView = Ti.UI.createView({
     top: '10dp',
-    height: '20dp'
+    height: '20dp',
+    width: '260dp',
 });
 var notificationsLabel = Raduga.UI.createLabel({
     color: 'black',
     textid: 'notifications',
     font: { fontSize: "14dp" },
-    left: '40dp',
+    left: '10dp',
 });
 var notificationsSwitch = Ti.UI.createSwitch({
     value: Ti.App.Properties.getString('notifications') !== 'false',
-    left: '239dp',
+    right: '0',
 });
 notificationsView.add(notificationsLabel);
 notificationsView.add(notificationsSwitch);
 
-var cityTextField = Ti.UI.createTextField({
+var cityTextField = Raduga.UI.createTextField({
     hintText: L('city'),
-    font: { fontSize: "14dp" },
-    color: 'rgb(103,103,113)',
     value: Ti.App.Properties.getString(Raduga.Platform.currentLanguage === 'ru' ? 'city_name_ru' : 'city_name_en'),
-    borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
-    top: '10dp', left: '30dp',
-    width: '260dp'
 });
 
 var linkTermsLabel = Raduga.UI.createLabel({
     font: { fontSize: "12dp" },
     color: 'black',
     text: L('terms'),
-    left: '30dp', bottom: '1dp',
+    left: '0', bottom: '1dp',
     width: Ti.UI.SIZE
 });
 var linkTermsLabelUnderLine = Ti.UI.createView({
     backgroundColor: 'black',
     height: '1dp',
-    left: '30dp', bottom: '0dp',
+    left: '0', bottom: '0dp',
     width: '101dp'
 });
 var linkAboutLabel = Raduga.UI.createLabel({
     font: { fontSize: "12dp" },
     color: 'black',
     text: L('about'),
-    left: '208dp', bottom: '1dp',
+    right: 0, bottom: '1dp',
     width: Ti.UI.SIZE
 });
 var linkAboutLabelUnderLine = Ti.UI.createView({
     backgroundColor: 'black',
     height: '1dp',
-    left: '208dp', bottom: '0dp',
+    right: 0, bottom: 0,
     width: '82dp'
 });
 var linksView = Ti.UI.createView({
     top: '10dp',
-    height: '20dp'
+    height: '20dp',
+    width: Raduga.Platform.width * .8125,
 });
 linksView.add(linkTermsLabel);
 linksView.add(linkTermsLabelUnderLine);
@@ -319,8 +296,7 @@ var updateUserDialog = function(view) {
     if (signedUp()) {
         usernameLoggedInLabel.setText(L('username') + ': ' + Ti.App.Properties.getString('username'));
         view.add(usernameLoggedInLabel);
-        view.add(usernameNewUserLabel);
-        view.add(usernameNewUserLabelUnderLine);
+        view.add(usernameNewUserView);
     } else {
         usernameTextField.value = '';
         view.add(usernameTextField);
