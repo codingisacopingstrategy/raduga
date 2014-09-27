@@ -83,6 +83,16 @@ var deletePhoto = function(photo) {
     delXhr.send();
 };
 
+var insufficientMetadata = function(photo) {
+    return typeof photo.created_at === 'undefined' ||
+           typeof photo.user === 'undefined' ||
+           typeof photo.urls === 'undefined' ||
+           typeof photo.custom_fields === 'undefined' ||
+           typeof photo.custom_fields.name_en === 'undefined' ||
+           typeof photo.custom_fields.name_ru === "undefined" ||
+           typeof photo.custom_fields.coordinates === 'undefined';
+};
+
 var photos2Features = function() {
     var geoJSON = {};
     geoJSON.type = "FeatureCollection";
@@ -93,7 +103,7 @@ var photos2Features = function() {
         var photo = Raduga.photos[i];
 
         // Skip photo’s without sufficient metadata
-        if (typeof photo.created_at === 'undefined' || typeof photo.custom_fields === 'undefined' || typeof photo.custom_fields.name_en === 'undefined' || typeof photo.custom_fields.name_ru === 'undefined' || typeof photo.custom_fields.coordinates === 'undefined') {
+        if (insufficientMetadata(photo)) {
             Ti.API.info('Photo ' + photo._id + ' does not have sufficient metadata to locate on map');
             continue;
         }
@@ -104,8 +114,7 @@ var photos2Features = function() {
             continue;
         } */
 
-
-        Ti.API.info('Photo ' + photo._id + ' will in due time be plotted on the map');
+        Ti.API.info('Photo ' + photo._id + ' will be plotted on the map');
 
         var name = photo.custom_fields[Raduga.Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en'];
         var lon  = photo.custom_fields.coordinates[0][0];
@@ -143,7 +152,7 @@ var createTableData = function() {
         var photo = Raduga.photos[i];
 
         // Skip photo’s without sufficient metadata
-        if (typeof photo.user === 'undefined' || typeof photo.urls === 'undefined' || typeof photo.custom_fields === 'undefined' || typeof photo.custom_fields.name_en === 'undefined' || typeof photo.custom_fields.name_ru === 'undefined') {
+        if (insufficientMetadata(photo)) {
             Ti.API.info('Photo ' + photo._id + ' does not have sufficient metadata to display in photo tab');
             continue;
         } else {
