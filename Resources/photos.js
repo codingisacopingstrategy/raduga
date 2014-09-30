@@ -207,7 +207,6 @@ var createTableData = function() {
 
         var photoShareButton = Ti.UI.createImageView({
             id :"share_"+ i,
-            backgroundColor: 'rgba(0,0,0,0.1)',
             image: 'ui/icons/share.png',
             width: '27dp',
             height: '30dp',
@@ -218,7 +217,6 @@ var createTableData = function() {
 
         if (photo.owned) {
             var photoDeleteButton = Ti.UI.createImageView({
-                backgroundColor: 'rgba(0,0,0,0.1)',
                 id :"delete_"+ i,
                 image: 'ui/icons/delete.png',
                 width: '18dp',
