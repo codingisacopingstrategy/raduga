@@ -250,6 +250,9 @@ notificationsSwitch.addEventListener('change', function() {
 usernameTextField.addEventListener('return', function() {
     passwordTextField.focus();
 });
+usernameTextField.addEventListener('blur', function() {
+    usernameTextField.setValue(usernameTextField.getValue().toLowerCase());
+});
 passwordTextField.addEventListener('return', function() {
     passwordCheckTextField.focus();
 });
