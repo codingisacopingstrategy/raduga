@@ -5,7 +5,7 @@
 	<string name="camera_tab_title">Camera</string>
 	<string name="camera">Camera</string>
 	<string name="settings_tab_title">Settings</string>
-	<string name="city">City</string>
+	<string name="city">Current city</string>
 	<string name="notifications">Notifications</string>
 	<string name="login">Log in</string>
 	<string name="logout">Log out</string>
@@ -45,7 +45,7 @@
 	<string name="alert">Alert</string>
 	<string name="no_internet">Raduga cannot connect to the internet. Please check your settings. </string>
 	<string name="where_rainbow">Where is the rainbow?</string>
-	<string name="where_rainbow_explanation">You can spot a rainbow when your back is facing the sun. In front of you, rain is falling, usually from a cloud. Sunlight falls on the raindrops, causing some of them to take on beautiful colors. The droplets must be plump and round, in order to refract the light so that a rainbow appears.\nAdditionally, the sun should be positioned low on the horizon. This is why you mostly encounter rainbows in the morning, and in the early evening.</string>
+	<string name="where_rainbow_explanation">You can spot a rainbow when your back is facing the sun. In front of you, rain is falling, usually from a cloud. Sunlight falls on the raindrops, causing some of them to take on beautiful colors.\nThe droplets must be plump and round, in order to refract the light so that a rainbow appears.\nAdditionally, the sun should be positioned low on the horizon.\nThis is why you mostly encounter rainbows in the morning, and in the early evening.</string>
 	<string name="confirm">Confirm</string>
 	<string name="cancel">Cancel</string>
 	<string name="delete_confirm_message">Would you like to delete this Rainbow photo?</string>

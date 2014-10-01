@@ -3,7 +3,7 @@ photos_tab_title,Photos,Фотографии
 camera_tab_title,Camera,Камера
 camera,Camera,Камера
 settings_tab_title,Settings,Настройки
-city,City,Город
+city,Current city,Город
 notifications,Notifications,Push-уведомления
 login,Log in,Войти
 logout,Log out,Выйти
@@ -43,7 +43,7 @@ ok,OK,о'кей
 alert,Alert,сигнал 
 no_internet,Raduga cannot connect to the internet. Please check your settings. ,"Радуга не может соединиться с интернетом. Пожалуйста, проверьте настройки. "
 where_rainbow,Where is the rainbow?,Где находится радуга?
-where_rainbow_explanation,"You can spot a rainbow when your back is facing the sun. In front of you, rain is falling, usually from a cloud. Sunlight falls on the raindrops, causing some of them to take on beautiful colors. The droplets must be plump and round, in order to refract the light so that a rainbow appears.\nAdditionally, the sun should be positioned low on the horizon. This is why you mostly encounter rainbows in the morning, and in the early evening.","Чтобы увидеть радугу, встаньте спиной к солнцу. Перед вами льется дождь, часто стеной. Солнечный свет падает на капли дождя, окрашивая некоторые из них яркими цветами. Эти капли должны быть круглой формы, тогда свет будет отражаться таким
+where_rainbow_explanation,"You can spot a rainbow when your back is facing the sun. In front of you, rain is falling, usually from a cloud. Sunlight falls on the raindrops, causing some of them to take on beautiful colors.\nThe droplets must be plump and round, in order to refract the light so that a rainbow appears.\nAdditionally, the sun should be positioned low on the horizon.\nThis is why you mostly encounter rainbows in the morning, and in the early evening.","Чтобы увидеть радугу, встаньте спиной к солнцу. Перед вами льется дождь, часто стеной. Солнечный свет падает на капли дождя, окрашивая некоторые из них яркими цветами. Эти капли должны быть круглой формы, тогда свет будет отражаться таким
 образом, что возникнет радуга.\nК тому же, солнце не должно стоять слишком высоко над горизонтом. Именно поэтому радугу можно увидеть чаще всего утром или в конце дня."
 confirm,Confirm,
 cancel,Cancel,
