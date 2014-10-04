@@ -333,3 +333,9 @@ var updateColours = function() {
 var colourTimer = setInterval(updateColours, 300000);
 updateColours();
 
+Ti.App.addEventListener('rainbowClicked', function(e) {
+    tabGroup.setActiveTab(photosTab);
+    var animationOptions = Ti.Platform.ios ? { animated: true, position: Ti.UI.iPhone.TableViewScrollPosition.TOP} : null;
+    tableView.scrollToIndex(e.index, animationOptions);
+});
+
