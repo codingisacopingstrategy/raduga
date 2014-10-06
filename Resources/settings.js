@@ -45,12 +45,14 @@ var rainbowExplanationHeadingLabel = Raduga.UI.createLabel({
     font: { fontSize: "15dp", fontWeight: 'bold' },
     top: '10dp',
     width: Raduga.Platform.width * .7625,
+    height: Ti.UI.SIZE,
     text: L('where_rainbow')
 });
 var rainbowExplanationLabel = Raduga.UI.createLabel({
     font: { fontSize: "15dp" },
     top: '0dp',
     width: Raduga.Platform.width * .7625,
+    height: Ti.UI.SIZE,
     text: L('where_rainbow_explanation')
 });
 
@@ -66,13 +68,13 @@ var usernameNewUserLabel = Raduga.UI.createLabel({
     color: 'black',
     text: L('sign_in_as_new_user'),
     bottom: '1dp',
-    left: .05625 * Raduga.Platform.width,
+    left: '9dp',
     width: Ti.UI.SIZE,
 });
 var usernameNewUserLabelUnderLine = Ti.UI.createView({
     backgroundColor: 'black',
     height: '1dp',
-    left: .05625 * Raduga.Platform.width,
+    left: '9dp',
     width: '127dp',
     bottom: 0,
 });
@@ -86,15 +88,15 @@ usernameNewUserView.add(usernameNewUserLabelUnderLine);
 
 
 var usernameTextField = Raduga.UI.createTextField({
-    hintText: ' ' + L('username'),
+    hintText: '  ' + L('username'),
     autocapitalization: Ti.UI.TEXT_AUTOCAPITALIZATION_NONE,
 });
 var passwordTextField = Raduga.UI.createTextField({
-    hintText: ' ' + L('password'),
+    hintText: '  ' + L('password'),
     passwordMask: true
 });
 var passwordCheckTextField = Raduga.UI.createTextField({
-    hintText: ' ' + L('password_again'),
+    hintText: '  ' + L('password_again'),
     passwordMask: true
 });
 
@@ -111,7 +113,7 @@ var notificationsLabel = Raduga.UI.createLabel({
     color: 'black',
     textid: 'notifications',
     font: { fontSize: "14dp" },
-    left: '4dp',
+    left: '9dp',
 });
 var notificationsSwitch = Ti.UI.createSwitch({
     value: Ti.App.Properties.getString('notifications') !== 'false',
@@ -121,8 +123,10 @@ notificationsView.add(notificationsLabel);
 notificationsView.add(notificationsSwitch);
 
 var cityTextField = Raduga.UI.createTextField({
-    hintText: ' ' + L('city'),
-    value: Ti.App.Properties.getString(Raduga.Platform.currentLanguage === 'ru' ? 'city_name_ru' : 'city_name_en'),
+    hintText: '  ' + L('city'),
+    value: Ti.App.Properties.getString(Raduga.Platform.currentLanguage === 'ru' ? 'city_name_ru' : 'city_name_en') ?
+    '  ' + Ti.App.Properties.getString(Raduga.Platform.currentLanguage === 'ru' ? 'city_name_ru' : 'city_name_en') :
+    '',
 });
 
 var linkTermsLabel = Raduga.UI.createLabel({
@@ -185,13 +189,15 @@ var settingsBottomSpace = Ti.UI.createView({
 });
 
 var settingsScrollView = Ti.UI.createScrollView({
-   contentWidth: Raduga.Platform.width,
-   contentHeight: 'auto',
-   left: '0',
-   top: '20dp',
-   layout: 'vertical',
-   showVerticalScrollIndicator: true,
-   showHorizontalScrollIndicator: false
+    width: Raduga.Platform.width,
+    height: Raduga.Platform.height,
+    contentWidth: Raduga.Platform.width,
+    contentHeight: 'auto',
+    left: '0',
+    top: '20dp',
+    layout: 'vertical',
+    showVerticalScrollIndicator: true,
+    showHorizontalScrollIndicator: false
 });
 
 settingsWindow.add(settingsScrollView);
