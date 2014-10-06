@@ -144,7 +144,53 @@
                 $.getJSON("http://vps40616.public.cloudvps.com/latest/rainbows.json", function( data ) {
                     L.geoJson(data.features,
                         {
-                            style: rainbowStyle
+                            style: rainbowStyle,
+                            gradient: {
+                                vector: [['0%', '50%'], ['100%', '50%']],
+                                stops: [{
+                                    'offset': '0%',
+                                    'style': {
+                                        'color': 'rgb(255, 0, 0)',
+                                        'opacity': 0.65
+                                    }
+                                }, {
+                                    'offset': '16%',
+                                    'style': {
+                                        'color': 'rgb(255, 127, 0)',
+                                        'opacity': 0.65
+                                    }
+                                }, {
+                                    'offset': '33%',
+                                    'style': {
+                                        'color': 'rgb(255, 255, 0)',
+                                        'opacity': 0.65
+                                    }
+                                }, {
+                                    'offset': '49%',
+                                    'style': {
+                                        'color': 'rgb(0, 255, 0)',
+                                        'opacity': 0.65
+                                    }
+                                }, {
+                                    'offset': '66%',
+                                    'style': {
+                                        'color': 'rgb(0, 0, 255)',
+                                        'opacity': 0.65
+                                    }
+                                }, {
+                                    'offset': '83%',
+                                    'style': {
+                                        'color': 'rgb(75, 0, 130)',
+                                        'opacity': 0.65
+                                    }
+                                }, {
+                                    'offset': '99%',
+                                    'style': {
+                                        'color': 'rgb(143, 0, 255)',
+                                        'opacity': 0.65
+                                    }
+                                }]
+                            }
                         }).addTo(map);
                 });
             });
