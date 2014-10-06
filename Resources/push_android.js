@@ -28,3 +28,5 @@ var setupPush = function (success) {
         Ti.API.info('Tray Click Focused App (app was already running)');
     });
 };
+
+exports.setupPush = setupPush;

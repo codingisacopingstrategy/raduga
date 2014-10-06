@@ -39,3 +39,6 @@ var setupPush = function (success) {
     });
 
 };
+
+exports.setupPush = setupPush;
+

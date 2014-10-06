@@ -1,3 +1,5 @@
+var zeroPad = require('utils').zeroPad;
+
 var currentColour = function(slug) {
     if (typeof slug === "undefined") {
         slug = gradientSlug();
@@ -42,17 +44,7 @@ var currentGradient = function(slug) {
     };
 };
 
-var currentSettingsGradient = function(slug) {
-    if (typeof slug === "undefined") {
-        slug = gradientSlug();
-    }
-    return {
-        type: 'linear',
-        startPoint: { x: '50%', y: '100%' },
-        endPoint: { x: '50%', y: '0%' },
-        colors: gradientStops[slug],
-    };
-};
+var currentSettingsGradient = currentGradient;
 
 var gradientStops ={
     "00:00" : [{ color: 'rgb(54,0,26)', offset: 0.0}, { color: 'rgb(31,0,73)', offset: 0.23 }, { color: 'rgb(0,0,0)', offset: 1.0 }],
@@ -104,3 +96,9 @@ var gradientStops ={
     "23:00" : [{ color: 'rgb(54,0,26)', offset: 0.0 }, { color: 'rgb(31,0,73)', offset: 0.22 }, { color: 'rgb(0,0,98)', offset: 0.52 }, { color: 'rgb(0,0,0)', offset: 1.0 }],
     "23:30" : [{ color: 'rgb(31,0,73)', offset: 0.23 },  { color: 'rgb(0,0,0)', offset: 1.0 }],
 };
+
+exports.gradientSlug            = gradientSlug;
+exports.currentColour           = currentColour;
+exports.currentGradient         = currentGradient;
+exports.currentSettingsGradient = currentSettingsGradient;
+

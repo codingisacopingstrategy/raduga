@@ -7752,3 +7752,5 @@ var cities = [
     "lon": 40.1225
   }
 ];
+
+exports.cities = cities;
