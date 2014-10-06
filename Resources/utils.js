@@ -1,5 +1,7 @@
 /* Utility Functions */
 
+var Raduga = Raduga || {}; // in case this file is used in the webview, which doesn’t know about the Raduga object
+
 /* User Interface */
 
 Raduga.UI = {};
