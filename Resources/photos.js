@@ -123,6 +123,7 @@ var photos2Features = function() {
             type: "Feature",
             properties: {
                 name: name,
+                index: i,
             },
             geometry: {
                 type: "Point",
