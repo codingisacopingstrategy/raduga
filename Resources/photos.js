@@ -257,7 +257,7 @@ var tableView = Ti.UI.createTableView({
 
 tableView.addEventListener("click", function(e){
     // only the delete button has an id, in other cases we show the share dialog:
-    if ( e.source.id.match(/^share_/) ) {
+    if ( e.source.id && e.source.id.match(/^share_/) ) {
         Ti.API.info("click registerd on share button");
         var photo = Raduga.photos[e.row.rowIndex];
         var city = photo.custom_fields[Raduga.Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en'];
@@ -272,7 +272,7 @@ tableView.addEventListener("click", function(e){
         } else {
             //implement sharing Android
         }
-    } else if ( e.source.id.match(/^delete_/) ) {
+    } else if ( e.source.id && e.source.id.match(/^delete_/) ) {
         Ti.API.info("click registerd on delete button");
         var photo = Raduga.photos[e.row.rowIndex];
 
