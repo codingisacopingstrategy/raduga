@@ -1102,14 +1102,12 @@ notificationsView.add(notificationsLabel);
 notificationsView.add(notificationsSwitch);
 
 var cityTextField = Raduga.UI.createTextField({
-    hintText: '  ' + L('city'),
-    value: Ti.App.Properties.getString(Raduga.Platform.currentLanguage === 'ru' ? 'city_name_ru' : 'city_name_en') ?
-    '  ' + Ti.App.Properties.getString(Raduga.Platform.currentLanguage === 'ru' ? 'city_name_ru' : 'city_name_en') :
-    '',
+    hintText: L('city'),
+    value: Ti.App.Properties.getString(Raduga.Platform.currentLanguage === 'ru' ? 'city_name_ru' : 'city_name_en'),
 });
 
 var linkTermsLabel = Raduga.UI.createLabel({
-    font: { fontSize: "8dp" },
+    font: { fontSize: "12dp" },
     color: 'black',
     text: L('terms'),
     left: '0', bottom: '1dp',
