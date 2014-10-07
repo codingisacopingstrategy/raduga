@@ -1273,10 +1273,10 @@ loginButton.addEventListener('click', function() {
 logoutButton.addEventListener('click', logoutUser);
 
 // external links
-linkTermsLabel.addEventListener('click', function(){
+linkTermsLabel.addEventListener('touchstart', function(){
     Ti.Platform.openURL("http://pinkponyexpress.nl/#63");
 });
-linkAboutLabel.addEventListener('click', function(){
+linkAboutLabel.addEventListener('touchstart', function(){
     Ti.Platform.openURL("http://pinkponyexpress.nl/#63");
 });
 
