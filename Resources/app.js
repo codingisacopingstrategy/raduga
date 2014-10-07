@@ -924,7 +924,7 @@ var showCam = function() {
                 // this is a really crude way around it: lock the camera,
                 // and make it available after a second.
                 Raduga.cameraAvailable = false;
-                setTimeout(function() { Raduga.cameraAvailable = true; }, 1000);
+                setTimeout(function() { Raduga.cameraAvailable = true; }, 4000);
                 uploadPhoto(event.media);
             } else {
                 Raduga.UI.alertError("Camera got the wrong type back: " + event.mediaType);
