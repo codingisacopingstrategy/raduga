@@ -124,7 +124,9 @@
                 },
                 onEachFeature: function(feature, layer) {
                     layer.on('click', function(e) {
-                        Ti.API.info(feature.properties.index, feature.properties.name);
+                        Ti.API.info(JSON.stringify(feature));
+                        Ti.API.info(feature.properties.index);
+                        Ti.API.info(feature.properties.name);
                         Ti.App.fireEvent('rainbowClicked', { index: feature.properties.index, name: feature.properties.name });
                     });
 

@@ -624,6 +624,10 @@ var createTableData = function() {
             rowIndex: i, // custom property, useful for determining the row during events
         });
 
+        Ti.API.info('rowindex: ' + i);
+        Ti.API.info('place: ' + photo.custom_fields.name_en);
+
+
         var rainbowImage = Ti.UI.createImageView({
             defaultImage: 'ui/transparant_pixel.png',
             image: Raduga.Platform.width < 640 ? photo.urls.medium_640 : photo.urls.large_1024,
@@ -1518,7 +1522,14 @@ updateColours();
 
 Ti.App.addEventListener('rainbowClicked', function(e) {
     tabGroup.setActiveTab(photosTab);
-    var animationOptions = Ti.Platform.ios ? { animated: true, position: Ti.UI.iPhone.TableViewScrollPosition.TOP} : null;
-    tableView.scrollToIndex(e.index, animationOptions);
+    Ti.API.info('click on index ' + e.index );
+    Ti.API.info(Raduga.photos.length);
+    Ti.API.info(JSON.stringify(Raduga.photos[parseInt(i)]));
+    Ti.API.info(JSON.stringify(Raduga.photos));
+    setTimeout(function() {
+        Ti.API.info('scrolling to image, I hope');
+        var animationOptions = Ti.Platform.ios ? { animated: true, position: Ti.UI.iPhone.TableViewScrollPosition.NONE} : null;
+        tableView.scrollToIndex(parseInt(e.index), animationOptions);
+    }, 1000);
 });
 
