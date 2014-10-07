@@ -18,11 +18,9 @@ exports.createTextField = function(options) {
      */
     options.font = { fontSize: "14dp" };
     options.color = 'rgb(103,103,113)';
-    options.borderStyle = Ti.UI.INPUT_BORDERSTYLE_NONE;
-    options.backgroundColor = 'rgb(255,255,255)';
+    options.borderStyle = Ti.UI.INPUT_BORDERSTYLE_ROUNDED;
     options.top = '10dp';
-    options.height = '20dp';
-    options.width = '246dp';
+    options.width = '260dp';
 
     return Ti.UI.createTextField(options);
 };
@@ -30,7 +28,7 @@ exports.createButton = function(titleid) {
     return Ti.UI.createButton({
         titleid: titleid,
         top: '10dp',
-        width: Raduga.Platform.width * .76875,
+        width: Raduga.Platform.width * .8125,
         borderSize: '0',
         color: 'rgb(0,255,0)',
         borderRadius: '0dp',

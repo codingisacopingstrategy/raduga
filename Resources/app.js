@@ -1016,16 +1016,16 @@ var activityIndicator = Ti.UI.createActivityIndicator({
 });
 
 var rainbowExplanationHeadingLabel = Raduga.UI.createLabel({
-    font: { fontSize: "15dp", fontWeight: 'bold' },
+    font: { fontSize: "16dp", fontWeight: 'bold' },
     top: '10dp',
-    width: Raduga.Platform.width * .7625,
+    width: Raduga.Platform.width * .8125,
     height: Ti.UI.SIZE,
     text: L('where_rainbow')
 });
 var rainbowExplanationLabel = Raduga.UI.createLabel({
-    font: { fontSize: "15dp" },
+    font: { fontSize: "16dp" },
     top: '0dp',
-    width: Raduga.Platform.width * .7625,
+    width: Raduga.Platform.width * .8125,
     height: Ti.UI.SIZE,
     text: L('where_rainbow_explanation')
 });
@@ -1042,35 +1042,35 @@ var usernameNewUserLabel = Raduga.UI.createLabel({
     color: 'black',
     text: L('sign_in_as_new_user'),
     bottom: '1dp',
-    left: '9dp',
+    left: '6dp',
     width: Ti.UI.SIZE,
 });
 var usernameNewUserLabelUnderLine = Ti.UI.createView({
     backgroundColor: 'black',
     height: '1dp',
-    left: '9dp',
+    left: '6dp',
     width: '127dp',
     bottom: 0,
 });
 var usernameNewUserView = Ti.UI.createView({
     top: '10dp',
     height: '20dp',
-    width: Raduga.Platform.width * .76875,
+    width: Raduga.Platform.width * .75,
 });
 usernameNewUserView.add(usernameNewUserLabel);
 usernameNewUserView.add(usernameNewUserLabelUnderLine);
 
 
 var usernameTextField = Raduga.UI.createTextField({
-    hintText: '  ' + L('username'),
+    hintText: L('username'),
     autocapitalization: Ti.UI.TEXT_AUTOCAPITALIZATION_NONE,
 });
 var passwordTextField = Raduga.UI.createTextField({
-    hintText: '  ' + L('password'),
+    hintText: L('password'),
     passwordMask: true
 });
 var passwordCheckTextField = Raduga.UI.createTextField({
-    hintText: '  ' + L('password_again'),
+    hintText: L('password_again'),
     passwordMask: true
 });
 
@@ -1081,17 +1081,19 @@ var signupButton = Raduga.UI.createButton('signup');
 var notificationsView = Ti.UI.createView({
     top: '10dp',
     height: '31dp',
-    width: '246dp',
+    width: '260dp',
 });
 var notificationsLabel = Raduga.UI.createLabel({
     color: 'black',
     textid: 'notifications',
     font: { fontSize: "14dp" },
-    left: '9dp',
+    left: '6dp',
+    bottom: '4dp',
 });
 var notificationsSwitch = Ti.UI.createSwitch({
     value: Ti.App.Properties.getString('notifications') !== 'false',
     right: '0',
+    bottom: '0',
 });
 notificationsView.add(notificationsLabel);
 notificationsView.add(notificationsSwitch);
@@ -1114,10 +1116,10 @@ var linkTermsLabelUnderLine = Ti.UI.createView({
     backgroundColor: 'black',
     height: '1dp',
     left: '0', bottom: '0dp',
-    width: '68dp'
+    width: '101dp'
 });
 var linkAboutLabel = Raduga.UI.createLabel({
-    font: { fontSize: "8dp" },
+    font: { fontSize: "12dp" },
     color: 'black',
     text: L('about'),
     right: 0, bottom: '1dp',
@@ -1127,19 +1129,19 @@ var linkAboutLabelUnderLine = Ti.UI.createView({
     backgroundColor: 'black',
     height: '1dp',
     right: 0, bottom: 0,
-    width: '55dp'
+    width: '82dp'
 });
 var linksView = Ti.UI.createView({
     top: '6dp',
     height: Ti.UI.SIZE,
-    width: Raduga.Platform.width * .76875,
+    width: Raduga.Platform.width * .8125,
 });
 linksView.add(linkTermsLabel);
 linksView.add(linkTermsLabelUnderLine);
 linksView.add(linkAboutLabel);
 linksView.add(linkAboutLabelUnderLine);
 var copyrightLabel = Raduga.UI.createLabel({
-    font: { fontSize: "8dp" },
+    font: { fontSize: "12dp" },
     color: 'black',
     text: L('copyright'),
     top: '10dp',
@@ -1148,10 +1150,10 @@ var copyrightLabel = Raduga.UI.createLabel({
 
 
 
-// for Android, where the toolbar is on top
+// for Android has the toolbar on top
 var settingsTopSpace = Ti.UI.createView({
     width: Raduga.Platform.width,
-    height: '30dp',
+    height: Raduga.Platform.android ? '50dp': '20dp',
     top: 0, bottom: 0,
 });
 
@@ -1168,7 +1170,7 @@ var settingsScrollView = Ti.UI.createScrollView({
     contentWidth: Raduga.Platform.width,
     contentHeight: 'auto',
     left: '0',
-    top: '20dp',
+    top: '0',
     layout: 'vertical',
     showVerticalScrollIndicator: true,
     showHorizontalScrollIndicator: false
@@ -1279,10 +1281,8 @@ settingsWindow.addEventListener('user_status_change', function() {
 });
 
 var updateUserDialog = function(view) {
-    view.removeAllChildren(); //TODO: also remove event listeners
-    if (Raduga.Platform.android) {
-        view.add(settingsTopSpace);
-    }
+    view.removeAllChildren(); //TODO: also remove event listeners?
+    view.add(settingsTopSpace);
     view.add(rainbowExplanationHeadingLabel);
     view.add(rainbowExplanationLabel);
     if (signedUp()) {
