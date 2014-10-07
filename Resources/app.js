@@ -98,8 +98,6 @@ var createUser = function(username, password, password_confirmation) {
         }
     }, function (e) {
         if (e.success) {
-            passwordTextField.value = '';
-            passwordCheckTextField.value = '';
             Raduga.user = e.users[0];
             var user = Raduga.user;
             Ti.App.Properties.setString('sessionID', Cloud.sessionId);
@@ -137,8 +135,6 @@ var loginUser = function(username, password) {
         password: password
     }, function (e) {
         if (e.success) {
-            passwordTextField.value = '';
-            passwordCheckTextField.value = '';
             Raduga.user = e.users[0];
             var user = Raduga.user;
             Ti.App.Properties.setString('sessionID', Cloud.sessionId);
@@ -180,7 +176,6 @@ var newUser = function() {
     Ti.App.Properties.setString('city_lat', '');
     Ti.App.Properties.setString('city_lon', '');
     Ti.App.Properties.setString('notifications', '');
-    cityTextField.value = '';
     notificationsSwitch.setValue(true);
     if (loggedIn) {
         logoutUser();
@@ -1296,9 +1291,13 @@ var updateUserDialog = function(view) {
         view.add(usernameNewUserView);
     } else {
         usernameTextField.value = '';
+        cityTextField.value = '';
         view.add(usernameTextField);
     };
-    if (!loggedIn()) {
+    if (loggedIn()) {
+        passwordTextField.value = '';
+        passwordCheckTextField.value = '';
+    } else {
         // We are not logged in. Add the pass
         view.add(passwordTextField);
         if (!signedUp()) {
