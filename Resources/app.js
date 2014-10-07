@@ -432,8 +432,9 @@ var updateRainbowCities = function() {
             }
         },
         onerror: function(error) {
-            if (Ti.Network.getNetworkTypeName() === "NONE") {
+            if (Ti.Network.getNetworkTypeName() === "NONE" || error.code === -1004) {
                 /** If the telephone is not connected to the internet, this is not actually an error */
+               /** btw, error -1004 is when there is network but it can’t find the internet */
                 Ti.API.info("tried to request rainbow cities while not connected to the internet");
                 return;
             }
@@ -487,8 +488,9 @@ var updatePhotos = function() {
             updateSpottedMessage();
         },
         onerror: function(error) {
-            if (Ti.Network.getNetworkTypeName() === "NONE") {
+            if (Ti.Network.getNetworkTypeName() === "NONE" || error.code === -1004) {
                 /** If the telephone is not connected to the internet, this is not actually an error */
+               /** btw, error -1004 is when there is network but it can’t find the internet */
                 Ti.API.info("tried to request photos while not connected to the internet");
                 return;
             }
@@ -510,8 +512,9 @@ var deletePhoto = function(photo) {
             updatePhotos();
         },
         onerror: function(error) {
-            if (Ti.Network.getNetworkTypeName() === "NONE") {
+            if (Ti.Network.getNetworkTypeName() === "NONE" || error.code === -1004) {
                 /** If the telephone is not connected to the internet, this is not actually an error */
+               /** btw, error -1004 is when there is network but it can’t find the internet */
                 Ti.API.info("tried to delete photos while not connected to the internet");
                 return;
             }
