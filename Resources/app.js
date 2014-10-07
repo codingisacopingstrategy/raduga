@@ -652,25 +652,41 @@ var createTableData = function() {
         });
         row.add(labelUserAndDate);
 
-        var photoShareButton = Ti.UI.createImageView({
+        var photoShareButton = Ti.UI.createView({
             id :"share_"+ i,
+            width: '60dp',
+            height: '60dp',
+            bottom: 0,
+            left: 0,
+        });
+        var photoShareButtonImage = Ti.UI.createImageView({
+            id :"share_image_" + i,
             image: 'ui/icons/share.png',
             width: '27dp',
             height: '30dp',
             bottom: '10dp',
             left: '10dp'
         });
+        photoShareButton.add(photoShareButtonImage);
         row.add(photoShareButton);
 
         if (photo.owned) {
-            var photoDeleteButton = Ti.UI.createImageView({
+            var photoDeleteButton = Ti.UI.createView({
                 id :"delete_"+ i,
+                width: '60dp',
+                height: '60dp',
+                bottom: 0,
+                right: 0,
+            });
+            var photoDeleteButtonImage = Ti.UI.createImageView({
+                id :"delete_image_" + i,
                 image: 'ui/icons/delete.png',
                 width: '18dp',
                 height: '25dp',
                 bottom: '10dp',
                 right: '10dp'
             });
+            photoDeleteButton.add(photoDeleteButtonImage);
             row.add(photoDeleteButton);
         }
 
@@ -702,7 +718,7 @@ var tableView = Ti.UI.createTableView({
     data: createTableData()
 });
 
-tableView.addEventListener("click", function(e){
+tableView.addEventListener("touchstart", function(e){
     // only the delete button has an id, in other cases we show the share dialog:
     if ( e.source.id && e.source.id.match(/^share_/) ) {
         Ti.API.info("click registerd on share button");
