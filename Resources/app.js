@@ -5,11 +5,11 @@ var Raduga = {
     cameraAvailable: true,
 };
 
-Raduga.Platform = require('platform');
-Ti.API.info(["OS:       " + Raduga.Platform.osname,
-             "Language: " + Raduga.Platform.currentLanguage,
-             "Screen:   " + Raduga.Platform.width + "*" + Raduga.Platform.height].join("\n"));
-Raduga.UI = require('ui');
+Platform = require('platform');
+Ti.API.info(["OS:       " + Platform.osname,
+             "Language: " + Platform.currentLanguage,
+             "Screen:   " + Platform.width + "*" + Platform.height].join("\n"));
+UI = require('ui');
 
 var deviceToken = null;
 
@@ -19,7 +19,7 @@ var Cloud = require('ti.cloud');
 // seem to be working.
 Cloud.sessionId = Ti.App.Properties.getString('sessionID');
 
-if (Raduga.Platform.ios) {
+if (Platform.ios) {
     var Social = require('dk.napp.social');
     Ti.API.info(["Facebook available: " + Social.isFacebookSupported(),
                  "Twitter available: " + Social.isTwitterSupported(),
@@ -27,20 +27,20 @@ if (Raduga.Platform.ios) {
 }
 
 //. Set up push notifications
-var push = require(Raduga.Platform.osname === 'android' ? 'push_android' : 'push_ios');
+var push = require(Platform.osname === 'android' ? 'push_android' : 'push_ios');
 var setupPush = push.setupPush;
 
 var initPush = function() {
     setupPush(function() {
         Cloud.PushNotifications.subscribe({
             channel: 'raduga_predictions',
-            type: Raduga.Platform.osname === 'android' ? 'android' : 'ios',
+            type: Platform.osname === 'android' ? 'android' : 'ios',
             device_token: deviceToken
         }, function (e) {
             if (e.success) {
                 Ti.API.info('Successfully subscribed to the Raduga push messages channel with device token ' + deviceToken);
             } else {
-                Raduga.UI.alertError('Failed Push Notification subscription: ' + (e.error && e.message) || JSON.stringify(e));
+                UI.alertError('Failed Push Notification subscription: ' + (e.error && e.message) || JSON.stringify(e));
             }
         });
     });
@@ -80,11 +80,11 @@ var createUser = function(username, password, password_confirmation) {
         password: password,
         password_confirmation: password_confirmation,
         custom_fields: {
-            language: Raduga.Platform.currentLanguage === 'ru' ? 'ru' : 'en',
+            language: Platform.currentLanguage === 'ru' ? 'ru' : 'en',
             notifications: notificationsSwitch.value,
             name_en: Ti.App.Properties.getString('city_name_en'),
             name_ru: Ti.App.Properties.getString('city_name_ru'),
-            language: Raduga.Platform.currentLanguage
+            language: Platform.currentLanguage
         }
     }, function (e) {
         if (e.success) {
@@ -211,7 +211,7 @@ var settingsWindow = Ti.UI.createWindow({
     navBarHidden: true,
 });
 
-if (Raduga.Platform.ios) {
+if (Platform.ios) {
     photosWindow.setStatusBarStyle(Ti.UI.iPhone.StatusBar.DARK_CONTENT);
     photosWindow.setExtendEdges([Ti.UI.EXTEND_EDGE_TOP, Ti.UI.EXTEND_EDGE_BOTTOM]);
     globe.window.setStatusBarStyle(Ti.UI.iPhone.StatusBar.LIGHT_CONTENT);
@@ -241,11 +241,11 @@ var updateSpottedMessage = function() {
     var latestRainbowDate = new Date(photo.created_at);
     if (loggedIn()) {
         var spottedMessage = String.format(L('rainbow_spotted_alt'),
-            photo.custom_fields[Raduga.Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en'],
+            photo.custom_fields[Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en'],
             utils.distanceToHome(photo.custom_fields.coordinates[0][1], photo.custom_fields.coordinates[0][0]));
     } else {
         var spottedMessage = String.format(L('rainbow_spotted_no_from_you'),
-        photo.custom_fields[Raduga.Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en']);
+        photo.custom_fields[Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en']);
     }
     var dateMessage = latestRainbowDate.getDate() + ' ' + utils.getMonth(latestRainbowDate) + ' ' + utils.Date2PonyHour(latestRainbowDate);
     globe.setRecentRainbowText(spottedMessage + '\n' + dateMessage);
@@ -279,7 +279,7 @@ var updatePhotos = function() {
                 Ti.API.info("tried to request photos while not connected to the internet");
                 return;
             }
-            Raduga.UI.alertError('Failed loading photos through network: ' + JSON.stringify(error));
+            UI.alertError('Failed loading photos through network: ' + JSON.stringify(error));
         }
     });
 
@@ -304,7 +304,7 @@ var deletePhoto = function(photo) {
                 Ti.API.info("tried to delete photos while not connected to the internet");
                 return;
             }
-            Raduga.UI.alertError('Failed deleting photo: ' + JSON.stringify(error));
+            UI.alertError('Failed deleting photo: ' + JSON.stringify(error));
         }
     });
 
@@ -351,7 +351,7 @@ var photos2Features = function() {
 
         Ti.API.info('Photo ' + photo._id + ' will be plotted on the map');
 
-        var name = photo.custom_fields[Raduga.Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en'];
+        var name = photo.custom_fields[Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en'];
         var lon  = photo.custom_fields.coordinates[0][0];
         var lat  = photo.custom_fields.coordinates[0][1];
         var feature = {
@@ -416,26 +416,26 @@ var createTableData = function() {
 
         var rainbowImage = Ti.UI.createImageView({
             defaultImage: 'ui/transparant_pixel.png',
-            image: Raduga.Platform.width < 640 ? photo.urls.medium_640 : photo.urls.large_1024,
+            image: Platform.width < 640 ? photo.urls.medium_640 : photo.urls.large_1024,
             left: 0,
             top: 0,
-            width: Raduga.Platform.width
+            width: Platform.width
         });
         row.add(rainbowImage);
 
         // with an almost transparent background that helps to keep text readable on white photos
         // and some very low tech padding with space " " ( thanks https://developer.appcelerator.com/question/50441/padding-on-a-label#answer-237825 )
-        var labelCity = Raduga.UI.createLabel({
+        var labelCity = UI.createLabel({
             backgroundColor: 'rgba(0,0,0,0.1)',
             color: 'white',
-            text: " " + photo.custom_fields[Raduga.Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en'] + " ",
+            text: " " + photo.custom_fields[Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en'] + " ",
             width: Ti.UI.SIZE,
             top: '3dp',
             left: '10dp'
         });
         row.add(labelCity);
 
-        var labelUserAndDate = Raduga.UI.createLabel({
+        var labelUserAndDate = UI.createLabel({
             backgroundColor: 'rgba(0,0,0,0.1)',
             color: 'white',
             text: " " + photo.user.username + " " + utils.Date2PonyDate(new Date(photo.created_at)) + " — " + utils.Date2PonyHour(new Date(photo.created_at)) + " ",
@@ -483,7 +483,7 @@ var createTableData = function() {
             row.add(photoDeleteButton);
         }
 
-        if(Raduga.Platform.ios) {
+        if(Platform.ios) {
             row.setSelectionStyle(Ti.UI.iPhone.TableViewCellSelectionStyle.NONE);
         }
 
@@ -516,10 +516,10 @@ tableView.addEventListener("touchstart", function(e){
     if ( e.source.id && e.source.id.match(/^share_/) ) {
         Ti.API.info("click registerd on share button");
         var photo = Raduga.photos[e.row.rowIndex];
-        var city = photo.custom_fields[Raduga.Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en'];
+        var city = photo.custom_fields[Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en'];
         var username = photo.user.username;
 
-        if(Raduga.Platform.ios && Social.isActivityViewSupported()){
+        if(Platform.ios && Social.isActivityViewSupported()){
             Ti.API.info("Social activity registered");
             Social.activityView({
                 text: String.format(L('photo_caption'), username, city),
@@ -551,7 +551,7 @@ tableView.addEventListener("touchstart", function(e){
 });
 
 
-if (Raduga.Platform.ios) {
+if (Platform.ios) {
     tableView.setSeparatorStyle(Ti.UI.iPhone.TableViewSeparatorStyle.NONE);
 }
 
@@ -563,8 +563,8 @@ photosWindow.add(tableView);
 var mapWebView = Ti.UI.createWebView({
     url : 'html/index.html',
     width: '100%',
-    width: Raduga.Platform.width,
-    height: Raduga.Platform.height,
+    width: Platform.width,
+    height: Platform.height,
     disableBounce: true
 });
 
@@ -611,7 +611,7 @@ var uploadPhoto = function(media) {
     if (!extension) {
         // theoretically, this should never throw: the regex above won’t allow for unknown extensions
         // better safe than sorry
-        Raduga.UI.alertError("The extension of photo your camera takes " + extension + " is unrecognised");
+        UI.alertError("The extension of photo your camera takes " + extension + " is unrecognised");
         return false;
     }
     var filename = now + '_raduga_by_' + Ti.App.Properties.getString('username') + extension;
@@ -642,7 +642,7 @@ var uploadPhoto = function(media) {
             Ti.API.info(JSON.stringify(response));
 
             if (response._status === "ERR") {
-                Raduga.UI.alertError('Failed uploading photo metadata, API trouble: ' + this.responseText);
+                UI.alertError('Failed uploading photo metadata, API trouble: ' + this.responseText);
                 return false;
             }
             Ti.API.info("Succesfully uploaded photo metadata, with _id " + response._id + " to the server");
@@ -655,7 +655,7 @@ var uploadPhoto = function(media) {
 
                     response = JSON.parse(this.responseText);
                     if (response._status === "ERR") {
-                        Raduga.UI.alertError('Failed uploading photo file, API trouble: ' + this.responseText);
+                        UI.alertError('Failed uploading photo file, API trouble: ' + this.responseText);
                         return false;
                     }
                     Ti.API.info("Succesfully uploaded photo: " + JSON.stringify(response));
@@ -667,7 +667,7 @@ var uploadPhoto = function(media) {
                 },
                 onerror: function(e) {
                     Ti.API.info(this.responseText);
-                    Raduga.UI.alertError('Failed uploading photo file: ' + e.error + '\n\n' + this.responseText);
+                    UI.alertError('Failed uploading photo file: ' + e.error + '\n\n' + this.responseText);
                     close();
                 },
                 onsendstream: function(e) {
@@ -688,7 +688,7 @@ var uploadPhoto = function(media) {
 
         },
         onerror: function(e) {
-            Raduga.UI.alertError('Failed uploading metadata camera: ' + e.error);
+            UI.alertError('Failed uploading metadata camera: ' + e.error);
             close();
         }
     });
@@ -714,13 +714,13 @@ var showCam = function() {
     Ti.API.info("showCam called");
 
     if (!Ti.App.Properties.getString('sessionID')) {
-        Raduga.UI.alertError(L("signin_before_upload"));
+        UI.alertError(L("signin_before_upload"));
         tabGroup.setActiveTab(settingsTab);
         return false;
     }
 
     if (Ti.Network.getNetworkTypeName() === "NONE") {
-        Raduga.UI.alertError(L("camera_no_internet"));
+        UI.alertError(L("camera_no_internet"));
         tabGroup.setActiveTab(photosTab);
         return false;
     }
@@ -736,7 +736,7 @@ var showCam = function() {
                 setTimeout(function() { Raduga.cameraAvailable = true; }, 4000);
                 uploadPhoto(event.media);
             } else {
-                Raduga.UI.alertError("Camera got the wrong type back: " + event.mediaType);
+                UI.alertError("Camera got the wrong type back: " + event.mediaType);
             }
         },
         cancel:function() {
@@ -773,7 +773,7 @@ var citiesWindow = Ti.UI.createWindow({
 
 var tableData = [];
 
-var cityNameField = Raduga.Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en';
+var cityNameField = Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en';
 for (var i = 0; i < cities.length; i++) {
     var city = cities[i];
     tableData.push({ title: city[cityNameField], val: city });
@@ -803,34 +803,34 @@ citiesSearch.addEventListener('cancel', function(e) {
 var activityIndicator = Ti.UI.createActivityIndicator({
     height: Ti.UI.SIZE,
     width: Ti.UI.SIZE,
-    style: Raduga.Platform.ios ? Ti.UI.iPhone.ActivityIndicatorStyle.BIG : Ti.UI.ActivityIndicatorStyle.BIG,
+    style: Platform.ios ? Ti.UI.iPhone.ActivityIndicatorStyle.BIG : Ti.UI.ActivityIndicatorStyle.BIG,
     backgroundColor: 'rbga(255,255,255,0.2)',
     borderRadius: '5dp'
 });
 
-var rainbowExplanationHeadingLabel = Raduga.UI.createLabel({
+var rainbowExplanationHeadingLabel = UI.createLabel({
     font: { fontSize: "16dp", fontWeight: 'bold' },
     top: '10dp',
-    width: Raduga.Platform.width * .8125,
+    width: Platform.width * .8125,
     height: Ti.UI.SIZE,
     text: L('where_rainbow')
 });
-var rainbowExplanationLabel = Raduga.UI.createLabel({
+var rainbowExplanationLabel = UI.createLabel({
     font: { fontSize: "16dp" },
     top: '0dp',
-    width: Raduga.Platform.width * .8125,
+    width: Platform.width * .8125,
     height: Ti.UI.SIZE,
     text: L('where_rainbow_explanation')
 });
 
-var usernameLoggedInLabel = Raduga.UI.createLabel({
+var usernameLoggedInLabel = UI.createLabel({
     font: { fontSize: "14dp" },
     color: 'black',
     text: L('username') + ': ',
     top: '10dp',
-    width: Raduga.Platform.width * .75,
+    width: Platform.width * .75,
 });
-var usernameNewUserLabel = Raduga.UI.createLabel({
+var usernameNewUserLabel = UI.createLabel({
     font: { fontSize: "14dp" },
     color: 'black',
     text: L('sign_in_as_new_user'),
@@ -848,35 +848,35 @@ var usernameNewUserLabelUnderLine = Ti.UI.createView({
 var usernameNewUserView = Ti.UI.createView({
     top: '10dp',
     height: '20dp',
-    width: Raduga.Platform.width * .75,
+    width: Platform.width * .75,
 });
 usernameNewUserView.add(usernameNewUserLabel);
 usernameNewUserView.add(usernameNewUserLabelUnderLine);
 
 
-var usernameTextField = Raduga.UI.createTextField({
+var usernameTextField = UI.createTextField({
     hintText: L('username'),
     autocapitalization: Ti.UI.TEXT_AUTOCAPITALIZATION_NONE,
 });
-var passwordTextField = Raduga.UI.createTextField({
+var passwordTextField = UI.createTextField({
     hintText: L('password'),
     passwordMask: true
 });
-var passwordCheckTextField = Raduga.UI.createTextField({
+var passwordCheckTextField = UI.createTextField({
     hintText: L('password_again'),
     passwordMask: true
 });
 
-var loginButton  = Raduga.UI.createButton('login');
-var logoutButton = Raduga.UI.createButton('logout');
-var signupButton = Raduga.UI.createButton('signup');
+var loginButton  = UI.createButton('login');
+var logoutButton = UI.createButton('logout');
+var signupButton = UI.createButton('signup');
 
 var notificationsView = Ti.UI.createView({
     top: '10dp',
     height: '31dp',
     width: '260dp',
 });
-var notificationsLabel = Raduga.UI.createLabel({
+var notificationsLabel = UI.createLabel({
     color: 'black',
     textid: 'notifications',
     font: { fontSize: "14dp" },
@@ -891,12 +891,12 @@ var notificationsSwitch = Ti.UI.createSwitch({
 notificationsView.add(notificationsLabel);
 notificationsView.add(notificationsSwitch);
 
-var cityTextField = Raduga.UI.createTextField({
+var cityTextField = UI.createTextField({
     hintText: L('city'),
-    value: Ti.App.Properties.getString(Raduga.Platform.currentLanguage === 'ru' ? 'city_name_ru' : 'city_name_en'),
+    value: Ti.App.Properties.getString(Platform.currentLanguage === 'ru' ? 'city_name_ru' : 'city_name_en'),
 });
 
-var linkTermsLabel = Raduga.UI.createLabel({
+var linkTermsLabel = UI.createLabel({
     font: { fontSize: "12dp" },
     color: 'black',
     text: L('terms'),
@@ -909,7 +909,7 @@ var linkTermsLabelUnderLine = Ti.UI.createView({
     left: '0', bottom: '0dp',
     width: '101dp'
 });
-var linkAboutLabel = Raduga.UI.createLabel({
+var linkAboutLabel = UI.createLabel({
     font: { fontSize: "12dp" },
     color: 'black',
     text: L('about'),
@@ -925,13 +925,13 @@ var linkAboutLabelUnderLine = Ti.UI.createView({
 var linksView = Ti.UI.createView({
     top: '6dp',
     height: Ti.UI.SIZE,
-    width: Raduga.Platform.width * .8125,
+    width: Platform.width * .8125,
 });
 linksView.add(linkTermsLabel);
 linksView.add(linkTermsLabelUnderLine);
 linksView.add(linkAboutLabel);
 linksView.add(linkAboutLabelUnderLine);
-var copyrightLabel = Raduga.UI.createLabel({
+var copyrightLabel = UI.createLabel({
     font: { fontSize: "12dp" },
     color: 'black',
     text: L('copyright'),
@@ -943,22 +943,22 @@ var copyrightLabel = Raduga.UI.createLabel({
 
 // for Android has the toolbar on top
 var settingsTopSpace = Ti.UI.createView({
-    width: Raduga.Platform.width,
-    height: Raduga.Platform.android ? '50dp': '20dp',
+    width: Platform.width,
+    height: Platform.android ? '50dp': '20dp',
     top: 0, bottom: 0,
 });
 
 // for iOS, where the toolbar is below
 var settingsBottomSpace = Ti.UI.createView({
-    width: Raduga.Platform.width,
+    width: Platform.width,
     height: '50dp',
     top: '10dp',
 });
 
 var settingsScrollView = Ti.UI.createScrollView({
-    width: Raduga.Platform.width,
-    height: Raduga.Platform.height,
-    contentWidth: Raduga.Platform.width,
+    width: Platform.width,
+    height: Platform.height,
+    contentWidth: Platform.width,
     contentHeight: 'auto',
     left: '0',
     top: '0',
@@ -987,7 +987,7 @@ citiesTable.addEventListener('click', function(e) {
                 name_en: e.rowData.val.name_en,
                 name_ru: e.rowData.val.name_ru,
                 coordinates: [[e.rowData.val.lon, e.rowData.val.lat]],
-                language: Raduga.Platform.currentLanguage,
+                language: Platform.currentLanguage,
             }
         }, function (e) {
             if (e.success) {
@@ -996,7 +996,7 @@ citiesTable.addEventListener('click', function(e) {
                 ' (' + parseFloat(Ti.App.Properties.getString('city_lon')) + ', ' +
                 parseFloat(Ti.App.Properties.getString('city_lat')) + ')' );
             } else {
-                Raduga.UI.alertError('Failed updating location settings: ' + (e.error && e.message) || JSON.stringify(e));
+                UI.alertError('Failed updating location settings: ' + (e.error && e.message) || JSON.stringify(e));
             }
         });
     }
@@ -1008,13 +1008,13 @@ notificationsSwitch.addEventListener('change', function() {
             username: usernameTextField.value,
             custom_fields: {
                 notifications: notificationsSwitch.value,
-                language: Raduga.Platform.currentLanguage,
+                language: Platform.currentLanguage,
             }
         }, function (e) {
             if (e.success) {
                 Ti.API.info('Succesfully updated push notification settings for user ' + e.users[0].username);
             } else {
-                Raduga.UI.alertError('Failed updating push notification settings ' + (e.error && e.message) || JSON.stringify(e));
+                UI.alertError('Failed updating push notification settings ' + (e.error && e.message) || JSON.stringify(e));
             }
         });
     }
@@ -1101,7 +1101,7 @@ var updateUserDialog = function(view) {
     view.add(loggedIn() ? logoutButton : signedUp() ? loginButton : signupButton );
     view.add(linksView);
     view.add(copyrightLabel);
-    if (Raduga.Platform.ios) {
+    if (Platform.ios) {
         view.add(settingsBottomSpace);
     }
 };

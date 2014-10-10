@@ -1,9 +1,11 @@
+Platform = require('platform');
+
 exports.createLabel = function(options) {
     /**
      * As Titianium doesn’t allow to set a default fontSize, we create our own method for
      * initiating labels that allows us to add default settings
      */
-    if (Raduga.Platform.osname === 'android') {
+    if (Platform.osname === 'android') {
         if (typeof options.font === "undefined") {
             options.font = { fontSize: "16dp" };
         }
@@ -28,7 +30,7 @@ exports.createButton = function(titleid) {
     return Ti.UI.createButton({
         titleid: titleid,
         top: '10dp',
-        width: Raduga.Platform.width * .8125,
+        width: Platform.width * .8125,
         borderSize: '0',
         color: 'rgb(0,255,0)',
         borderRadius: '0dp',
