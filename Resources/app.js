@@ -69,12 +69,8 @@ var photosWindow = Ti.UI.createWindow({
 var globelib = require('globe');
 var globe = new globelib.Globe();
 
-var mapWindow = Ti.UI.createWindow({
-    orientationModes: [Ti.UI.PORTRAIT],
-    backgroundColor: 'white',
-    layout: 'vertical',
-    navBarHidden: true,
-});
+var maplib = require('map');
+var map = new maplib.Map();
 
 var cameralib = require('camera');
 var camera = new cameralib.Camera();
@@ -87,8 +83,8 @@ if (Platform.ios) {
     photosWindow.setExtendEdges([Ti.UI.EXTEND_EDGE_TOP, Ti.UI.EXTEND_EDGE_BOTTOM]);
     globe.window.setStatusBarStyle(Ti.UI.iPhone.StatusBar.LIGHT_CONTENT);
     globe.window.setExtendEdges([Ti.UI.EXTEND_EDGE_TOP, Ti.UI.EXTEND_EDGE_BOTTOM]);
-    mapWindow.setStatusBarStyle(Ti.UI.iPhone.StatusBar.DARK_CONTENT);
-    mapWindow.setExtendEdges([Ti.UI.EXTEND_EDGE_TOP, Ti.UI.EXTEND_EDGE_BOTTOM]);
+    map.window.setStatusBarStyle(Ti.UI.iPhone.StatusBar.DARK_CONTENT);
+    map.window.setExtendEdges([Ti.UI.EXTEND_EDGE_TOP, Ti.UI.EXTEND_EDGE_BOTTOM]);
     camera.window.setStatusBarStyle(Ti.UI.iPhone.StatusBar.LIGHT_CONTENT);
     camera.window.setExtendEdges([Ti.UI.EXTEND_EDGE_TOP, Ti.UI.EXTEND_EDGE_BOTTOM]);
     settings.window.setStatusBarStyle(Ti.UI.iPhone.StatusBar.LIGHT_CONTENT);
@@ -135,6 +131,7 @@ var updatePhotos = function() {
             var photos = json._items;
             Ti.API.info('found on the internet ' + photos.length + ' photos');
             Raduga.photos = photos;
+            Ti.App.fireEvent('spottedRainbows', { rainbows : photos});
             // fill the photo-tab
             tableView.setData(createTableData());
             // plot the photos in the webview
@@ -199,49 +196,6 @@ var insufficientMetadata = function(photo) {
            typeof photo.custom_fields.coordinates === 'undefined';
 };
 
-var photos2Features = function() {
-    var geoJSON = {};
-    geoJSON.type = "FeatureCollection";
-    geoJSON.features = [];
-
-    console.log("trying to add " + Raduga.photos.length + " photos as features");
-    for (var i = 0; i < Raduga.photos.length; i++) {
-        var photo = Raduga.photos[i];
-
-        // Skip photo’s without sufficient metadata
-        if (insufficientMetadata(photo)) {
-            Ti.API.info('Photo ' + photo._id + ' does not have sufficient metadata to locate on map');
-            continue;
-        }
-
-        /* This code will only plot rainbows of today:
-        if (new Date(photo.created_at).toDateString() !== new Date().toDateString()) {
-            Ti.API.info('Photo ' + photo._id + ' is not of today, and does not warrant a marker on the map');
-            continue;
-        } */
-
-        Ti.API.info('Photo ' + photo._id + ' will be plotted on the map');
-
-        var name = photo.custom_fields[Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en'];
-        var lon  = photo.custom_fields.coordinates[0][0];
-        var lat  = photo.custom_fields.coordinates[0][1];
-        var feature = {
-            type: "Feature",
-            properties: {
-                name: name,
-                index: i,
-            },
-            geometry: {
-                type: "Point",
-                coordinates: [
-                    lon, lat
-                ]
-            }
-        };
-        geoJSON.features.push(feature);
-    }
-    return geoJSON;
-};
 
 var createTableData = function() {
     var tableData = [];
@@ -428,28 +382,6 @@ if (Platform.ios) {
 
 photosWindow.add(tableView);
 
-
-/* Map Window */
-
-var mapWebView = Ti.UI.createWebView({
-    url : 'html/index.html',
-    width: '100%',
-    width: Platform.width,
-    height: Platform.height,
-    disableBounce: true
-});
-
-mapWebView.addEventListener('load', function() {
-    // If someone clicks on the map before they set up their location; center on Moscow
-    var city = Ti.App.Properties.getString('city_name_en') ? Ti.App.Properties.getString('city_name_en') : 'Moscow';
-    Ti.API.info("Centering map on " + city);
-    mapWebView.evalJS('initMap("' + city +'", ' + JSON.stringify(photos2Features()) + ');');
-});
-
-var updateMap = function() {
-    mapWindow.add(mapWebView);
-};
-
 //
 // Create tabs that will house the windows
 //
@@ -484,7 +416,7 @@ var globeTab = Ti.UI.createTab({
 var mapTab = Ti.UI.createTab({
     icon: 'ui/icons/map.png',
     activeIcon: 'ui/icons/map_hi.png',
-    window: mapWindow,
+    window: map.window,
     width: '20%',
     height: '50dp'
 });
@@ -545,6 +477,10 @@ Ti.App.addEventListener('launched', function(){
     settings.refreshUI();
     tabGroup.open();
 });
+Ti.App.addEventListener('spottedRainbows', function(e) {
+    Ti.API.info('Spotted rainbows sent to map');
+    map.updateRainbows(e.rainbows);
+});
 
 /*
  * ATTENTION: extremely inelegant way of making sure the mapTab background
@@ -575,7 +511,6 @@ var initWithNetwork = function() {
     users.updateUser();
     globe.update();
     updatePhotos();
-    updateMap();
 };
 
 var initSansNetwork = function() {
