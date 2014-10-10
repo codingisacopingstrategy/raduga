@@ -205,18 +205,16 @@ var updateRainbowCities = function() {
 };
 
 exports.Globe = function() {
-    predictionLabel.setColor(gradients.currentColour());
-    recentRainbowLabel.setColor(gradients.currentColour());
-
     this.window = globeWindow;
+    this.updateColours = function() {
+        globeWindow.setBackgroundGradient(gradients.currentGradient());
+        predictionLabel.setColor(gradients.currentColour());
+        recentRainbowLabel.setColor(gradients.currentColour());
+    };
     this.update = function() {
         updateSunLine();
         updateElektroL();
         updateRainbowCities();
-
-        predictionLabel.setColor(gradients.currentColour());
-        recentRainbowLabel.setColor(gradients.currentColour());
-
     };
     this.setRecentRainbowText = function(text) {
         recentRainbowLabel.setText(text);
@@ -226,4 +224,5 @@ exports.Globe = function() {
         globe.setImage('html/elektro_l_130502_0030_10.png'); // globe error image
         predictionLabel.setText(L('no_internet'));
     };
+    this.updateColours();
 };
