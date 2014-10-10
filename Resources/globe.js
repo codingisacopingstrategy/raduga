@@ -205,6 +205,9 @@ var updateRainbowCities = function() {
 };
 
 exports.Globe = function() {
+    predictionLabel.setColor(gradients.currentColour());
+    recentRainbowLabel.setColor(gradients.currentColour());
+
     this.window = globeWindow;
     this.update = function() {
         updateSunLine();
@@ -219,6 +222,7 @@ exports.Globe = function() {
         recentRainbowLabel.setText(text);
     };
     this.error = function() {
+        Ti.API.info('set offline globe view');
         globe.setImage('html/elektro_l_130502_0030_10.png'); // globe error image
         predictionLabel.setText(L('no_internet'));
     };

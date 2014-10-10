@@ -50,130 +50,7 @@ var cities = require('cities').cities;   // the coordinates of 1100 Russian town
 var gradients = require('gradients');
 var utils = require('utils');
 
-// functions for logging in, logging out, and creating new users
-/* A series of functions that deal with users: createUser, loginUser */
-var signedUp = function() {
-   return Boolean(Ti.App.Properties.getString('username'));
-};
-var loggedIn = function() {
-    return Boolean(Ti.App.Properties.getString('sessionID'));
-};
-
-var createUser = function(username, password, password_confirmation) {
-    if (!username) {
-        alert(L('username_blank'));
-        return false;
-    } else if (!password) {
-        alert(L('password_blank'));
-        return false;
-    } else if (password !== password_confirmation) {
-        alert(L('passwords_no_match'));
-        return false;
-    } else if (!cityTextField.value) {
-        alert(L('city_blank'));
-        return false;
-    }
-
-    activityIndicator.show();
-    Cloud.Users.create({
-        username: username,
-        password: password,
-        password_confirmation: password_confirmation,
-        custom_fields: {
-            language: Platform.currentLanguage === 'ru' ? 'ru' : 'en',
-            notifications: notificationsSwitch.value,
-            name_en: Ti.App.Properties.getString('city_name_en'),
-            name_ru: Ti.App.Properties.getString('city_name_ru'),
-            language: Platform.currentLanguage
-        }
-    }, function (e) {
-        if (e.success) {
-            Raduga.user = e.users[0];
-            var user = Raduga.user;
-            Ti.App.Properties.setString('sessionID', Cloud.sessionId);
-            Ti.App.Properties.setString('username', user.username);
-            Ti.App.Properties.setString('userid', user.id);
-            settingsWindow.fireEvent('user_status_change');
-            initPush();
-            var dialog = Ti.UI.createAlertDialog({
-                message: L('username') + ': ' + user.username,
-                ok: 'OK',
-                title: L('welcome')
-            }).show();
-            tabGroup.setActiveTab(globeTab);
-        } else {
-            if (e.message.toLowerCase().indexOf("already taken") !== -1) {
-                loginUser(username, password);
-            } else {
-                alertError('Failed creating user: ' + (e.error && e.message) || JSON.stringify(e));
-            }
-        }
-        activityIndicator.hide();
-    });
-};
-
-
-var loginUser = function(username, password) {
-    if (!password) {
-        alert('Please enter password');
-        return false;
-    }
-
-    activityIndicator.show();
-    Cloud.Users.login({
-        login: username,
-        password: password
-    }, function (e) {
-        if (e.success) {
-            Raduga.user = e.users[0];
-            var user = Raduga.user;
-            Ti.App.Properties.setString('sessionID', Cloud.sessionId);
-            Ti.App.Properties.setString('username', user.username);
-            Ti.App.Properties.setString('userid', user.id);
-            Ti.API.info("User " +  user.username + " logged in");
-            settingsWindow.fireEvent('user_status_change');
-            initPush();
-            if (Raduga.photos.length > 0) {
-                updateSpottedMessage();
-            }
-            tabGroup.setActiveTab(globeTab);
-        } else {
-            alert('Error for ' + username + ' and ' + password + ':\n' +
-                ((e.error && e.message) || JSON.stringify(e)));
-        }
-        activityIndicator.hide();
-    });
-};
-
-var logoutUser = function() {
-    activityIndicator.show();
-    Cloud.Users.logout(function (e) {
-        if (e.success) {
-            Ti.App.Properties.setString('sessionID', Cloud.sessionId); // set to null
-            Ti.API.info('Successfully logged out');
-            settingsWindow.fireEvent('user_status_change');
-        } else {
-            alertError('Failed logging out user: ' + (e.error && e.message) || JSON.stringify(e));
-        }
-    activityIndicator.hide();
-    });
-};
-
-var newUser = function() {
-    Ti.App.Properties.setString('username', '');
-    Ti.App.Properties.setString('city_name_en', '');
-    Ti.App.Properties.setString('city_name_ru', '');
-    Ti.App.Properties.setString('city_lat', '');
-    Ti.App.Properties.setString('city_lon', '');
-    Ti.App.Properties.setString('notifications', '');
-    notificationsSwitch.setValue(true);
-    if (loggedIn) {
-        logoutUser();
-    } else {
-        settingsWindow.fireEvent('user_status_change');
-    }
-};
-
+var users = require('users');
 /* Set up UI */
 
 // this sets the background color of the master UIView (when there are no windows/tab groups on it)
@@ -239,7 +116,7 @@ var updateSpottedMessage = function() {
     }
     var photo = Raduga.photos[0];
     var latestRainbowDate = new Date(photo.created_at);
-    if (loggedIn()) {
+    if (users.loggedIn()) {
         var spottedMessage = String.format(L('rainbow_spotted_alt'),
             photo.custom_fields[Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en'],
             utils.distanceToHome(photo.custom_fields.coordinates[0][1], photo.custom_fields.coordinates[0][0]));
@@ -400,7 +277,7 @@ var createTableData = function() {
         // The Z is another way of saying GMT.
         photo.created_at = photo.created_at.replace('+0000','Z');
 
-        if (photo.user.username === Ti.App.Properties.getString('username') && loggedIn()) {
+        if (photo.user.username === Ti.App.Properties.getString('username') && users.loggedIn()) {
             photo.owned = true;
         }
 
@@ -980,7 +857,7 @@ citiesTable.addEventListener('click', function(e) {
     Ti.App.Properties.setString('city_lat', e.rowData.val.lat);
     Ti.App.Properties.setString('city_lon', e.rowData.val.lon);
     citiesWindow.close();
-    if (loggedIn()) {
+    if (users.loggedIn()) {
         Cloud.Users.update({
             username: usernameTextField.value,
             custom_fields: {
@@ -1003,7 +880,7 @@ citiesTable.addEventListener('click', function(e) {
 });
 notificationsSwitch.addEventListener('change', function() {
     Ti.App.Properties.setString('notifications', String(notificationsSwitch.value));
-    if (loggedIn()) {
+    if (users.loggedIn()) {
         Cloud.Users.update({
             username: usernameTextField.value,
             custom_fields: {
@@ -1047,16 +924,16 @@ cityTextField.addEventListener('focus', function(e) {
 });
 
 // setup actions for the various user labels
-usernameNewUserLabel.addEventListener('click', newUser);
+usernameNewUserLabel.addEventListener('click', users.newUser);
 signupButton.addEventListener('click', function(){
-    createUser(usernameTextField.value, passwordTextField.value, passwordCheckTextField.value);
+    users.createUser(usernameTextField.value, passwordTextField.value, passwordCheckTextField.value, notificationsSwitch.value);
 });
 loginButton.addEventListener('click', function() {
     // if the username is known there is no textField:
     var username = usernameTextField.value ? usernameTextField.value : Ti.App.Properties.getString('username');
-    loginUser(username, passwordTextField.value);
+    users.loginUser(username, passwordTextField.value);
 });
-logoutButton.addEventListener('click', logoutUser);
+logoutButton.addEventListener('click', users.logoutUser);
 
 // external links
 linkTermsLabel.addEventListener('touchstart', function(){
@@ -1066,47 +943,40 @@ linkAboutLabel.addEventListener('touchstart', function(){
     Ti.Platform.openURL("http://pinkponyexpress.nl/#63");
 });
 
-// handle refreshing the whole of the settings screen
-settingsWindow.addEventListener('user_status_change', function() {
-    updateUserDialog(settingsScrollView);
-});
-
-var updateUserDialog = function(view) {
-    view.removeAllChildren(); //TODO: also remove event listeners?
-    view.add(settingsTopSpace);
-    view.add(rainbowExplanationHeadingLabel);
-    view.add(rainbowExplanationLabel);
-    if (signedUp()) {
+var updateUserDialog = function() {
+    settingsScrollView.removeAllChildren(); //TODO: also remove event listeners?
+    settingsScrollView.add(settingsTopSpace);
+    settingsScrollView.add(rainbowExplanationHeadingLabel);
+    settingsScrollView.add(rainbowExplanationLabel);
+    if (users.signedUp()) {
         usernameLoggedInLabel.setText(L('username') + ': ' + Ti.App.Properties.getString('username'));
-        view.add(usernameLoggedInLabel);
-        view.add(usernameNewUserView);
+        settingsScrollView.add(usernameLoggedInLabel);
+        settingsScrollView.add(usernameNewUserView);
     } else {
         usernameTextField.value = '';
         cityTextField.value = '';
-        view.add(usernameTextField);
+        settingsScrollView.add(usernameTextField);
     };
-    if (loggedIn()) {
+    if (users.loggedIn()) {
         passwordTextField.value = '';
         passwordCheckTextField.value = '';
     } else {
         // We are not logged in. Add the pass
-        view.add(passwordTextField);
-        if (!signedUp()) {
-            view.add(passwordCheckTextField);
+        settingsScrollView.add(passwordTextField);
+        if (!users.signedUp()) {
+            settingsScrollView.add(passwordCheckTextField);
         }
     }
-    view.add(cityTextField);
-    view.add(notificationsView);
+    settingsScrollView.add(cityTextField);
+    settingsScrollView.add(notificationsView);
     // if a: x else if b: y else: z
-    view.add(loggedIn() ? logoutButton : signedUp() ? loginButton : signupButton );
-    view.add(linksView);
-    view.add(copyrightLabel);
+    settingsScrollView.add(users.loggedIn() ? logoutButton : users.signedUp() ? loginButton : signupButton );
+    settingsScrollView.add(linksView);
+    settingsScrollView.add(copyrightLabel);
     if (Platform.ios) {
-        view.add(settingsBottomSpace);
+        settingsScrollView.add(settingsBottomSpace);
     }
 };
-
-updateUserDialog(settingsScrollView);
 
 //
 // Create tabs that will house the windows
@@ -1130,8 +1000,6 @@ var photosTab = Ti.UI.createTab({
     width: '20%',
     height: '50dp'
 });
-
-photosTab.addEventListener("focus", updatePhotos);
 
 var globeTab = Ti.UI.createTab({
     icon: 'ui/icons/earth.png',
@@ -1182,6 +1050,29 @@ tabGroup.addTab(cameraTab);
 tabGroup.addTab(photosTab);
 tabGroup.addTab(settingsTab);
 
+Ti.App.addEventListener('startedLoading', function() {
+    activityIndicator.show();
+});
+Ti.App.addEventListener('stoppedLoading', function() {
+    activityIndicator.hide();
+});
+Ti.App.addEventListener('user_status_change', function() {
+    updateUserDialog();
+});
+Ti.App.addEventListener('loggedIn', initPush);
+Ti.App.addEventListener('loggedIn', function() {
+    Ti.API.info('User logged in, set globeTab as active');
+    tabGroup.setActiveTab(globeTab);
+});
+Ti.App.addEventListener('loggedOut', function() {
+    Ti.API.info('User logged out, set settingsTab as active');
+    tabGroup.setActiveTab(settingsTab);
+});
+Ti.App.addEventListener('launched', function(){
+    Ti.API.info('App ready to launch');
+    updateUserDialog();
+    tabGroup.open();
+});
 
 /*
  * ATTENTION: extremely inelegant way of making sure the mapTab background
@@ -1207,51 +1098,19 @@ settingsTab.addEventListener("focus", standardOp);
 // Initialise app
 //
 
-var updateUser = function() {
-    Cloud.Users.showMe(function (e) {
-        if (e.success) {
-            Raduga.user = e.users[0];
-            var user = Raduga.user;
-
-            Ti.API.info("User " +  user.username + " " + user.id + " logged in at " +
-            Ti.App.Properties.getString('city_name_en') + '/' + Ti.App.Properties.getString('city_name_ru') +
-            ' (' + parseFloat(Ti.App.Properties.getString('city_lon')) + ', ' +
-            parseFloat(Ti.App.Properties.getString('city_lat')) + ')' );
-
-            Ti.App.Properties.setString('sessionID', Cloud.sessionId);
-            Ti.App.Properties.setString('username', user.username);
-            Ti.App.Properties.setString('userid', user.id);
-            initPush();
-            tabGroup.open();
-        } else {
-            // this way the will know we need to log in.
-            Ti.API.info("No user logged in");
-            Ti.App.Properties.setString('sessionID', '');
-            settingsWindow.fireEvent('user_status_change');
-            tabGroup.setActiveTab(settingsTab);
-            tabGroup.open();
-        }
-    });
-};
-
-
 var initWithNetwork = function() {
     Ti.API.info("initialising app, presuming network connectivity");
-    updateUser();
+    users.updateUser();
     globe.update();
     updatePhotos();
-
     updateMap();
-    if (!Ti.App.Properties.getString('sessionID')) {
-        tabGroup.setActiveTab(settingsTab);
-    }
 };
 
 var initSansNetwork = function() {
     Ti.API.info("initialising app, presuming no network connectivity");
     globe.error();
     tabGroup.setActiveTab(globeTab);
-    tabGroup.open();
+    Ti.App.fireEvent('launched');
 };
 
 if (Ti.Network.getNetworkTypeName() === "NONE") {
