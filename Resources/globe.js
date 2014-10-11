@@ -15,7 +15,6 @@ var globeWindow = Ti.UI.createWindow({
 var globeContainer = Ti.UI.createView({
     width: Platform.width,
     height: Platform.height,
-    layout: 'vertical'
 });
 
 var recentRainbowLabel = UI.createLabel({
@@ -26,7 +25,7 @@ var recentRainbowLabel = UI.createLabel({
 });
 
 var globe = Ti.UI.createImageView({
-    top: '10dp',
+    top: Platform.android ? '122dp' : '92dp',
     defaultImage: 'ui/transparant_pixel.png',
     image: 'html/elektro_l_20140311_0530_rgb.png',
     backgroundColor: 'transparent',
@@ -37,10 +36,10 @@ var globe = Ti.UI.createImageView({
 });
 
 var predictionLabel = UI.createLabel({
-    text: '',
+    top: (Platform.android ? 122 : 92 ) + Platform.width * .8 + 10,
     color: gradients.currentColour(),
     textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
-    top: '10dp', left: '10dp', right: '10dp',
+    left: '10dp', right: '10dp',
 });
 
 var sunLine = Ti.UI.createView({
@@ -89,20 +88,22 @@ var rainbowLinePercentage = function(n) {
     return (parseInt(hourHash[n] / 6 * 78) + 11) + "%";
 };
 
+globeContainer.add(recentRainbowLabel);
+globeContainer.add(globe);
+globeContainer.add(predictionLabel);
+globeWindow.add(globeContainer);
+
 var updateSunLine = function() {
+    globeWindow.remove(globeContainer);
+
     var d = new Date();
     // during the day, the sunLine is above the globe:
     var above = 6 <= d.getHours() < 18;
-    if (globeContainer.children.length > 0) {
-        globeContainer.removeAllChildren();
-    }
+
     sunLine.setLeft(rainbowLinePercentage());
     if (!above) {
         globeWindow.add(sunLine);
     }
-    globeContainer.add(recentRainbowLabel);
-    globeContainer.add(globe);
-    globeContainer.add(predictionLabel);
     globeWindow.add(globeContainer);
     if (above) {
         globeWindow.add(sunLine);
