@@ -17,7 +17,7 @@ exports.createUser = function(username, password, password_confirmation, notific
     } else if (password !== password_confirmation) {
         alert(L('passwords_no_match'));
         return false;
-    } else if (!cityTextField.value) {
+    } else if (!Ti.App.Properties.getString('city_name_en')) {
         alert(L('city_blank'));
         return false;
     }
@@ -110,8 +110,7 @@ exports.newUser = function() {
     Ti.App.Properties.setString('city_name_ru', '');
     Ti.App.Properties.setString('city_lat', '');
     Ti.App.Properties.setString('city_lon', '');
-    Ti.App.Properties.setString('notifications', '');
-    notificationsSwitch.setValue(true);
+    Ti.App.Properties.setString('notifications', 'true');
     if (exports.loggedIn) {
         exports.logoutUser();
     } else {

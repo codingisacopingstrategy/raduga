@@ -455,10 +455,10 @@ tabGroup.addTab(photosTab);
 tabGroup.addTab(settingsTab);
 
 Ti.App.addEventListener('startedLoading', function() {
-    activityIndicator.show();
+    settings.startLoading();
 });
 Ti.App.addEventListener('stoppedLoading', function() {
-    activityIndicator.hide();
+    settings.stopLoading();
 });
 Ti.App.addEventListener('user_status_change', function() {
     settings.refreshUI();

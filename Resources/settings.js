@@ -337,6 +337,7 @@ var updateUserDialog = function() {
         }
     }
     settingsScrollView.add(cityTextField);
+    notificationsSwitch.setValue(Ti.App.Properties.getString('notifications') !== 'false');
     settingsScrollView.add(notificationsView);
     // if a: x else if b: y else: z
     settingsScrollView.add(users.loggedIn() ? logoutButton : users.signedUp() ? loginButton : signupButton );
@@ -365,5 +366,11 @@ exports.Settings = function() {
         copyrightLabel                  .setColor(gradients.currentColour());
     };
     this.refreshUI = updateUserDialog;
+    this.startLoading = function() {
+        activityIndicator.show();
+    };
+    this.stopLoading = function() {
+        activityIndicator.hide();
+    };
     this.updateColours();
 };
