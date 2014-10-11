@@ -1,3 +1,5 @@
+var photosutils = require('photos');
+
 var rainbowCache = [];
 
 var mapWindow = Ti.UI.createWindow({
@@ -36,7 +38,7 @@ var photos2Features = function(photos) {
         var photo = photos[i];
 
         // Skip photo’s without sufficient metadata
-        if (insufficientMetadata(photo)) {
+        if (photosutils.insufficientMetadata(photo)) {
             Ti.API.info('Photo ' + photo._id + ' does not have sufficient metadata to locate on map');
             continue;
         }
@@ -46,8 +48,6 @@ var photos2Features = function(photos) {
             Ti.API.info('Photo ' + photo._id + ' is not of today, and does not warrant a marker on the map');
             continue;
         } */
-
-        Ti.API.info('Photo ' + photo._id + ' will be plotted on the map');
 
         var name = photo.custom_fields[Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en'];
         var lon  = photo.custom_fields.coordinates[0][0];

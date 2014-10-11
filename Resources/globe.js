@@ -4,8 +4,6 @@ var gradients = require('gradients');
 var UI = require('ui');
 var Platform = require('platform');
 
-Ti.API.info('After looking around on the internet, it seems on iOS app.js has access to this variable, which to me is pretty weird: commonJS models are not properly isolated ' + Platform.width);
-
 var globeWindow = Ti.UI.createWindow({
     orientationModes: [Ti.UI.PORTRAIT],
     backgroundColor: 'white',
@@ -134,6 +132,28 @@ var updateElektroL = function() {
     }
 };
 
+var updateSpottedMessage = function(rainbows) {
+     // display most recent rainbow in globe tab
+    if (rainbows.length === 0) {
+        globe.setRecentRainbowText('');
+        return null;
+    }
+    var rainbow = rainbows[0];
+    var latestRainbowDate = new Date(rainbow.created_at);
+    if (users.loggedIn()) {
+        var spottedMessage = String.format(L('rainbow_spotted_alt'),
+            rainbow.custom_fields[Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en'],
+            utils.distanceToHome(rainbow.custom_fields.coordinates[0][1], rainbow.custom_fields.coordinates[0][0]));
+    } else {
+        var spottedMessage = String.format(L('rainbow_spotted_no_from_you'),
+        rainbow.custom_fields[Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en']);
+    }
+    var dateMessage = latestRainbowDate.getDate() + ' ' + utils.getMonth(latestRainbowDate) + ' ' + utils.Date2PonyHour(latestRainbowDate);
+    var totalSpottedMessage = spottedMessage + '\n' + dateMessage;
+    Ti.API.info('spottedMessage: ' + totalSpottedMessage);
+    recentRainbowLabel.setText(totalSpottedMessage);
+};
+
 var rainbowCities;
 var updateRainbowCities = function() {
     var url = "http://vps40616.public.cloudvps.com/latest/rainbow_cities.json";
@@ -213,17 +233,15 @@ exports.Globe = function() {
         recentRainbowLabel.setColor(gradients.currentColour());
     };
     this.update = function() {
-        updateSunLine();
         updateElektroL();
+        updateSunLine();
         updateRainbowCities();
-    };
-    this.setRecentRainbowText = function(text) {
-        recentRainbowLabel.setText(text);
     };
     this.error = function() {
         Ti.API.info('set offline globe view');
         globe.setImage('html/elektro_l_130502_0030_10.png'); // globe error image
         predictionLabel.setText(L('no_internet'));
     };
+    this.updateRainbows = updateSpottedMessage;
     this.updateColours();
 };

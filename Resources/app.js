@@ -51,8 +51,8 @@ var gradients = require('gradients');
 var utils = require('utils');
 
 var users = require('users');
-/* Set up UI */
 
+/* Set up UI */
 // this sets the background color of the master UIView (when there are no windows/tab groups on it)
 Ti.UI.setBackgroundColor('#ffffff');
 // launch in portrait mode
@@ -60,14 +60,12 @@ Ti.UI.orientation = Ti.UI.PORTRAIT;
 //
 // Create the Windows
 //
-var photosWindow = Ti.UI.createWindow({
-    orientationModes: [Ti.UI.PORTRAIT],
-    backgroundColor: 'white',
-    navBarHidden: true,
-});
 
 var globelib = require('globe');
 var globe = new globelib.Globe();
+
+var photoslib = require('photos');
+var photos = new photoslib.Photos();
 
 var maplib = require('map');
 var map = new maplib.Map();
@@ -79,8 +77,8 @@ var settingslib = require('settings');
 var settings = new settingslib.Settings();
 
 if (Platform.ios) {
-    photosWindow.setStatusBarStyle(Ti.UI.iPhone.StatusBar.DARK_CONTENT);
-    photosWindow.setExtendEdges([Ti.UI.EXTEND_EDGE_TOP, Ti.UI.EXTEND_EDGE_BOTTOM]);
+    photos.window.setStatusBarStyle(Ti.UI.iPhone.StatusBar.DARK_CONTENT);
+    photos.window.setExtendEdges([Ti.UI.EXTEND_EDGE_TOP, Ti.UI.EXTEND_EDGE_BOTTOM]);
     globe.window.setStatusBarStyle(Ti.UI.iPhone.StatusBar.LIGHT_CONTENT);
     globe.window.setExtendEdges([Ti.UI.EXTEND_EDGE_TOP, Ti.UI.EXTEND_EDGE_BOTTOM]);
     map.window.setStatusBarStyle(Ti.UI.iPhone.StatusBar.DARK_CONTENT);
@@ -92,298 +90,7 @@ if (Platform.ios) {
 }
 
 //
-// Add functionality to the windows
-//
-
-
-// photosWindow behaviour
-
-var updateSpottedMessage = function() {
-     // display most recent rainbow in globe tab
-    if (Raduga.photos.length === 0) {
-        globe.setRecentRainbowText('');
-        return null;
-    }
-    var photo = Raduga.photos[0];
-    var latestRainbowDate = new Date(photo.created_at);
-    if (users.loggedIn()) {
-        var spottedMessage = String.format(L('rainbow_spotted_alt'),
-            photo.custom_fields[Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en'],
-            utils.distanceToHome(photo.custom_fields.coordinates[0][1], photo.custom_fields.coordinates[0][0]));
-    } else {
-        var spottedMessage = String.format(L('rainbow_spotted_no_from_you'),
-        photo.custom_fields[Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en']);
-    }
-    var dateMessage = latestRainbowDate.getDate() + ' ' + utils.getMonth(latestRainbowDate) + ' ' + utils.Date2PonyHour(latestRainbowDate);
-    globe.setRecentRainbowText(spottedMessage + '\n' + dateMessage);
-};
-
-var updatePhotos = function() {
-    Ti.API.info('updating photos');
-    var url = 'http://vps40616.public.cloudvps.com/photos/?where={"processed":true}&projection={"image":0}';
-    // var url = 'http://127.0.0.1:5000/photos/?where={"processed":true}&projection={"image":0}';
-    var json;
-
-    var xhr = Ti.Network.createHTTPClient({
-        onload: function() {
-            // parse the retrieved data, turning it into a JavaScript object
-            json = JSON.parse(this.responseText);
-            var photos = json._items;
-            Ti.API.info('found on the internet ' + photos.length + ' photos');
-            Raduga.photos = photos;
-            Ti.App.fireEvent('spottedRainbows', { rainbows : photos});
-            // fill the photo-tab
-            tableView.setData(createTableData());
-            // plot the photos in the webview
-            // globe.evalJS('svg.append("path").datum(' + JSON.stringify(photos2Features())  + ').attr("d", path.pointRadius(14)).attr("class", "place");');
-
-            updateSpottedMessage();
-        },
-        onerror: function(error) {
-            if (Ti.Network.getNetworkTypeName() === "NONE" || error.code === -1004 || error.code === -1001) {
-                /** If the telephone is not connected to the internet, this is not actually an error */
-               /** btw, error -1004 is when there is network but it can’t find the internet
-                * -1001 is when the server times out (probably a connection problem as well) */
-                Ti.API.info("tried to request photos while not connected to the internet");
-                return;
-            }
-            UI.alertError('Failed loading photos through network: ' + JSON.stringify(error));
-        }
-    });
-
-    xhr.open("GET", url);
-    xhr.send();
-};
-
-var deletePhoto = function(photo) {
-    var url = 'http://vps40616.public.cloudvps.com/photos/' + photo.id;
-//    var url = 'http://127.0.0.1:5000/photos/' + photo.id;
-    var authstr = 'Basic ' + Ti.Utils.base64encode(Ti.App.Properties.getString('userid') + ':');
-
-    var delXhr = Ti.Network.createHTTPClient({
-        onload: function() {
-            updatePhotos();
-        },
-        onerror: function(error) {
-            if (Ti.Network.getNetworkTypeName() === "NONE" || error.code === -1004 || error.code === -1001) {
-                /** If the telephone is not connected to the internet, this is not actually an error */
-               /** btw, error -1004 is when there is network but it can’t find the internet
-                * -1001 is when the server times out (probably a connection problem as well) */
-                Ti.API.info("tried to delete photos while not connected to the internet");
-                return;
-            }
-            UI.alertError('Failed deleting photo: ' + JSON.stringify(error));
-        }
-    });
-
-    delXhr.open("DELETE", url);
-    //delXhr.setRequestHeader('X-HTTP-Method-Override', 'DELETE');  // in iOS we can send a DELETE request directly,
-                                                                // but in (Titanium’s implementation of) Android we can’t
-//    Concurrency checking disabled for now, because of https://github.com/nicolaiarocci/eve/issues/369 (is going to be available in 0.5)
-//    delXhr.setRequestHeader('If-Match', photo._etag);
-    console.log(photo._etag);
-    delXhr.setRequestHeader('Authorization', authstr);
-    delXhr.send();
-};
-
-var insufficientMetadata = function(photo) {
-    return typeof photo.created_at === 'undefined' ||
-           typeof photo.user === 'undefined' ||
-           typeof photo.urls === 'undefined' ||
-           typeof photo.custom_fields === 'undefined' ||
-           typeof photo.custom_fields.name_en === 'undefined' ||
-           typeof photo.custom_fields.name_ru === "undefined" ||
-           typeof photo.custom_fields.coordinates === 'undefined';
-};
-
-
-var createTableData = function() {
-    var tableData = [];
-
-    var row = Ti.UI.createTableViewRow({
-        className: 'separator', // used to improve table performance
-        backgroundColor: 'transparent',
-        rowIndex: -1, // custom property, useful for determining the row during events
-        height: '20dp'
-    });
-
-    tableData.push(row);
-
-    for (var i = 0; i < Raduga.photos.length; i++) {
-        var photo = Raduga.photos[i];
-
-        // Skip photo’s without sufficient metadata
-        if (insufficientMetadata(photo)) {
-            Ti.API.info('Photo ' + photo._id + ' does not have sufficient metadata to display in photo tab');
-            continue;
-        } else {
-            Ti.API.info('Showing photo ' + photo._id);
-        }
-
-        // Titanium’s cloud service uses the "2014-02-13T14:27:39+0000" format
-        // which is not recognised by the Date constructor in iOS
-        // The Z is another way of saying GMT.
-        photo.created_at = photo.created_at.replace('+0000','Z');
-
-        if (photo.user.username === Ti.App.Properties.getString('username') && users.loggedIn()) {
-            photo.owned = true;
-        }
-
-        var row = Ti.UI.createTableViewRow({
-            className: 'rainbowPhoto', // used to improve table performance
-            backgroundColor: 'transparent',
-            rowIndex: i, // custom property, useful for determining the row during events
-        });
-
-        Ti.API.info('rowindex: ' + i);
-        Ti.API.info('place: ' + photo.custom_fields.name_en);
-
-
-        var rainbowImage = Ti.UI.createImageView({
-            defaultImage: 'ui/transparant_pixel.png',
-            image: Platform.width < 640 ? photo.urls.medium_640 : photo.urls.large_1024,
-            left: 0,
-            top: 0,
-            width: Platform.width
-        });
-        row.add(rainbowImage);
-
-        // with an almost transparent background that helps to keep text readable on white photos
-        // and some very low tech padding with space " " ( thanks https://developer.appcelerator.com/question/50441/padding-on-a-label#answer-237825 )
-        var labelCity = UI.createLabel({
-            backgroundColor: 'rgba(0,0,0,0.1)',
-            color: 'white',
-            text: " " + photo.custom_fields[Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en'] + " ",
-            width: Ti.UI.SIZE,
-            top: '3dp',
-            left: '10dp'
-        });
-        row.add(labelCity);
-
-        var labelUserAndDate = UI.createLabel({
-            backgroundColor: 'rgba(0,0,0,0.1)',
-            color: 'white',
-            text: " " + photo.user.username + " " + utils.Date2PonyDate(new Date(photo.created_at)) + " — " + utils.Date2PonyHour(new Date(photo.created_at)) + " ",
-            width: Ti.UI.SIZE,
-            top: '27dp',
-            left: '10dp'
-        });
-        row.add(labelUserAndDate);
-
-        var photoShareButton = Ti.UI.createView({
-            id :"share_"+ i,
-            width: '60dp',
-            height: '60dp',
-            bottom: 0,
-            left: 0,
-        });
-        var photoShareButtonImage = Ti.UI.createImageView({
-            id :"share_image_" + i,
-            image: 'ui/icons/share.png',
-            width: '27dp',
-            height: '30dp',
-            bottom: '10dp',
-            left: '10dp'
-        });
-        photoShareButton.add(photoShareButtonImage);
-        row.add(photoShareButton);
-
-        if (photo.owned) {
-            var photoDeleteButton = Ti.UI.createView({
-                id :"delete_"+ i,
-                width: '60dp',
-                height: '60dp',
-                bottom: 0,
-                right: 0,
-            });
-            var photoDeleteButtonImage = Ti.UI.createImageView({
-                id :"delete_image_" + i,
-                image: 'ui/icons/delete.png',
-                width: '18dp',
-                height: '25dp',
-                bottom: '10dp',
-                right: '10dp'
-            });
-            photoDeleteButton.add(photoDeleteButtonImage);
-            row.add(photoDeleteButton);
-        }
-
-        if(Platform.ios) {
-            row.setSelectionStyle(Ti.UI.iPhone.TableViewCellSelectionStyle.NONE);
-        }
-
-        tableData.push(row);
-
-        var row = Ti.UI.createTableViewRow({
-            className: 'separator', // used to improve table performance
-            backgroundColor: 'transparent',
-            rowIndex: -1, // custom property, useful for determining the row during events
-            height: '2dp'
-        });
-
-        tableData.push(row);
-
-
-    }
-    return tableData;
-};
-
-var tableView = Ti.UI.createTableView({
-    top: '0dp',
-    minRowHeight: '0dp',
-    separatorColor: 'transparent',
-    backgroundColor: 'transparent',
-    data: createTableData()
-});
-
-tableView.addEventListener("touchstart", function(e){
-    // only the delete button has an id, in other cases we show the share dialog:
-    if ( e.source.id && e.source.id.match(/^share_/) ) {
-        Ti.API.info("click registerd on share button");
-        var photo = Raduga.photos[e.row.rowIndex];
-        var city = photo.custom_fields[Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en'];
-        var username = photo.user.username;
-
-        if(Platform.ios && Social.isActivityViewSupported()){
-            Ti.API.info("Social activity registered");
-            Social.activityView({
-                text: String.format(L('photo_caption'), username, city),
-                image: photo.urls.original,
-            });
-        } else {
-            //implement sharing Android
-        }
-    } else if ( e.source.id && e.source.id.match(/^delete_/) ) {
-        Ti.API.info("click registerd on delete button");
-        var photo = Raduga.photos[e.row.rowIndex];
-
-        var dialog = Ti.UI.createAlertDialog({
-            cancel : 1,
-            buttonNames : [L('confirm'), L('cancel')],
-            message : L('delete_confirm_message'),
-            title : L('delete')
-        });
-        dialog.addEventListener('click', function(e) {
-            if (e.index === e.source.cancel) {
-                Ti.API.info('The cancel button was clicked');
-                return;
-            }
-            Ti.API.info("Trying to delete");
-            deletePhoto(photo);
-        });
-        dialog.show();
-    }
-});
-
-
-if (Platform.ios) {
-    tableView.setSeparatorStyle(Ti.UI.iPhone.TableViewSeparatorStyle.NONE);
-}
-
-photosWindow.add(tableView);
-
-//
-// Create tabs that will house the windows
+// Create tabs that will house the windows, and associated events
 //
 
 var tabGroup = Ti.UI.createTabGroup({
@@ -400,10 +107,12 @@ var tabGroup = Ti.UI.createTabGroup({
 var photosTab = Ti.UI.createTab({
     icon: 'ui/icons/wall.png',
     activeIcon: 'ui/icons/wall_hi.png',
-    window: photosWindow,
+    window: photos.window,
     width: '20%',
     height: '50dp'
 });
+
+photosTab.addEventListener("focus", photos.update);
 
 var globeTab = Ti.UI.createTab({
     icon: 'ui/icons/earth.png',
@@ -480,7 +189,26 @@ Ti.App.addEventListener('launched', function(){
 Ti.App.addEventListener('spottedRainbows', function(e) {
     Ti.API.info('Spotted rainbows sent to map');
     map.updateRainbows(e.rainbows);
+    Ti.API.info('Latest spotted rainbow shown above the globe');
+    globe.updateRainbows(e.rainbows);
 });
+
+Ti.App.addEventListener('rainbowClicked', function(e) {
+    // The underlying idea is that the index set in map.js > photos2Features
+    // equates to the rowIndex set in photos.js > createTableData
+    // and that that thus the photoscroll can scroll to the position of
+    // the corresponding photo, when a city is clicked on the map
+    // however, FIXME ’cause this doesn’t seem to work
+    // the photoscroll does scroll, simply not to the right place
+    tabGroup.setActiveTab(photosTab);
+    Ti.API.info('click on index ' + e.index );
+    setTimeout(function() {
+        Ti.API.info('scrolling to image, I hope');
+        var animationOptions = Ti.Platform.ios ? { animated: true, position: Ti.UI.iPhone.TableViewScrollPosition.NONE} : null;
+        tableView.scrollToIndex(parseInt(e.index), animationOptions);
+    }, 1000);
+});
+
 
 /*
  * ATTENTION: extremely inelegant way of making sure the mapTab background
@@ -495,12 +223,10 @@ var highOp = function() {
 };
 
 cameraTab.addEventListener("focus", standardOp);
-photosTab.addEventListener("focus", updatePhotos);
 globeTab.addEventListener("focus", standardOp);
 mapTab.addEventListener("focus", highOp);
 cameraTab.addEventListener("focus", standardOp);
 settingsTab.addEventListener("focus", standardOp);
-
 
 //
 // Initialise app
@@ -510,7 +236,7 @@ var initWithNetwork = function() {
     Ti.API.info("initialising app, presuming network connectivity");
     users.updateUser();
     globe.update();
-    updatePhotos();
+    photos.update();
 };
 
 var initSansNetwork = function() {
@@ -557,18 +283,3 @@ var updateColours = function() {
 };
 
 var colourTimer = setInterval(updateColours, 300000);
-updateColours();
-
-Ti.App.addEventListener('rainbowClicked', function(e) {
-    tabGroup.setActiveTab(photosTab);
-    Ti.API.info('click on index ' + e.index );
-    Ti.API.info(Raduga.photos.length);
-    Ti.API.info(JSON.stringify(Raduga.photos[parseInt(i)]));
-    Ti.API.info(JSON.stringify(Raduga.photos));
-    setTimeout(function() {
-        Ti.API.info('scrolling to image, I hope');
-        var animationOptions = Ti.Platform.ios ? { animated: true, position: Ti.UI.iPhone.TableViewScrollPosition.NONE} : null;
-        tableView.scrollToIndex(parseInt(e.index), animationOptions);
-    }, 1000);
-});
-
