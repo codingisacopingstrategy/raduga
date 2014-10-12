@@ -271,6 +271,7 @@ exports.Photos = function() {
     this.window = photosWindow;
     this.insufficientMetadata = insufficientMetadata;
     this.update = updatePhotos;
+    this.tableView = tableView;
 };
 
 exports.insufficientMetadata = insufficientMetadata;

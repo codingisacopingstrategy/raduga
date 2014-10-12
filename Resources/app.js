@@ -205,7 +205,7 @@ Ti.App.addEventListener('rainbowClicked', function(e) {
     setTimeout(function() {
         Ti.API.info('scrolling to image, I hope');
         var animationOptions = Ti.Platform.ios ? { animated: true, position: Ti.UI.iPhone.TableViewScrollPosition.NONE} : null;
-        tableView.scrollToIndex(parseInt(e.index), animationOptions);
+        photos.tableView.scrollToIndex(parseInt(e.index), animationOptions);
     }, 1000);
 });
 
