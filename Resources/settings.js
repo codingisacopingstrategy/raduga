@@ -60,7 +60,7 @@ var rainbowExplanationHeadingLabel = UI.createLabel({
 });
 var rainbowExplanationLabel = UI.createLabel({
     font: { fontSize: "16dp" },
-    top: '0dp',
+    top: 0,
     width: Platform.width * .8125,
     height: Ti.UI.SIZE,
     text: L('where_rainbow_explanation')
@@ -128,8 +128,8 @@ var notificationsLabel = UI.createLabel({
 });
 var notificationsSwitch = Ti.UI.createSwitch({
     value: Ti.App.Properties.getString('notifications') !== 'false',
-    right: '0',
-    bottom: '0',
+    right: 0,
+    bottom: 0,
 });
 notificationsView.add(notificationsLabel);
 notificationsView.add(notificationsSwitch);
@@ -143,13 +143,13 @@ var linkTermsLabel = UI.createLabel({
     font: { fontSize: "12dp" },
     color: 'black',
     text: L('terms'),
-    left: '0', bottom: '1dp',
+    left: 0, bottom: '1dp',
     width: Ti.UI.SIZE
 });
 var linkTermsLabelUnderLine = Ti.UI.createView({
     backgroundColor: 'black',
     height: '1dp',
-    left: '0', bottom: '0dp',
+    left: 0, bottom: 0,
     width: '101dp'
 });
 var linkAboutLabel = UI.createLabel({
@@ -203,8 +203,8 @@ var settingsScrollView = Ti.UI.createScrollView({
     height: Platform.height,
     contentWidth: Platform.width,
     contentHeight: 'auto',
-    left: '0',
-    top: '0',
+    left: 0,
+    top: 0,
     layout: 'vertical',
     showVerticalScrollIndicator: true,
     showHorizontalScrollIndicator: false

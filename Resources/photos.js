@@ -214,8 +214,8 @@ var createTableData = function(photos) {
 };
 
 var tableView = Ti.UI.createTableView({
-    top: '0dp',
-    minRowHeight: '0dp',
+    top: 0,
+    minRowHeight: 0,
     separatorColor: 'transparent',
     backgroundColor: 'transparent',
     data: []
