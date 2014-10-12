@@ -4,6 +4,8 @@ var users = require('users');
 
 var settingsWindow = Ti.UI.createWindow({
     orientationModes: [Ti.UI.PORTRAIT],
+    width: Platform.width,
+    height: Platform.height,
     backgroundGradient: gradients.currentSettingsGradient(),
     navBarHidden: true,
 });
@@ -110,10 +112,6 @@ var passwordCheckTextField = UI.createTextField({
     passwordMask: true
 });
 
-var loginButton  = UI.createButton('login');
-var logoutButton = UI.createButton('logout');
-var signupButton = UI.createButton('signup');
-
 var notificationsView = Ti.UI.createView({
     top: '10dp',
     height: '31dp',
@@ -138,6 +136,17 @@ var cityTextField = UI.createTextField({
     hintText: L('city'),
     value: Ti.App.Properties.getString(Platform.currentLanguage === 'ru' ? 'city_name_ru' : 'city_name_en'),
 });
+
+var loginButton  = UI.createButton('login');
+var logoutButton = UI.createButton('logout');
+var signupButton = UI.createButton('signup');
+
+var settingsButtonView = Ti.UI.createView({
+    height: Ti.UI.SIZE,
+});
+settingsButtonView.add(loginButton);
+settingsButtonView.add(logoutButton);
+settingsButtonView.add(signupButton);
 
 var linkTermsLabel = UI.createLabel({
     font: { fontSize: "12dp" },
@@ -198,7 +207,7 @@ var settingsBottomSpace = Ti.UI.createView({
     top: '10dp',
 });
 
-// see scrollview in api docs: 
+// see scrollview in api docs:
 var settingsScrollView = Ti.UI.createScrollView({
     width: Platform.width,
     height: Platform.height,
@@ -207,7 +216,7 @@ var settingsScrollView = Ti.UI.createScrollView({
     left: 0,
     right: 0,
     bottom: 0,
-    top: '0',
+    top: 0,
     layout: 'vertical',
     showVerticalScrollIndicator: true,
     showHorizontalScrollIndicator: false
@@ -314,53 +323,87 @@ linkAboutLabel.addEventListener('touchstart', function(){
     Ti.Platform.openURL("http://pinkponyexpress.nl/#63");
 });
 
+settingsScrollView.add(settingsTopSpace);
+settingsScrollView.add(rainbowExplanationHeadingLabel);
+settingsScrollView.add(rainbowExplanationLabel);
+settingsScrollView.add(usernameLoggedInLabel);
+settingsScrollView.add(usernameNewUserView);
+settingsScrollView.add(usernameTextField);
+settingsScrollView.add(passwordTextField);
+settingsScrollView.add(passwordCheckTextField);
+settingsScrollView.add(notificationsView);
+settingsScrollView.add(cityTextField);
+settingsScrollView.add(settingsButtonView);
+settingsScrollView.add(linksView);
+settingsScrollView.add(copyrightLabel);
+if (Platform.ios) {
+    settingsScrollView.add(settingsBottomSpace);
+}
+
 // FIXME: THIS SEEMS BUGGY, SOMETIMES ELEMENTS ARE MISSING OR MARGINS MOVE
+// https://github.com/codingisacopingstrategy/raduga/issues/2
 var updateUserDialog = function() {
-    
-    /* Why Would you do this don't make another instance of all views,
-    replace or remove individual items from the settingsScrollView is way better / performant
-    
-    Since the layouttype of settingsScrollView is 'vertical', every view container is stacked relatively below eachothers neighbour. 
-    If you would remove (or hide) the individual items like (passwordfield after signup), this is way simpler.
-    
-    Might fix the jumping margin too. 
-    
-    */
-    settingsScrollView.removeAllChildren(); //TODO: also remove event listeners?
-    settingsScrollView.add(settingsTopSpace);
-    settingsScrollView.add(rainbowExplanationHeadingLabel);
-    settingsScrollView.add(rainbowExplanationLabel);
+
+    // we can’t just simply use the element’s .hide() and .show() methods,
+    // because then they still take up space in the layout
+    // ( except in case of the login logout signup buttons, because they are
+    // absolutely positioned )
+    var hide = function(el) {
+        if (el.getHeight() === 0) {
+            return; // button is already hidden
+        } else {
+            el.hide();
+            el.setHeight(0);
+            el.setTop(0);
+        }
+    };
+    var show = function(el, height) {
+        if (el.getHeight() !== 0) {
+            return; // button is already shown
+        } else {
+            el.show();
+            el.setHeight(height ? height : Ti.UI.SIZE);
+            el.setTop('10dp');
+        }
+    };
+
+    notificationsSwitch.setValue(Ti.App.Properties.getString('notifications') !== 'false');
     if (users.signedUp()) {
         usernameLoggedInLabel.setText(L('username') + ': ' + Ti.App.Properties.getString('username'));
-        settingsScrollView.add(usernameLoggedInLabel);
-        settingsScrollView.add(usernameNewUserView);
+        hide(usernameTextField);
+        show(usernameLoggedInLabel);
+        show(usernameNewUserView, '20dp');
     } else {
         usernameTextField.value = '';
         cityTextField.value = '';
-        settingsScrollView.add(usernameTextField);
+        show(usernameTextField);
+        hide(usernameLoggedInLabel);
+        hide(usernameNewUserView);
     };
     if (users.loggedIn()) {
         passwordTextField.value = '';
         passwordCheckTextField.value = '';
+        hide(passwordTextField);
+        hide(passwordCheckTextField);
+        logoutButton.show();
+        loginButton.hide();
+        signupButton.hide();
     } else {
-        // We are not logged in. Add the pass
-        settingsScrollView.add(passwordTextField);
-        if (!users.signedUp()) {
-            settingsScrollView.add(passwordCheckTextField);
+        if (users.signedUp()) {
+            show(passwordTextField);
+            hide(passwordCheckTextField);
+            logoutButton.hide();
+            loginButton.show();
+            signupButton.hide();
+        } else {
+            show(passwordTextField);
+            show(passwordCheckTextField);
+            logoutButton.hide();
+            loginButton.hide();
+            signupButton.show();
         }
     }
-    settingsScrollView.add(cityTextField);
-    notificationsSwitch.setValue(Ti.App.Properties.getString('notifications') !== 'false');
-    settingsScrollView.add(notificationsView);
-    // if a: x else if b: y else: z
-    settingsScrollView.add(users.loggedIn() ? logoutButton : users.signedUp() ? loginButton : signupButton );
-    settingsScrollView.add(linksView);
-    settingsScrollView.add(copyrightLabel);
-    if (Platform.ios) {
-        settingsScrollView.add(settingsBottomSpace);
-    }
 };
-
 exports.Settings = function() {
     this.window = settingsWindow;
     this.updateColours = function() {
