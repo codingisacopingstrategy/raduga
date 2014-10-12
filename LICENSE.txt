@@ -1,2 +1,13 @@
-All rights reserved Stichting Pink Pony Express, Rotterdam.
+(c) 2014 Stichting Pink Pony Express, Rotterdam.
 
+The source code of this application is distributed under the
+GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+As the copyright owner, Pink Pony Express reserves the right to
+distribute the Application under different licenses to comply
+with the restrictions of various App Stores / environments.
