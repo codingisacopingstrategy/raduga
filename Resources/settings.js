@@ -198,12 +198,15 @@ var settingsBottomSpace = Ti.UI.createView({
     top: '10dp',
 });
 
+// see scrollview in api docs: 
 var settingsScrollView = Ti.UI.createScrollView({
     width: Platform.width,
     height: Platform.height,
     contentWidth: Platform.width,
-    contentHeight: 'auto',
-    left: '0',
+    /*contentHeight: 'auto', */
+    left: 0,
+    right: 0,
+    bottom: 0,
     top: '0',
     layout: 'vertical',
     showVerticalScrollIndicator: true,
@@ -313,6 +316,16 @@ linkAboutLabel.addEventListener('touchstart', function(){
 
 // FIXME: THIS SEEMS BUGGY, SOMETIMES ELEMENTS ARE MISSING OR MARGINS MOVE
 var updateUserDialog = function() {
+    
+    /* Why Would you do this don't make another instance of all views,
+    replace or remove individual items from the settingsScrollView is way better / performant
+    
+    Since the layouttype of settingsScrollView is 'vertical', every view container is stacked relatively below eachothers neighbour. 
+    If you would remove (or hide) the individual items like (passwordfield after signup), this is way simpler.
+    
+    Might fix the jumping margin too. 
+    
+    */
     settingsScrollView.removeAllChildren(); //TODO: also remove event listeners?
     settingsScrollView.add(settingsTopSpace);
     settingsScrollView.add(rainbowExplanationHeadingLabel);
