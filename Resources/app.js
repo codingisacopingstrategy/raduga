@@ -105,6 +105,7 @@ var tabGroup = Ti.UI.createTabGroup({
 });
 
 var photosTab = Ti.UI.createTab({
+    id: 'photosTab',
     icon: 'ui/icons/wall.png',
     activeIcon: 'ui/icons/wall_hi.png',
     window: photos.window,
@@ -112,7 +113,15 @@ var photosTab = Ti.UI.createTab({
     height: '50dp'
 });
 
-photosTab.addEventListener("focus", photos.update);
+photosTab.addEventListener("focus", function(e) {
+    Ti.API.info("focus on the photosTab");
+    if (e.source.id === 'photosTab') {
+        Ti.API.info("focus on the photosTab tab, updating photos");
+        photos.update();
+    } else {
+        Ti.API.info("Not actually update phototab");
+    }
+});
 
 var globeTab = Ti.UI.createTab({
     icon: 'ui/icons/earth.png',
@@ -162,6 +171,15 @@ tabGroup.addTab(mapTab);
 tabGroup.addTab(cameraTab);
 tabGroup.addTab(photosTab);
 tabGroup.addTab(settingsTab);
+
+Ti.App.addEventListener('switchTab', function(e) {
+    if (e.tab === "photos") {
+        tabGroup.setActiveTab(photosTab);
+    } else if (e.tab === "settings") {
+        tabGroup.setActiveTab(settingsTab);
+    }
+});
+Ti.App.addEventListener('photosUpdate', photos.update);
 
 Ti.App.addEventListener('startedLoading', function() {
     settings.startLoading();

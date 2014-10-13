@@ -1,5 +1,7 @@
 // Set up Camera Window
 
+var cameraAvailable = true;
+
 var cameraWindow = Ti.UI.createWindow({
     orientationModes: [Ti.UI.PORTRAIT],
     backgroundColor: 'black',
@@ -87,7 +89,8 @@ var uploadPhoto = function(media) {
 
                     // We are done here!
                     // switch to the tab that shows the photos
-                    tabGroup.setActiveTab(photosTab);
+                    Ti.App.trigger('photosUpdate');
+                    Ti.App.fireEvent('switchTab', {'tab': 'photos'});
                     close();
                 },
                 onerror: function(e) {
@@ -131,7 +134,7 @@ var uploadPhoto = function(media) {
 // from the example http://docs.appcelerator.com/titanium/3.0/#!/guide/Camera_and_Photo_Gallery_APIs :
 var showCam = function() {
     // this is to prevent the bug noted a bit further down
-    if (!Raduga.cameraAvailable) {
+    if (!cameraAvailable) {
         Ti.API.info('tried to trigger showCam while still locked');
         return;
     }
@@ -140,13 +143,13 @@ var showCam = function() {
 
     if (!Ti.App.Properties.getString('sessionID')) {
         UI.alertError(L("signin_before_upload"));
-        tabGroup.setActiveTab(settingsTab);
+        Ti.App.fireEvent('switchTab', {'tab': 'settings'});
         return false;
     }
 
     if (Ti.Network.getNetworkTypeName() === "NONE") {
         UI.alertError(L("camera_no_internet"));
-        tabGroup.setActiveTab(photosTab);
+        Ti.App.fireEvent('switchTab', {'tab': 'photos'});
         return false;
     }
 
@@ -157,8 +160,8 @@ var showCam = function() {
                 // is taken, which triggers the camera, causing a loop
                 // this is a really crude way around it: lock the camera,
                 // and make it available after a second.
-                Raduga.cameraAvailable = false;
-                setTimeout(function() { Raduga.cameraAvailable = true; }, 4000);
+                cameraAvailable = false;
+                setTimeout(function() { cameraAvailable = true; }, 4000);
                 uploadPhoto(event.media);
             } else {
                 UI.alertError("Camera got the wrong type back: " + event.mediaType);
@@ -166,7 +169,7 @@ var showCam = function() {
         },
         cancel:function() {
                 // called when user cancels taking a picture
-                tabGroup.setActiveTab(photosTab);
+                Ti.App.fireEvent('switchTab', {'tab': 'photos'});
                 close();
         },
         error:function(error) {
