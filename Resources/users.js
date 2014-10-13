@@ -51,7 +51,7 @@ exports.createUser = function(username, password, password_confirmation, notific
             if (e.message.toLowerCase().indexOf("already taken") !== -1) {
                 exports.loginUser(username, password);
             } else {
-                alertError('Failed creating user: ' + (e.error && e.message) || JSON.stringify(e));
+                UI.alertError('Failed creating user: ' + (e.error && e.message) || JSON.stringify(e));
             }
         }
         Ti.App.fireEvent('stoppedLoading');
@@ -98,7 +98,7 @@ exports.logoutUser = function() {
             Ti.App.fireEvent('user_status_change');
             Ti.App.fireEvent('loggedOut');
         } else {
-            alertError('Failed logging out user: ' + (e.error && e.message) || JSON.stringify(e));
+            UI.alertError('Failed logging out user: ' + (e.error && e.message) || JSON.stringify(e));
         }
         Ti.App.fireEvent('stoppedLoading');
     });
