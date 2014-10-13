@@ -2,10 +2,29 @@ var UI = require('ui');
 var Platform = require('platform');
 var users = require('users');
 
+var y = 0;
+
+var prehack = function() {
+    // store our height before we open the modal window
+    // the margin we don’t need to store because it’s always
+    // supposed to be zero
+    y = settingsScrollView.getContentOffset().y;
+    Ti.API.info(y);
+};
+
+var posthack = function() {
+    // after closing the modal window, make sure we are at the original height
+    // and margin
+    var currentY = settingsScrollView.getContentOffset().y;
+    if (currentY !== y) {
+        Ti.API.info("margin jerk countered");
+        Ti.API.info("moving from y=" + currentY + " back to the original " + y);
+    }
+    settingsScrollView.setContentOffset({x: 0, y: y}, {animated: false});
+};
+
 var settingsWindow = Ti.UI.createWindow({
     orientationModes: [Ti.UI.PORTRAIT],
-    width: Platform.width,
-    height: Platform.height,
     backgroundGradient: gradients.currentSettingsGradient(),
     navBarHidden: true,
 });
@@ -40,6 +59,7 @@ var citiesTable = Ti.UI.createTableView({
 citiesWindow.add(citiesTable);
 citiesSearch.addEventListener('cancel', function(e) {
     citiesWindow.close();
+    posthack();
 });
 
 // Settings Form Window
@@ -209,10 +229,6 @@ var settingsBottomSpace = Ti.UI.createView({
 
 // see scrollview in api docs:
 var settingsScrollView = Ti.UI.createScrollView({
-    width: Platform.width,
-    height: Platform.height,
-    contentWidth: Platform.width,
-    /*contentHeight: 'auto', */
     left: 0,
     right: 0,
     bottom: 0,
@@ -237,6 +253,8 @@ citiesTable.addEventListener('click', function(e) {
     Ti.App.Properties.setString('city_lat', e.rowData.val.lat);
     Ti.App.Properties.setString('city_lon', e.rowData.val.lon);
     citiesWindow.close();
+    posthack();
+
     if (users.loggedIn()) {
         Cloud.Users.update({
             username: usernameTextField.value,
@@ -298,6 +316,7 @@ passwordCheckTextField.addEventListener('return', function() {
 
 // the city selection window
 cityTextField.addEventListener('focus', function(e) {
+    prehack();
     cityTextField.blur();
     citiesWindow.open();
     citiesSearch.focus();
