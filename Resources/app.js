@@ -220,11 +220,9 @@ Ti.App.addEventListener('rainbowClicked', function(e) {
     // the photoscroll does scroll, simply not to the right place
     tabGroup.setActiveTab(photosTab);
     Ti.API.info('click on index ' + e.index );
-    setTimeout(function() {
-        Ti.API.info('scrolling to image, I hope');
-        var animationOptions = Ti.Platform.ios ? { animated: true, position: Ti.UI.iPhone.TableViewScrollPosition.NONE} : null;
-        photos.tableView.scrollToIndex(parseInt(e.index), animationOptions);
-    }, 1000);
+    Ti.API.info('scrolling to image, I hope');
+    var animationOptions = Ti.Platform.ios ? { animated: true, position: Ti.UI.iPhone.TableViewScrollPosition.TOP} : null;
+    photos.tableView.scrollToIndex(parseInt(e.index) * 2 + 1, animationOptions);
 });
 
 
