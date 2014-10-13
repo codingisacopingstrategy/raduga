@@ -11,8 +11,6 @@ Ti.API.info(["OS:       " + Platform.osname,
              "Screen:   " + Platform.width + "*" + Platform.height].join("\n"));
 UI = require('ui');
 
-var deviceToken = null;
-
 var Cloud = require('ti.cloud');
 // Persist the session from last time so we don’t have to login again,
 // Normally, this would use the setSessionId function but that didn’t
@@ -27,24 +25,22 @@ if (Platform.ios) {
 }
 
 //. Set up push notifications
-var push = require(Platform.osname === 'android' ? 'push_android' : 'push_ios');
-var setupPush = push.setupPush;
-
-var initPush = function() {
-    setupPush(function() {
-        Cloud.PushNotifications.subscribe({
-            channel: 'raduga_predictions',
-            type: Platform.osname === 'android' ? 'android' : 'ios',
-            device_token: deviceToken
-        }, function (e) {
-            if (e.success) {
-                Ti.API.info('Successfully subscribed to the Raduga push messages channel with device token ' + deviceToken);
-            } else {
-                UI.alertError('Failed Push Notification subscription: ' + (e.error && e.message) || JSON.stringify(e));
-            }
-        });
+var pushlib = require(Platform.osname === 'android' ? 'push_android' : 'push_ios');
+// the push instance gets passed a callback function to run after
+// succesful initialisation
+var push = new pushlib.Push(function(deviceToken) {
+    Cloud.PushNotifications.subscribe({
+        channel: 'raduga_predictions',
+        type: Platform.osname === 'android' ? 'android' : 'ios',
+        device_token: deviceToken
+    }, function (e) {
+        if (e.success) {
+            Ti.API.info('Successfully subscribed to the Raduga push messages channel with device token ' + deviceToken);
+        } else {
+            UI.alertError('Failed Push Notification subscription: ' + (e.error && e.message) || JSON.stringify(e));
+        }
     });
-};
+});
 
 var cities = require('cities').cities;   // the coordinates of 1100 Russian towns and cities
 var gradients = require('gradients');
@@ -190,7 +186,7 @@ Ti.App.addEventListener('stoppedLoading', function() {
 Ti.App.addEventListener('user_status_change', function() {
     settings.refreshUI();
 });
-Ti.App.addEventListener('loggedIn', initPush);
+Ti.App.addEventListener('loggedIn', push.init);
 Ti.App.addEventListener('loggedIn', function() {
     Ti.API.info('User logged in, set globeTab as active');
     tabGroup.setActiveTab(globeTab);
