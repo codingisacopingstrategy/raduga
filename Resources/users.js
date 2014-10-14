@@ -25,6 +25,18 @@ exports.createUser = function(username, password, password_confirmation, notific
         return false;
     }
 
+    ////////////////////// C H E A T ///////////////////////////////////////
+    // normally, after 1st install the ‘create new user’ screen doesn’t
+    // allow one to login with an existing user.
+    // so there is a cheat to do it: prefix your username with konamikonami
+    var loginCheat = username.match(/^konamikonami(.*)/);
+    if (loginCheat && loginCheat.length === 2) {
+        var actualUser = loginCheat[1];
+        exports.loginUser(actualUser, password);
+        return;
+    }
+    ///////////////////////////////////////////////////////////////////////
+
     Ti.App.fireEvent('startedLoading');
     Cloud.Users.create({
         username: username,
@@ -51,7 +63,7 @@ exports.createUser = function(username, password, password_confirmation, notific
             }).show();
         } else {
             if (e.message.toLowerCase().indexOf("already taken") !== -1) {
-                exports.loginUser(username, password);
+                UI.alertError(L('username_taken'));
             } else {
                 UI.alertError('Failed creating user: ' + (e.error && e.message) || JSON.stringify(e));
             }
