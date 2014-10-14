@@ -93,22 +93,10 @@ globeContainer.add(recentRainbowLabel);
 globeContainer.add(globe);
 globeContainer.add(predictionLabel);
 globeWindow.add(globeContainer);
+globeWindow.add(sunLine);
 
 var updateSunLine = function() {
-    globeWindow.remove(globeContainer);
-
-    var d = new Date();
-    // during the day, the sunLine is above the globe:
-    var above = (6 <= d.getHours() < 18);
-
     sunLine.setLeft(rainbowLinePercentage());
-    if (!above) {
-        globeWindow.add(sunLine);
-    }
-    globeWindow.add(globeContainer);
-    if (above) {
-        globeWindow.add(sunLine);
-    }
 };
 
 // Check if we are in an area with heightened rainbow chance and update the display accordingly
@@ -248,4 +236,5 @@ exports.Globe = function() {
     };
     this.updateRainbows = updateSpottedMessage;
     this.updateColours();
+    updateSunLine();
 };
