@@ -91,7 +91,7 @@ var uploadPhoto = function(media) {
 
                     // We are done here!
                     // switch to the tab that shows the photos
-                    Ti.App.trigger('photosUpdate');
+                    Ti.App.fireEvent('photosUpdate');
                     Ti.App.fireEvent('switchTab', {'tab': 'photos'});
                     close();
                 },
