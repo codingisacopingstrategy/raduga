@@ -29,10 +29,10 @@ var updatePhotos = function() {
             tableView.setData(createTableData(photos));
         },
         onerror: function(error) {
-            if (Ti.Network.getNetworkTypeName() === "NONE" || error.code === -1009 || error.code === -1004 || error.code === -1001) {
+            if (Ti.Network.getNetworkTypeName() === "NONE" || error.code === -1009 || error.code === -1003 || error.code === -1004 || error.code === -1001) {
                 /** If the telephone is not connected to the internet, this is not actually an error */
                /** btw, error -1004 is when there is network but it can’t find the internet
-                * -1009 is when there is no internet connection (is supposed to be found by getNetworkTypeName, but apparently not always)                 * -1001 is when the server times out (probably a connection problem as well) */
+                * -1009 is when there is no internet connection (is supposed to be found by getNetworkTypeName, but apparently not always)                 * -1003 is when a server with this hostname could not be found                 * -1001 is when the server times out (probably a connection problem as well) */
                 Ti.API.info("tried to request photos while not connected to the internet");
                 return;
             }
@@ -54,10 +54,10 @@ var deletePhoto = function(photo) {
             updatePhotos();
         },
         onerror: function(error) {
-            if (Ti.Network.getNetworkTypeName() === "NONE" || error.code === -1009 || error.code === -1004 || error.code === -1001) {
+            if (Ti.Network.getNetworkTypeName() === "NONE" || error.code === -1009 || error.code === -1003 || error.code === -1004 || error.code === -1001) {
                 /** If the telephone is not connected to the internet, this is not actually an error */
                /** btw, error -1004 is when there is network but it can’t find the internet
-                * -1009 is when there is no internet connection (is supposed to be found by getNetworkTypeName, but apparently not always)                 * -1001 is when the server times out (probably a connection problem as well) */
+                * -1009 is when there is no internet connection (is supposed to be found by getNetworkTypeName, but apparently not always)                 * -1003 is when a server with this hostname could not be found                 * -1001 is when the server times out (probably a connection problem as well) */
                 Ti.API.info("tried to delete photos while not connected to the internet");
                 return;
             }
