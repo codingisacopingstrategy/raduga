@@ -2,7 +2,7 @@
 // http://docs.appcelerator.com/titanium/3.0/#!/guide/Coding_Best_Practices-section-30082362_CodingBestPractices-Setlocalvariablestoavoidcallingnativemethods
 
 exports.osname = Ti.Platform.osname;
-exports.ios = Titanium.Platform.name == 'iPhone OS';
+exports.ios = Ti.Platform.name === 'iPhone OS';
 exports.android = exports.osname === 'android';
 exports.currentLanguage = Ti.Locale.currentLanguage;
 exports.width = Ti.Platform.displayCaps.platformWidth;

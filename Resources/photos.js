@@ -2,7 +2,17 @@
 var utils = require('utils');
 var UI = require('ui');
 var Platform = require('platform');
+var gradients = require('gradients');
+var users = require('users');
 
+if (Platform.ios) {
+    var Social = require('dk.napp.social');
+    Ti.API.info(["Facebook available: " + Social.isFacebookSupported(),
+                 "Twitter available: " + Social.isTwitterSupported(),
+                 "SinaWeibo available: " + Social.isSinaWeiboSupported()].join(" "));
+}
+
+var i = 0;
 var photosWindow = Ti.UI.createWindow({
     orientationModes: [Ti.UI.PORTRAIT],
     backgroundColor: 'white',
@@ -98,7 +108,7 @@ var createTableData = function(photos) {
 
     tableData.push(row);
 
-    for (var i = 0; i < photos.length; i++) {
+    for (i = 0; i < photos.length; i++) {
         var photo = photos[i];
 
         // Skip photo’s without sufficient metadata

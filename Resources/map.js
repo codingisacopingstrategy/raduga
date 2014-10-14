@@ -1,4 +1,5 @@
 var photosutils = require('photos');
+var Platform = require('platform');
 
 var rainbowCache = [];
 
@@ -6,7 +7,7 @@ var mapWindow = Ti.UI.createWindow({
     orientationModes: [Ti.UI.PORTRAIT],
     backgroundColor: 'white',
     layout: 'vertical',
-    navBarHidden: true,
+    navBarHidden: true
 });
 
 /* Map Window */
@@ -14,7 +15,6 @@ var mapWindow = Ti.UI.createWindow({
 var mapWebView = Ti.UI.createWebView({
     url : 'html/index.html',
     width: '100%',
-    width: Platform.width,
     height: Platform.height,
     disableBounce: true
 });

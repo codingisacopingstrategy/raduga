@@ -1,3 +1,6 @@
+var Platform = require('platform');
+var UI = require('ui');
+
 // functions for logging in, logging out, and creating new users
 /* A series of functions that deal with users: createUser, loginUser */
 exports.signedUp = function() {
@@ -32,7 +35,6 @@ exports.createUser = function(username, password, password_confirmation, notific
             notifications: notifications,
             name_en: Ti.App.Properties.getString('city_name_en'),
             name_ru: Ti.App.Properties.getString('city_name_ru'),
-            language: Platform.currentLanguage
         }
     }, function (e) {
         if (e.success) {
@@ -78,9 +80,7 @@ exports.loginUser = function(username, password) {
             Ti.API.info("User " +  user.username + " logged in");
             Ti.App.fireEvent('user_status_change');
             Ti.App.fireEvent('loggedIn');
-            if (Raduga.photos.length > 0) {
-                updateSpottedMessage();
-            }
+
         } else {
             alert('Error for ' + username + ' and ' + password + ':\n' +
                 ((e.error && e.message) || JSON.stringify(e)));

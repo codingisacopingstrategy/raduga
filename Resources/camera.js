@@ -1,4 +1,6 @@
 // Set up Camera Window
+var gradients = require('gradients');
+var UI = require('ui');
 
 var cameraAvailable = true;
 
@@ -9,13 +11,13 @@ var cameraWindow = Ti.UI.createWindow({
 });
 
 var cameraProgressBar = Ti.UI.createProgressBar({
-    width:200,
-    height:50,
-    min:0,
-    max:1,
-    value:0,
-    top:10,
-    message:'Uploading image',
+    width: '200dp',
+    height: '50dp',
+    min: 0,
+    max: 1,
+    value: 0,
+    top: '10dp',
+    message: 'Uploading image',
     color: 'rgb(103,103,113)',
 });
 
@@ -65,7 +67,7 @@ var uploadPhoto = function(media) {
 
     var xhr = Ti.Network.createHTTPClient({
         onload: function() {
-            response = JSON.parse(this.responseText);
+            var response = JSON.parse(this.responseText);
             Ti.API.info(JSON.stringify(response));
 
             if (response._status === "ERR") {
@@ -80,7 +82,7 @@ var uploadPhoto = function(media) {
                     // example response:
                     // {"_updated":"Thu, 29 May 2014 15:57:29 GMT","_status":"OK","_id":"538758e922497d0249bb9662","_links":{"self":{"href":"127.0.0.1:5000/photos/538758e922497d0249bb9662","title":"Photo"}},"_etag":"bfb6ba7eb0ff446e682b6be0f9cc6b28d7e09ae1"}
 
-                    response = JSON.parse(this.responseText);
+                    var response = JSON.parse(this.responseText);
                     if (response._status === "ERR") {
                         UI.alertError('Failed uploading photo file, API trouble: ' + this.responseText);
                         return false;
@@ -155,7 +157,7 @@ var showCam = function() {
 
     Ti.Media.showCamera({
         success:function(event) {
-            if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {
+            if(event.mediaType === Ti.Media.MEDIA_TYPE_PHOTO) {
                 // there is a bug with the tab getting focus whenever a picture
                 // is taken, which triggers the camera, causing a loop
                 // this is a really crude way around it: lock the camera,
@@ -176,7 +178,7 @@ var showCam = function() {
             close();
             // called when there's an error
             var a = Ti.UI.createAlertDialog({title:L('camera')});
-            if (error.code == Ti.Media.NO_CAMERA) {
+            if (error.code === Ti.Media.NO_CAMERA) {
                 a.setMessage('Please run this test on device');
                 // if one wants to test uploading photos from the simulator, enable this code:
                 // var photo = Ti.Filesystem.getFile('ui/upload_test_photo.jpg');

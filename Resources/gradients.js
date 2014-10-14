@@ -40,7 +40,7 @@ var currentGradient = function(slug) {
         type: 'linear',
         startPoint: { x: '50%', y: '100%' },
         endPoint: { x: '50%', y: '0%' },
-        colors: gradientStops[slug],
+        colors: gradientStops[slug]
     };
 };
 
@@ -94,7 +94,7 @@ var gradientStops ={
     "22:00" : [{ color: 'rgb(14,0,127)', offset: 0.0 }, { color: 'rgb(103,39,234)', offset: 0.10 }, { color: 'rgb(13,32,88)', offset: 0.58 }, { color: 'rgb(13,32,28)', offset: 0.95 }],
     "22:30" : [{ color: 'rgb(14,0,127)', offset: 0.0 }, { color: 'rgb(13,32,88)', offset: 0.58 }, { color: 'rgb(13,32,28)', offset: 0.95 }],
     "23:00" : [{ color: 'rgb(54,0,26)', offset: 0.0 }, { color: 'rgb(31,0,73)', offset: 0.22 }, { color: 'rgb(0,0,98)', offset: 0.52 }, { color: 'rgb(0,0,0)', offset: 1.0 }],
-    "23:30" : [{ color: 'rgb(31,0,73)', offset: 0.23 },  { color: 'rgb(0,0,0)', offset: 1.0 }],
+    "23:30" : [{ color: 'rgb(31,0,73)', offset: 0.23 },  { color: 'rgb(0,0,0)', offset: 1.0 }]
 };
 
 exports.gradientSlug            = gradientSlug;

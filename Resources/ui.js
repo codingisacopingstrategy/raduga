@@ -1,4 +1,4 @@
-Platform = require('platform');
+var Platform = require('platform');
 
 exports.createLabel = function(options) {
     /**
@@ -30,13 +30,13 @@ exports.createButton = function(titleid) {
     return Ti.UI.createButton({
         titleid: titleid,
         top: '10dp',
-        width: Platform.width * .8125,
+        width: Platform.width * 0.8125,
         borderSize: 0,
         color: 'rgb(0,255,0)',
         borderRadius: 0,
         backgroundColor: 'rgba(0,0,0)',
-        font: { fontSize: "14dp", fontWeight: "bold", },
-        style: Ti.UI.iPhone.SystemButtonStyle.PLAIN,
+        font: { fontSize: "14dp", fontWeight: "bold" },
+        style: Ti.UI.iPhone.SystemButtonStyle.PLAIN
     });
 };
 

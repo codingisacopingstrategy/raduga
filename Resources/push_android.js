@@ -19,15 +19,15 @@ exports.Push = function(successCallback) {
         });
 
         // Process incoming push notifications
-        CloudPush.addEventListener('callback', function (evt) {
+        CloudPush.addEventListener('callback', function (e) {
             alert(evt.payload);
         });
         // Triggered when the push notifications is in the tray when the app is not running
-        CloudPush.addEventListener('trayClickLaunchedApp', function (evt) {
+        CloudPush.addEventListener('trayClickLaunchedApp', function (e) {
             Ti.API.info('Tray Click Launched App (app was not running)');
         });
         // Triggered when the push notifications is in the tray when the app is running
-        CloudPush.addEventListener('trayClickFocusedApp', function (evt) {
+        CloudPush.addEventListener('trayClickFocusedApp', function (e) {
             Ti.API.info('Tray Click Focused App (app was already running)');
         });
     };

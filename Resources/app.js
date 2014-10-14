@@ -1,28 +1,16 @@
-var Raduga = {
-    photos: [],
-    user: null,
-    Platform: {},
-    cameraAvailable: true,
-};
+var Raduga = {};
 
-Platform = require('platform');
+var Platform = require('platform');
 Ti.API.info(["OS:       " + Platform.osname,
              "Language: " + Platform.currentLanguage,
              "Screen:   " + Platform.width + "*" + Platform.height].join("\n"));
-UI = require('ui');
+var UI = require('ui');
 
 var Cloud = require('ti.cloud');
 // Persist the session from last time so we don’t have to login again,
 // Normally, this would use the setSessionId function but that didn’t
 // seem to be working.
 Cloud.sessionId = Ti.App.Properties.getString('sessionID');
-
-if (Platform.ios) {
-    var Social = require('dk.napp.social');
-    Ti.API.info(["Facebook available: " + Social.isFacebookSupported(),
-                 "Twitter available: " + Social.isTwitterSupported(),
-                 "SinaWeibo available: " + Social.isSinaWeiboSupported()].join(" "));
-}
 
 //. Set up push notifications
 var pushlib = require(Platform.osname === 'android' ? 'push_android' : 'push_ios');
@@ -188,6 +176,8 @@ Ti.App.addEventListener('user_status_change', function() {
 });
 Ti.App.addEventListener('loggedIn', push.init);
 Ti.App.addEventListener('loggedIn', function() {
+    Ti.API.info('User logged in, re-request photos so globe spotted message can be reloaded & trash cans can appear in photo scroll');
+    photos.update();
     Ti.API.info('User logged in, set globeTab as active');
     tabGroup.setActiveTab(globeTab);
 });
@@ -218,7 +208,7 @@ Ti.App.addEventListener('rainbowClicked', function(e) {
     Ti.API.info('click on index ' + e.index );
     Ti.API.info('scrolling to image, I hope');
     var animationOptions = Ti.Platform.ios ? { animated: true, position: Ti.UI.iPhone.TableViewScrollPosition.TOP} : null;
-    photos.tableView.scrollToIndex(parseInt(e.index) * 2 + 1, animationOptions);
+    photos.tableView.scrollToIndex(parseInt(e.index, 10) * 2 + 1, animationOptions);
 });
 
 
@@ -284,8 +274,6 @@ var updateColours = function() {
         return null;
     }
     Ti.API.info("colours need to be updated");
-
-    var slug; //= '16:00'; set a slug by hand for debugging purposes
 
     globe.update();
     globe.updateColours();

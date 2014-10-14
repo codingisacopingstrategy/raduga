@@ -26,7 +26,7 @@ var posthack = function() {
 var settingsWindow = Ti.UI.createWindow({
     orientationModes: [Ti.UI.PORTRAIT],
     backgroundGradient: gradients.currentSettingsGradient(),
-    navBarHidden: true,
+    navBarHidden: true
 });
 
 // Cities Selection
@@ -45,9 +45,9 @@ for (var i = 0; i < cities.length; i++) {
 
 var citiesSearch = Ti.UI.createSearchBar({
     barColor:'#000',
-    showCancel:true,
-    height:43,
-    top:0,
+    showCancel: true,
+    height: '43dp',
+    top: 0
 });
 
 var citiesTable = Ti.UI.createTableView({
@@ -76,14 +76,14 @@ var activityIndicator = Ti.UI.createActivityIndicator({
 var rainbowExplanationHeadingLabel = UI.createLabel({
     font: { fontSize: "16dp", fontWeight: 'bold' },
     top: '10dp',
-    width: Platform.width * .8125,
+    width: Platform.width * 0.8125,
     height: Ti.UI.SIZE,
     text: L('where_rainbow')
 });
 var rainbowExplanationLabel = UI.createLabel({
     font: { fontSize: "16dp" },
     top: 0,
-    width: Platform.width * .8125,
+    width: Platform.width * 0.8125,
     height: Ti.UI.SIZE,
     text: L('where_rainbow_explanation')
 });
@@ -93,7 +93,7 @@ var usernameLoggedInLabel = UI.createLabel({
     color: 'black',
     text: L('username') + ': ',
     top: '10dp',
-    width: Platform.width * .75,
+    width: Platform.width * 0.75
 });
 var usernameNewUserLabel = UI.createLabel({
     font: { fontSize: "14dp" },
@@ -101,19 +101,19 @@ var usernameNewUserLabel = UI.createLabel({
     text: L('sign_in_as_new_user'),
     bottom: '1dp',
     left: '6dp',
-    width: Ti.UI.SIZE,
+    width: Ti.UI.SIZE
 });
 var usernameNewUserLabelUnderLine = Ti.UI.createView({
     backgroundColor: 'black',
     height: '1dp',
     left: '6dp',
     width: '127dp',
-    bottom: 0,
+    bottom: 0
 });
 var usernameNewUserView = Ti.UI.createView({
     top: '10dp',
     height: '20dp',
-    width: Platform.width * .75,
+    width: Platform.width * 0.75
 });
 usernameNewUserView.add(usernameNewUserLabel);
 usernameNewUserView.add(usernameNewUserLabelUnderLine);
@@ -121,7 +121,7 @@ usernameNewUserView.add(usernameNewUserLabelUnderLine);
 
 var usernameTextField = UI.createTextField({
     hintText: L('username'),
-    autocapitalization: Ti.UI.TEXT_AUTOCAPITALIZATION_NONE,
+    autocapitalization: Ti.UI.TEXT_AUTOCAPITALIZATION_NONE
 });
 var passwordTextField = UI.createTextField({
     hintText: L('password'),
@@ -135,26 +135,26 @@ var passwordCheckTextField = UI.createTextField({
 var notificationsView = Ti.UI.createView({
     top: '10dp',
     height: '31dp',
-    width: '260dp',
+    width: '260dp'
 });
 var notificationsLabel = UI.createLabel({
     color: 'black',
     textid: 'notifications',
     font: { fontSize: "14dp" },
     left: '6dp',
-    bottom: '4dp',
+    bottom: '4dp'
 });
 var notificationsSwitch = Ti.UI.createSwitch({
     value: Ti.App.Properties.getString('notifications') !== 'false',
     right: 0,
-    bottom: 0,
+    bottom: 0
 });
 notificationsView.add(notificationsLabel);
 notificationsView.add(notificationsSwitch);
 
 var cityTextField = UI.createTextField({
     hintText: L('city'),
-    value: Ti.App.Properties.getString(Platform.currentLanguage === 'ru' ? 'city_name_ru' : 'city_name_en'),
+    value: Ti.App.Properties.getString(Platform.currentLanguage === 'ru' ? 'city_name_ru' : 'city_name_en')
 });
 
 var loginButton  = UI.createButton('login');
@@ -197,7 +197,7 @@ var linkAboutLabelUnderLine = Ti.UI.createView({
 var linksView = Ti.UI.createView({
     top: '6dp',
     height: Ti.UI.SIZE,
-    width: Platform.width * .8125,
+    width: Platform.width * 0.8125
 });
 linksView.add(linkTermsLabel);
 linksView.add(linkTermsLabelUnderLine);
@@ -208,7 +208,7 @@ var copyrightLabel = UI.createLabel({
     color: 'black',
     text: L('copyright'),
     top: '10dp',
-    width: Ti.UI.SIZE,
+    width: Ti.UI.SIZE
 });
 
 
@@ -217,14 +217,14 @@ var copyrightLabel = UI.createLabel({
 var settingsTopSpace = Ti.UI.createView({
     width: Platform.width,
     height: Platform.android ? '50dp': '20dp',
-    top: 0, bottom: 0,
+    top: 0, bottom: 0
 });
 
 // for iOS, where the toolbar is below
 var settingsBottomSpace = Ti.UI.createView({
     width: Platform.width,
     height: '50dp',
-    top: '10dp',
+    top: '10dp'
 });
 
 // see scrollview in api docs:
@@ -240,7 +240,6 @@ var settingsScrollView = Ti.UI.createScrollView({
 
 settingsWindow.add(settingsScrollView);
 settingsWindow.add(activityIndicator);
-
 
 
 //
@@ -262,7 +261,7 @@ citiesTable.addEventListener('click', function(e) {
                 name_en: e.rowData.val.name_en,
                 name_ru: e.rowData.val.name_ru,
                 coordinates: [[e.rowData.val.lon, e.rowData.val.lat]],
-                language: Platform.currentLanguage,
+                language: Platform.currentLanguage === 'ru' ? 'ru' : 'en'
             }
         }, function (e) {
             if (e.success) {
@@ -283,7 +282,7 @@ notificationsSwitch.addEventListener('change', function() {
             username: usernameTextField.value,
             custom_fields: {
                 notifications: notificationsSwitch.value,
-                language: Platform.currentLanguage,
+                language: Platform.currentLanguage === 'ru' ? 'ru' : 'en',
             }
         }, function (e) {
             if (e.success) {

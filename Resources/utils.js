@@ -1,3 +1,5 @@
+var Platform = require('platform');
+
 /* Date Formatting */
 
 var zeroPad = function(n) {
@@ -16,10 +18,10 @@ exports.Date2PonyHour = function(d) {
 
 exports.getMonth = function(d) {
     var months;
-    if (Raduga.Platform.currentLanguage == "ru") {
-        var months = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
+    if (Platform.currentLanguage == "ru") {
+        months = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
     } else {
-        var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     }
     return months[d.getMonth()];
 };
@@ -52,5 +54,5 @@ exports.distanceToHome = function(lat, lon) {
 exports.mime2extensionDict = {
     "image/jpeg": '.jpg',
     "image/png": ".png",
-    "image/tiff": ".tiff",
+    "image/tiff": ".tiff"
 };

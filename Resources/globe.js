@@ -1,25 +1,28 @@
 // Behaviour of globeWindow, The globe with the rainbows
-var utils = require('utils');
-var gradients = require('gradients');
 var UI = require('ui');
 var Platform = require('platform');
+var utils = require('utils');
+var gradients = require('gradients');
+var users = require('users');
+
+var i = 0;
 
 var globeWindow = Ti.UI.createWindow({
     orientationModes: [Ti.UI.PORTRAIT],
     backgroundColor: 'white',
-    navBarHidden: true,
+    navBarHidden: true
 });
 
 var globeContainer = Ti.UI.createView({
     width: Platform.width,
-    height: Platform.height,
+    height: Platform.height
 });
 
 var recentRainbowLabel = UI.createLabel({
     color: gradients.currentColour(),
     text: '',
     textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
-    top: Platform.android ? '52dp' : '22dp', left: '10dp', right: '10dp', // On Android, we need to make space for the tab bar which is on top
+    top: Platform.android ? '52dp' : '22dp', left: '10dp', right: '10dp' // On Android, we need to make space for the tab bar which is on top
 });
 
 var globe = Ti.UI.createImageView({
@@ -27,17 +30,17 @@ var globe = Ti.UI.createImageView({
     defaultImage: 'ui/transparant_pixel.png',
     image: 'html/elektro_l_20140311_0530_rgb.png',
     backgroundColor: 'transparent',
-    width: Platform.width * .8,
-    height: Platform.width * .8,
+    width: Platform.width * 0.8,
+    height: Platform.width * 0.8,
     touchEnabled: false,
     disableBounce: true
 });
 
 var predictionLabel = UI.createLabel({
-    top: (Platform.android ? 122 : 92 ) + Platform.width * .8 + 10,
+    top: (Platform.android ? 122 : 92 ) + Platform.width * 0.8 + 10,
     color: gradients.currentColour(),
     textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
-    left: '10dp', right: '10dp',
+    left: '10dp', right: '10dp'
 });
 
 var sunLine = Ti.UI.createView({
@@ -47,7 +50,7 @@ var sunLine = Ti.UI.createView({
         type: 'linear',
         startPoint: { x: '50%', y: '0%' },
         endPoint: { x: '50%', y: '100%' },
-        colors: [{ color: 'rgb(126,136,235)', offset: 0.0}, { color: 'rgb(34,205,152)', offset: 0.25 }, { color: 'rgb(238,255,139)', offset: 0.50 }, { color: 'rgb(253,199,58)', offset: 0.75 }, { color: 'rgb(255,119,121)', offset: 1.0 }],
+        colors: [{ color: 'rgb(126,136,235)', offset: 0.0}, { color: 'rgb(34,205,152)', offset: 0.25 }, { color: 'rgb(238,255,139)', offset: 0.50 }, { color: 'rgb(253,199,58)', offset: 0.75 }, { color: 'rgb(255,119,121)', offset: 1.0 }]
     }
 });
 
@@ -83,7 +86,7 @@ var rainbowLinePercentage = function(n) {
         23: 2.25
     };
     if (typeof n === "undefined") { n = new Date().getHours(); }
-    return (parseInt(hourHash[n] / 6 * 78) + 11) + "%";
+    return (parseInt(hourHash[n] / 6 * 78, 10) + 11) + "%";
 };
 
 globeContainer.add(recentRainbowLabel);
@@ -96,7 +99,7 @@ var updateSunLine = function() {
 
     var d = new Date();
     // during the day, the sunLine is above the globe:
-    var above = 6 <= d.getHours() < 18;
+    var above = (6 <= d.getHours() < 18);
 
     sunLine.setLeft(rainbowLinePercentage());
     if (!above) {
@@ -139,13 +142,14 @@ var updateSpottedMessage = function(rainbows) {
         return null;
     }
     var rainbow = rainbows[0];
+    var spottedMessage;
     var latestRainbowDate = new Date(rainbow.created_at);
     if (users.loggedIn()) {
-        var spottedMessage = String.format(L('rainbow_spotted_alt'),
+        spottedMessage = String.format(L('rainbow_spotted_alt'),
             rainbow.custom_fields[Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en'],
             utils.distanceToHome(rainbow.custom_fields.coordinates[0][1], rainbow.custom_fields.coordinates[0][0]));
     } else {
-        var spottedMessage = String.format(L('rainbow_spotted_no_from_you'),
+        spottedMessage = String.format(L('rainbow_spotted_no_from_you'),
         rainbow.custom_fields[Platform.currentLanguage === 'ru' ? 'name_ru' : 'name_en']);
     }
     var dateMessage = latestRainbowDate.getDate() + ' ' + utils.getMonth(latestRainbowDate) + ' ' + utils.Date2PonyHour(latestRainbowDate);
@@ -166,7 +170,7 @@ var updateRainbowCities = function() {
             rainbowCities = json;
             Ti.API.info('found on the internet ' + rainbowCities.length + ' cities with heightened chance of rainbows');
 
-            for (var i = 0; i < rainbowCities.length; i++) {
+            for (i = 0; i < rainbowCities.length; i++) {
                 if (rainbowCities[i].name_en === Ti.App.Properties.getString('city_name_en')) {
                 // we are in rainbow area!
                     if (new Date().getHours() < 12) {
@@ -188,10 +192,10 @@ var updateRainbowCities = function() {
             });
 
             rainbowCities.sort(function(a,b) {
-                if (a.distance < b.distance)
-                    return -1;
-                if (a.distance > b.distance)
-                    return 1;
+                if (a.distance < b.distance) {
+                    return -1; }
+                if (a.distance > b.distance) {
+                    return 1; }
                 return 0;
             });
 
