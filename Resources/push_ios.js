@@ -1,5 +1,6 @@
 var UI = require('ui');
 var Platform = require('platform');
+var users = require('users');
 
 exports.Push = function(successCallback) {
     this.deviceToken = null;
@@ -36,10 +37,12 @@ exports.Push = function(successCallback) {
                     return false;
                 }
                 var dialog = Ti.UI.createAlertDialog({
-                    message: e.data.alert + JSON.stringify(e),
+                    message: e.data.alert,
                     ok: 'OK',
                     title: L('rainbow')
                 }).show();
+                Ti.UI.iPhone.setAppBadge(0); // reset the badge counter to 0
+                users.modifyUser({custom_fields: { badge: 0}}); // store this online
             }
         });
     };

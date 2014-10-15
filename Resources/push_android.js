@@ -20,7 +20,7 @@ exports.Push = function(successCallback) {
 
         // Process incoming push notifications
         CloudPush.addEventListener('callback', function (e) {
-            alert(evt.payload);
+            alert(e.payload);
         });
         // Triggered when the push notifications is in the tray when the app is not running
         CloudPush.addEventListener('trayClickLaunchedApp', function (e) {

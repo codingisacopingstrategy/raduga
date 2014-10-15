@@ -47,6 +47,7 @@ exports.createUser = function(username, password, password_confirmation, notific
             notifications: notifications,
             name_en: Ti.App.Properties.getString('city_name_en'),
             name_ru: Ti.App.Properties.getString('city_name_ru'),
+            badge: 0
         }
     }, function (e) {
         if (e.success) {
@@ -154,4 +155,16 @@ exports.updateUser = function() {
             Ti.App.fireEvent('launched');
         }
     });
+};
+
+exports.modifyUser = function(hash) {
+    if (users.loggedIn()) {
+        Cloud.Users.update(hash, function (e) {
+            if (e.success) {
+                Ti.API.info('Succesfully updated user profile for user ' + e.users[0].username);
+            } else {
+                UI.alertError('Failed updating user profile ' + (e.error && e.message) || JSON.stringify(e));
+            }
+        });
+    }
 };
