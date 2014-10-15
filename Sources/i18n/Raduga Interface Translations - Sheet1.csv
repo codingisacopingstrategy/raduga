@@ -45,12 +45,12 @@ no_internet,Raduga cannot connect to the internet. Please check your settings. ,
 where_rainbow,Where is the rainbow?,Где находится радуга?
 where_rainbow_explanation,"You can spot a rainbow when your back is facing the sun. In front of you, rain is falling, usually from a cloud. Sunlight falls on the raindrops, causing some of them to take on beautiful colors.\nThe droplets must be plump and round, in order to refract the light so that a rainbow appears.\nAdditionally, the sun should be positioned low on the horizon.\nThis is why you mostly encounter rainbows in the morning, and in the early evening.","Чтобы увидеть радугу, встаньте спиной к солнцу. Перед вами льется дождь, часто стеной. Солнечный свет падает на капли дождя, окрашивая некоторые из них яркими цветами. Эти капли должны быть круглой формы, тогда свет будет отражаться таким
 образом, что возникнет радуга.\nК тому же, солнце не должно стоять слишком высоко над горизонтом. Именно поэтому радугу можно увидеть чаще всего утром или в конце дня."
-confirm,Confirm,
-cancel,Cancel,
-delete_confirm_message,Would you like to delete this Rainbow photo?,
-delete,Delete,
-sign_in_as_new_user,Sign in as new user,
-terms,Privacy and Terms,
-about,About Raduga,
-copyright,© Pink Pony Express 2014,
-camera_no_internet,Please connect to the internet before uploading,
+confirm,Confirm,Подтвердить
+cancel,Cancel,Отменить
+delete_confirm_message,Would you like to delete this Rainbow photo?,Хотите стереть это фото Радуги?
+delete,Delete,Стереть
+sign_in_as_new_user,Sign in as new user,Зарегистрироваться как новый пользователь
+terms,Privacy and Terms,Защита информации и ее условия
+about,About Raduga,О Радуге
+copyright,© Pink Pony Express 2014,© Pink Pony Express 2014
+camera_no_internet,Please connect to the internet before uploading,"Пожалуйста, соединитесь с интернетом прежде, чем загружать файл"

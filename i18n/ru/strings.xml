@@ -47,13 +47,13 @@
 	<string name="where_rainbow">Где находится радуга?</string>
 	<string name="where_rainbow_explanation">Чтобы увидеть радугу, встаньте спиной к солнцу. Перед вами льется дождь, часто стеной. Солнечный свет падает на капли дождя, окрашивая некоторые из них яркими цветами. Эти капли должны быть круглой формы, тогда свет будет отражаться таким
 образом, что возникнет радуга.\nК тому же, солнце не должно стоять слишком высоко над горизонтом. Именно поэтому радугу можно увидеть чаще всего утром или в конце дня.</string>
-	<string name="confirm"></string>
-	<string name="cancel"></string>
-	<string name="delete_confirm_message"></string>
-	<string name="delete"></string>
-	<string name="sign_in_as_new_user"></string>
-	<string name="terms"></string>
-	<string name="about"></string>
-	<string name="copyright"></string>
-	<string name="camera_no_internet"></string>
+	<string name="confirm">Подтвердить</string>
+	<string name="cancel">Отменить</string>
+	<string name="delete_confirm_message">Хотите стереть это фото Радуги?</string>
+	<string name="delete">Стереть</string>
+	<string name="sign_in_as_new_user">Зарегистрироваться как новый пользователь</string>
+	<string name="terms">Защита информации и ее условия</string>
+	<string name="about">О Радуге</string>
+	<string name="copyright">© Pink Pony Express 2014</string>
+	<string name="camera_no_internet">Пожалуйста, соединитесь с интернетом прежде, чем загружать файл</string>
 </resources>
