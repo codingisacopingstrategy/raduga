@@ -1,9 +1,32 @@
+/* This file creates the UI for the Settings Window and the associated functionality
+ *
+ * It knows three states:
+ *
+ * No one signed in, no one logged in (utility function users.signedUp() returns false)
+ * User signed in, not logged in (users.signedUp() is true, users.loggedIn() is false)
+ * User signed in and logged in (users.loggedIn() is true)
+ *
+ * With no user signed up, the form allows to create a new user
+ * With no user logged in, the form allows to log in
+ * With a user logged in, the form allows to change settings
+ *
+ * The functions to login, logout and to create and modify users and user settings
+ * are called from `users.js`
+ *
+ * FIXME: While signed up but not logged in, a user is able to change settings—
+ * however they are not propagated to the server. The user should not be able to
+ * change these settins until they are logged in
+ *  */
+
 var UI = require('ui');
 var Platform = require('platform');
 var users = require('users');
 
+// This is part of an elaborate hack to stop the Settings Scrollview from
+// jerking to the left
+// The root-causes of this phenomenon are unknown
+// cf https://github.com/codingisacopingstrategy/raduga/issues/2
 var y = 0;
-
 var prehack = function() {
     // store our height before we open the modal window
     // the margin we don’t need to store because it’s always
@@ -59,7 +82,7 @@ var citiesTable = Ti.UI.createTableView({
 citiesWindow.add(citiesTable);
 citiesSearch.addEventListener('cancel', function(e) {
     citiesWindow.close();
-    posthack();
+    posthack(); // make sure the scrollview is moved back to same position it was before the citiesWindow modal was opened
 });
 
 // Settings Form Window
@@ -212,7 +235,6 @@ var copyrightLabel = UI.createLabel({
 });
 
 
-
 // for Android has the toolbar on top
 var settingsTopSpace = Ti.UI.createView({
     width: Platform.width,
@@ -252,7 +274,7 @@ citiesTable.addEventListener('click', function(e) {
     Ti.App.Properties.setString('city_lat', e.rowData.val.lat);
     Ti.App.Properties.setString('city_lon', e.rowData.val.lon);
     citiesWindow.close();
-    posthack();
+    posthack(); // make sure the scrollview is moved back to same position it was before the citiesWindow modal was opened
 
     if (users.loggedIn()) {
         Cloud.Users.update({
@@ -321,9 +343,8 @@ passwordCheckTextField.addEventListener('return', function() {
     cityTextField.focus();
 });
 
-// the city selection window
 cityTextField.addEventListener('focus', function(e) {
-    prehack();
+    prehack(); // note position so we can move back if unexplained jerking occurs
     cityTextField.blur();
     citiesWindow.open();
     citiesSearch.focus();
@@ -366,8 +387,6 @@ if (Platform.ios) {
     settingsScrollView.add(settingsBottomSpace);
 }
 
-// FIXME: THIS SEEMS BUGGY, SOMETIMES ELEMENTS ARE MISSING OR MARGINS MOVE
-// https://github.com/codingisacopingstrategy/raduga/issues/2
 var updateUserDialog = function() {
 
     // we can’t just simply use the element’s .hide() and .show() methods,
