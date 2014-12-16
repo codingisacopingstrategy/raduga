@@ -1,4 +1,4 @@
-(c) 2014 Stichting Pink Pony Express, Rotterdam.
+(c) 2014 Eric Schrijver & Stichting Pink Pony Express, Rotterdam.
 
 The source code of this application is distributed under the
 GNU Affero General Public License as published by
@@ -11,3 +11,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 As the copyright owner, Pink Pony Express reserves the right to
 distribute the Application under different licenses to comply
 with the restrictions of various App Stores / environments.
+
+This program bundles the Appcelerator Titanium Library which is
+Licensed under the Apache License, Version 2.0
+
+See: <http://www.apache.org/licenses/LICENSE-2.0>
