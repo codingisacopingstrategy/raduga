@@ -300,7 +300,15 @@ usernameTextField.addEventListener('return', function() {
 usernameTextField.addEventListener('blur', function() {
     usernameTextField.setValue(usernameTextField.getValue().toLowerCase());
 });
+
 passwordTextField.addEventListener('return', function() {
+    if (users.signedUp()) {
+        // this should only be on the sign-up screen
+        // not on the sign-in screen—
+        // because on the sign-in screen the passwordCheckTextField is hidden
+        // and we don’t want a keyboard to pop up for an invisible screen!
+        return;
+    }
     passwordCheckTextField.focus();
 });
 passwordCheckTextField.addEventListener('return', function() {
