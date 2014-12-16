@@ -1,3 +1,11 @@
+/**
+ * FIXME Push notifications callbacks have not yet been implemented for Android
+ *
+ * Please check push_ios.js for the functionality to implement
+ *
+ * Setting up Push notifications worked, at some point, but requires more extensive testing
+ */
+
 var UI = require('ui');
 
 exports.Push = function(successCallback) {

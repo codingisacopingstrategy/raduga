@@ -12,10 +12,13 @@ var Cloud = require('ti.cloud');
 // seem to be working.
 Cloud.sessionId = Ti.App.Properties.getString('sessionID');
 
-//. Set up push notifications
+//. Set up push notifications: use the right module for each platform
 var pushlib = require(Platform.osname === 'android' ? 'push_android' : 'push_ios');
-// the push instance gets passed a callback function to run after
-// succesful initialisation
+// Succesfully initialising push notifications will produce a device token.
+// How to initialise is different for both platforms.
+// the object Push allows us to initialise push notifications, and to pass
+// as a callback a function to run when everything has been set up, using
+// the newly acquired device token.
 var push = new pushlib.Push(function(deviceToken) {
     Cloud.PushNotifications.subscribe({
         channel: 'raduga_predictions',
