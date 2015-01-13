@@ -1,34 +1,35 @@
+/**
+ * The map view itself is implemented as a webview
+ *
+ *     see Resources/html/index.html
+ *
+ * This window provides the wrapper for the webview
+ *
+ * And the code needed to communicate between the webview
+ * and the rest of the app.
+ */
+
 var photosutils = require('photos');
 var Platform = require('platform');
 
+//
+// Global Variables
+//
+
 var rainbowCache = [];
 
-var mapWindow = Ti.UI.createWindow({
-    orientationModes: [Ti.UI.PORTRAIT],
-    backgroundColor: 'white',
-    layout: 'vertical',
-    navBarHidden: true
-});
-
-/* Map Window */
-
-var mapWebView = Ti.UI.createWebView({
-    url : 'html/index.html',
-    width: '100%',
-    height: Platform.height,
-    disableBounce: true
-});
-
-mapWebView.addEventListener('load', function() {
-    // If someone clicks on the map before they set up their location; center on Moscow
-    var city = Ti.App.Properties.getString('city_name_en') ? Ti.App.Properties.getString('city_name_en') : 'Moscow';
-    Ti.API.info("Centering map on " + city);
-    mapWebView.evalJS('initMap("' + city +'", ' + JSON.stringify(photos2Features(rainbowCache)) + ');');
-});
-
-mapWindow.add(mapWebView);
+//
+// Utility functions
+//
 
 var photos2Features = function(photos) {
+    /**
+     * The webview uses leaflet.js. An easy way to plot elements on a leaflet
+     * map is to pass them in in a format known as ‘GeoJSON’
+     *
+     * This utility function takes the list of geocoded photos and transforms
+     * them into a GeoJSON FeatureCollection.
+     */
     var geoJSON = {};
     geoJSON.type = "FeatureCollection";
     geoJSON.features = [];
@@ -43,7 +44,7 @@ var photos2Features = function(photos) {
             continue;
         }
 
-        /* This code will only plot rainbows of today:
+        /* By default we have the latest 20 photos. This code will only plot rainbows of today:
         if (new Date(photo.created_at).toDateString() !== new Date().toDateString()) {
             Ti.API.info('Photo ' + photo._id + ' is not of today, and does not warrant a marker on the map');
             continue;
@@ -69,6 +70,44 @@ var photos2Features = function(photos) {
     }
     return geoJSON;
 };
+
+//
+// Set up Webview (see Resources/html/index.html)
+//
+
+var mapWebView = Ti.UI.createWebView({
+    url : 'html/index.html',
+    width: '100%',
+    height: Platform.height,
+    disableBounce: true
+});
+
+// When all necessary resources have loaded in the webview,
+// We tell it to initialise the map. The map is centered on
+// the city that the user has set as their location
+// If no user (or location) is set, center on Moscow
+mapWebView.addEventListener('load', function() {
+    var city = Ti.App.Properties.getString('city_name_en') ? Ti.App.Properties.getString('city_name_en') : 'Moscow';
+    Ti.API.info("Centering map on " + city);
+    mapWebView.evalJS('initMap("' + city +'", ' + JSON.stringify(photos2Features(rainbowCache)) + ');');
+});
+
+//
+// Set up Map Window
+//
+
+var mapWindow = Ti.UI.createWindow({
+    orientationModes: [Ti.UI.PORTRAIT],
+    backgroundColor: 'white',
+    layout: 'vertical',
+    navBarHidden: true
+});
+
+mapWindow.add(mapWebView);
+
+//
+// Export public functions
+//
 
 exports.Map = function() {
     this.window = mapWindow;

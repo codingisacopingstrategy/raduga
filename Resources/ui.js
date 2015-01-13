@@ -1,3 +1,9 @@
+/**
+ * These functions are mainly replacements for Titanium’s existing UI functions,
+ * allowing to easily set default values for the generated elements
+*/
+
+
 var Platform = require('platform');
 
 exports.createLabel = function(options) {

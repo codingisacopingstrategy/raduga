@@ -1,13 +1,31 @@
+/*
+ * The Raduga interface changes in function of the hour of the day.
+ * 
+ * The background is a different gradient each time. The text
+ * colour is adapted to the gradient.
+ *
+ * The functions in this file just return the values for the gradients
+ * Setting the gradients is handled in the various modules through the
+ * `updateColours` function, and coordinated in app.js
+ *
+ * There is a different gradient for each 30 minutes.
+ * It might be nicer still to have the app change continously between
+ * these gradients.
+ */
+
 var zeroPad = require('utils').zeroPad;
 
 var currentColour = function(slug) {
+    /**
+    * The text colour
+    */
     if (typeof slug === "undefined") {
         slug = gradientSlug();
     }
     // "05:30" -> 5
     var hour = parseInt(slug.split(":")[0], 10);
-    if (0 <= hour && hour < 7) { return 'rgb(196,201,211)'; }
-    if (7 <= hour && hour < 12) { return 'rgb(104,102,113)'; }
+    if (0 <= hour && hour < 7)   { return 'rgb(196,201,211)'; }
+    if (7 <= hour && hour < 12)  { return 'rgb(104,102,113)'; }
     if (12 <= hour && hour < 17) { return 'rgb(103,103,113)'; }
     if (17 <= hour && hour < 24) { return 'rgb(196,201,211)'; }
 };
@@ -33,6 +51,10 @@ var i2GradientSlug = function(i) {
 };
 
 var currentGradient = function(slug) {
+    /**
+     * This creates the actual gradient in a format Titanium knows how to use
+     * It is the ‘stops’ that are different each time.
+     */
     if (typeof slug === "undefined") {
         slug = gradientSlug();
     }
@@ -44,8 +66,11 @@ var currentGradient = function(slug) {
     };
 };
 
+// FIXME: these are the same, so any references to currentSettingsGradient can safely be changed to currentGradient
+// to currentGradient
 var currentSettingsGradient = currentGradient;
 
+// The different colours, for different moments of the day:
 var gradientStops ={
     "00:00" : [{ color: 'rgb(54,0,26)', offset: 0.0}, { color: 'rgb(31,0,73)', offset: 0.23 }, { color: 'rgb(0,0,0)', offset: 1.0 }],
     "00:30" : [{ color: 'rgb(54,0,26)', offset: 0.0}, { color: 'rgb(31,0,73)', offset: 0.23 }, { color: 'rgb(0,0,98)', offset: 0.52 }, { color: 'rgb(0,0,0)', offset: 1.0 }],

@@ -1,4 +1,12 @@
-// photosWindow behaviour
+/**
+ * Creates the window for the Photoscroll,
+ *
+ * defines the social & delete buttons,
+ *
+ * and the the functions needed to get and delete photos from the server
+ *
+ */
+
 var utils = require('utils');
 var UI = require('ui');
 var Platform = require('platform');
@@ -12,14 +20,15 @@ if (Platform.ios) {
                  "SinaWeibo available: " + Social.isSinaWeiboSupported()].join(" "));
 }
 
-var i = 0;
-var photosWindow = Ti.UI.createWindow({
-    orientationModes: [Ti.UI.PORTRAIT],
-    backgroundColor: 'white',
-    navBarHidden: true,
-});
+//
+// Global variables
+//
 
 var photoCache = [];
+
+//
+// Functions to interact with online Photos API
+//
 
 var updatePhotos = function() {
     var url = 'http://vps40616.public.cloudvps.com/photos/?where={"processed":true}&projection={"image":0}';
@@ -85,7 +94,15 @@ var deletePhoto = function(photo) {
     delXhr.send();
 };
 
+//
+// Utility functions
+//
+
 var insufficientMetadata = function(photo) {
+    // Checks if a photo has all the metadata necesary to be used in the app
+    // This function is also used by the function in `map.js` that creates the array
+    // of rainbows to plot on the map. This way we know the images in the photo scroll are the same
+    // as those on the map, and we can go to the corresponding image from the map view.
     return typeof photo.created_at === 'undefined' ||
            typeof photo.user === 'undefined' ||
            typeof photo.urls === 'undefined' ||
@@ -95,45 +112,43 @@ var insufficientMetadata = function(photo) {
            typeof photo.custom_fields.coordinates === 'undefined';
 };
 
-
-var createTableData = function(photos) {
-    var tableData = [];
-
-    var row = Ti.UI.createTableViewRow({
+var createSeparatorRow = function() {
+    // The photos are separed by whitespace. The easiest way to implement seemed to be
+    // by adding separate white table rows.
+    return Ti.UI.createTableViewRow({
         className: 'separator', // used to improve table performance
         backgroundColor: 'transparent',
         rowIndex: -1, // custom property, useful for determining the row during events
         height: '20dp'
     });
+};
 
-    tableData.push(row);
+//
+// The function that creates the table-rows from the photo data
+//
 
-    for (i = 0; i < photos.length; i++) {
+var createTableData = function(photos) {
+    var tableData = [];
+    tableData.push(createSeparatorRow());
+    for (var i = 0; i < photos.length; i++) {
         var photo = photos[i];
-
         // Skip photo’s without sufficient metadata
         if (insufficientMetadata(photo)) {
             Ti.API.info('Photo ' + photo._id + ' does not have sufficient metadata to display in photo tab');
             continue;
         }
-
         // Titanium’s cloud service uses the "2014-02-13T14:27:39+0000" format
         // which is not recognised by the Date constructor in iOS
         // The Z is another way of saying GMT.
         photo.created_at = photo.created_at.replace('+0000','Z');
-
-        if (photo.user.username === Ti.App.Properties.getString('username') && users.loggedIn()) {
-            photo.owned = true;
-        }
-
+        // Create the container (the row)
         var row = Ti.UI.createTableViewRow({
             className: 'rainbowPhoto', // used to improve table performance
             backgroundColor: 'transparent',
             rowIndex: i, // custom property, useful for determining the row during events
         });
-
-        Ti.API.info('rowindex: ' + i + ' place: ' + photo.custom_fields.name_en + ' id: ' + photo.id );
-
+        Ti.API.info('Displaying photo, rowIndex: ' + i + ', place: ' + photo.custom_fields.name_en + ', id: ' + photo.id );
+        // Create the image view, add it to the row
         var rainbowImage = Ti.UI.createImageView({
             defaultImage: 'ui/transparant_pixel.png',
             image: Platform.width < 640 ? photo.urls.medium_640 : photo.urls.large_1024,
@@ -142,7 +157,7 @@ var createTableData = function(photos) {
             width: Platform.width
         });
         row.add(rainbowImage);
-
+        // Create and add a label with the name of the city
         // with an almost transparent background that helps to keep text readable on white photos
         // and some very low tech padding with space " " ( thanks https://developer.appcelerator.com/question/50441/padding-on-a-label#answer-237825 )
         var labelCity = UI.createLabel({
@@ -154,7 +169,7 @@ var createTableData = function(photos) {
             left: '10dp'
         });
         row.add(labelCity);
-
+        // Create and add a label with the date and username
         var labelUserAndDate = UI.createLabel({
             backgroundColor: 'rgba(0,0,0,0.1)',
             color: 'white',
@@ -164,7 +179,9 @@ var createTableData = function(photos) {
             left: '10dp'
         });
         row.add(labelUserAndDate);
-
+        // Create and add the button that enables sharing
+        // It needs to be bigger than its icon to make it possible to touch
+        // So the icon is an imageView inside a larger view
         var photoShareButton = Ti.UI.createView({
             id :"share_"+ i,
             width: '60dp',
@@ -182,8 +199,9 @@ var createTableData = function(photos) {
         });
         photoShareButton.add(photoShareButtonImage);
         row.add(photoShareButton);
-
-        if (photo.owned) {
+        // If this is a photo uploaded by the current user,
+        // Create and add a button to delete it
+        if (photo.user.username === Ti.App.Properties.getString('username') && users.loggedIn()) {
             var photoDeleteButton = Ti.UI.createView({
                 id :"delete_"+ i,
                 width: '60dp',
@@ -202,26 +220,20 @@ var createTableData = function(photos) {
             photoDeleteButton.add(photoDeleteButtonImage);
             row.add(photoDeleteButton);
         }
-
         if(Platform.ios) {
             row.setSelectionStyle(Ti.UI.iPhone.TableViewCellSelectionStyle.NONE);
         }
-
+        // That’s it! add the row to our table-data
         tableData.push(row);
-
-        var row = Ti.UI.createTableViewRow({
-            className: 'separator', // used to improve table performance
-            backgroundColor: 'transparent',
-            rowIndex: -1, // custom property, useful for determining the row during events
-            height: '2dp'
-        });
-
-        tableData.push(row);
-
-
+        // And add the white-space underneath
+        tableData.push(createSeparatorRow());
     }
     return tableData;
 };
+
+//
+// Set up the main UI and interactions
+//
 
 var tableView = Ti.UI.createTableView({
     top: 0,
@@ -231,8 +243,13 @@ var tableView = Ti.UI.createTableView({
     data: []
 });
 
+if (Platform.ios) { // removes default lines between items
+    tableView.setSeparatorStyle(Ti.UI.iPhone.TableViewSeparatorStyle.NONE);
+}
+
+// handle various click events:
 tableView.addEventListener("touchstart", function(e){
-    // only the delete button has an id, in other cases we show the share dialog:
+    // if the share button was clicked
     if ( e.source.id && e.source.id.match(/^share_/) ) {
         Ti.API.info("click registerd on share button");
         var photo = photoCache[e.row.rowIndex];
@@ -246,8 +263,9 @@ tableView.addEventListener("touchstart", function(e){
                 image: photo.urls.original,
             });
         } else {
-            //implement sharing Android
+            // FIXME implement sharing Android
         }
+    // if the delete button was clicked
     } else if ( e.source.id && e.source.id.match(/^delete_/) ) {
         Ti.API.info("click registerd on delete button");
         var photo = photoCache[e.row.rowIndex];
@@ -271,11 +289,21 @@ tableView.addEventListener("touchstart", function(e){
 });
 
 
-if (Platform.ios) {
-    tableView.setSeparatorStyle(Ti.UI.iPhone.TableViewSeparatorStyle.NONE);
-}
+//
+// Create the Window
+//
+
+var photosWindow = Ti.UI.createWindow({
+    orientationModes: [Ti.UI.PORTRAIT],
+    backgroundColor: 'white',
+    navBarHidden: true,
+});
 
 photosWindow.add(tableView);
+
+//
+// Export public functions
+//
 
 exports.Photos = function() {
     this.window = photosWindow;

@@ -21,6 +21,7 @@
 var UI = require('ui');
 var Platform = require('platform');
 var users = require('users');
+var gradients = require('gradients');
 
 // This is part of an elaborate hack to stop the Settings Scrollview from
 // jerking to the left

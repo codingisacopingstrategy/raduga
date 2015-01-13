@@ -1,8 +1,10 @@
+/*
+ * functions for logging in, logging out, and creating new users
+ */
+
 var Platform = require('platform');
 var UI = require('ui');
 
-// functions for logging in, logging out, and creating new users
-/* A series of functions that deal with users: createUser, loginUser */
 exports.signedUp = function() {
     return Boolean(Ti.App.Properties.getString('username'));
 };

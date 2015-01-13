@@ -1,8 +1,36 @@
-// Set up Camera Window
+/*
+ *
+ * The device’s camera, the UI for progressbar, and the function to upload
+ * the photo to the server
+ *
+*/
+
 var gradients = require('gradients');
 var UI = require('ui');
 
+//
+// Global variables
+//
+
 var cameraAvailable = true;
+
+//
+// Set up the cameraWindow
+//
+
+// The cameraWindow is mainly used to show a progress bar when uploading.
+//
+// The device’s camera interface is not actually part of the cameraWindow,
+// it is implemented as a modal on top of it.
+//
+// When we click on the cameraTab, the cameraWindow is visible for a flash,
+// before the camera interface kicks in. Because the cameraWindow’s intended
+// gradient background is too distracting in this case, we first set it to
+// a black background. The progress bar is also hidden at this point.
+//
+// Only when an upload is triggered, the cameraWindow get its designated
+// gradient, and the progress bar is shown.
+
 
 var cameraWindow = Ti.UI.createWindow({
     orientationModes: [Ti.UI.PORTRAIT],
@@ -29,6 +57,15 @@ var close = function() {
     cameraProgressBar.value = 0;
 };
 
+//
+// The actual upload function, as called by the camera
+//
+
+// It happens in too times: first the metadata is uploaded,
+// than the file itself. This was the most straight-forward—
+// but if one can find the right way to encode the data as form/multipart
+// it should be possible in one go as well
+
 var uploadPhoto = function(media) {
     Ti.API.info("uploadPhoto called");
     cameraWindow.setBackgroundGradient(gradients.currentGradient());
@@ -36,15 +73,14 @@ var uploadPhoto = function(media) {
 
     var now = new Date().toISOString();
     var mime = media.mimeType;
-    var extension = utils.mime2extensionDict[mime];
+    var extension = utils.mime2extensionDict[mime]; // recognise jpg, png, tiff (maybe add gif, bmp?)
     if (!extension) {
-        // theoretically, this should never throw: the regex above won’t allow for unknown extensions
-        // better safe than sorry
-        UI.alertError("The extension of photo your camera takes " + extension + " is unrecognised");
+        UI.alertError("Do not know how to handle photos of the type " + mime);
         return false;
     }
     var filename = now + '_raduga_by_' + Ti.App.Properties.getString('username') + extension;
 
+    // this is all the metadata we want to send:
     var photoData = {
         filename: filename,
         content_type: mime,
@@ -63,20 +99,22 @@ var uploadPhoto = function(media) {
         processed: false
     };
 
+    // For now, we authenticate through HTTP basic authentication with the username
     var authstr = 'Basic ' + Ti.Utils.base64encode(Ti.App.Properties.getString('userid') + ':');
 
     var xhr = Ti.Network.createHTTPClient({
         onload: function() {
             var response = JSON.parse(this.responseText);
             Ti.API.info(JSON.stringify(response));
-
             if (response._status === "ERR") {
                 UI.alertError('Failed uploading photo metadata, API trouble: ' + this.responseText);
                 return false;
             }
             Ti.API.info("Succesfully uploaded photo metadata, with _id " + response._id + " to the server");
 
-            // now upload the image itself:
+            // We have succesfully uploaded the image!
+            // now we need to upload the image itself.
+            // We create a second request:
             var secondXhr = Titanium.Network.createHTTPClient({
                 onload: function(e) {
                     // example response:
@@ -108,8 +146,9 @@ var uploadPhoto = function(media) {
             secondXhr.open('POST', 'http://' + response._links.self.href);
             secondXhr.setRequestHeader('X-HTTP-Method-Override', 'PATCH');  // in iOS we can sent a PATCH request directly,
                                                                             // but in (Titanium’s implementation of) Android we can’t
-//            Concurrency checking disabled for now, because of https://github.com/nicolaiarocci/eve/issues/369 (is going to be available in 0.5)
-//            secondXhr.setRequestHeader('If-Match', response._etag);
+
+            // Concurrency checking disabled for now, because of https://github.com/nicolaiarocci/eve/issues/369 (is going to be available in 0.5)
+            // secondXhr.setRequestHeader('If-Match', response._etag);
             secondXhr.setRequestHeader('Authorization', authstr);
             secondXhr.send({
                 id: response._id,
@@ -131,7 +170,9 @@ var uploadPhoto = function(media) {
     xhr.send(JSON.stringify(photoData));
 };
 
-// Camera Behaviour
+//
+// Camera Behaviour: this is what happens when we press the camera button
+//
 
 // from the example http://docs.appcelerator.com/titanium/3.0/#!/guide/Camera_and_Photo_Gallery_APIs :
 var showCam = function() {
@@ -193,6 +234,10 @@ var showCam = function() {
         mediaTypes:[Ti.Media.MEDIA_TYPE_PHOTO]
     });
 };
+
+//
+// Public exports
+//
 
 exports.Camera = function() {
     this.window = cameraWindow;

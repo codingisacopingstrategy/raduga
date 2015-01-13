@@ -1,11 +1,22 @@
-// Behaviour of globeWindow, The globe with the rainbows
+/**
+ * The globe view: the first view a (logged-in) user sees
+ *
+ * It shows an image of the globe, beatiful imagery courtesy of
+ * the Elektro L satelitte
+ *
+ * A text above the globe mentions the last spotted rainbow,
+ * text below mentions predicted rainbow zones
+ */
+
 var UI = require('ui');
 var Platform = require('platform');
 var utils = require('utils');
 var gradients = require('gradients');
 var users = require('users');
 
-var i = 0;
+//
+// User interface
+//
 
 var globeWindow = Ti.UI.createWindow({
     orientationModes: [Ti.UI.PORTRAIT],
@@ -18,6 +29,7 @@ var globeContainer = Ti.UI.createView({
     height: Platform.height
 });
 
+// The text above the globe, mentioning the most recent rainbow spotted (photo uploaded)
 var recentRainbowLabel = UI.createLabel({
     color: gradients.currentColour(),
     text: '',
@@ -25,6 +37,7 @@ var recentRainbowLabel = UI.createLabel({
     top: Platform.android ? '52dp' : '22dp', left: '10dp', right: '10dp' // On Android, we need to make space for the tab bar which is on top
 });
 
+// The image of the globe, as downloaded from Elektro L
 var globe = Ti.UI.createImageView({
     top: Platform.android ? '122dp' : '92dp',
     defaultImage: 'ui/transparant_pixel.png',
@@ -36,6 +49,7 @@ var globe = Ti.UI.createImageView({
     disableBounce: true
 });
 
+// The text underneath the globe, shows nearest three cities in which rainbows are predicted
 var predictionLabel = UI.createLabel({
     top: (Platform.android ? 122 : 92 ) + Platform.width * 0.8 + 10,
     color: gradients.currentColour(),
@@ -43,6 +57,8 @@ var predictionLabel = UI.createLabel({
     left: '10dp', right: '10dp'
 });
 
+// a line (filled with a rainbow gradient) in front of (or behind) the globe,
+// showing the approxomative position of the sun
 var sunLine = Ti.UI.createView({
     width: '1dp',
     height:  Platform.height,
@@ -95,12 +111,15 @@ globeContainer.add(predictionLabel);
 globeWindow.add(globeContainer);
 globeWindow.add(sunLine);
 
+//
+// Update interface
+//
+
 var updateSunLine = function() {
     sunLine.setLeft(rainbowLinePercentage());
 };
 
 // Check if we are in an area with heightened rainbow chance and update the display accordingly
-
 var updateElektroL = function() {
     var d = new Date();
     d.setSeconds(0);
@@ -110,21 +129,13 @@ var updateElektroL = function() {
     var elektro_url = 'http://vps40616.public.cloudvps.com/static/elektro/' + elektro_slug + '_RGB.png';
 
     if (globe.getImage() !== elektro_url) {
-        /*var newGlobeImage = Ti.UI.createImageView(elektro_url);
-        Ti.API.info("the image will be replaced by " + elektro_url + ", started to load");
-        newGlobeImage.addEventListener('load', function(e) {
-            Ti.API.info(elektro_url + " has now loaded, replacing old image");
-            globeWindow.remove(globe);
-            globeWindow.add(newGlobeImage);
-            globe = newGlobeImage;
-        });*/
         Ti.API.info("loading Elektro L " + elektro_url);
         globe.setImage(elektro_url);
     }
 };
 
+// mention the most recent spotted rainbow in a message above the globe
 var updateSpottedMessage = function(rainbows) {
-     // display most recent rainbow in globe tab
     if (rainbows.length === 0) {
         globe.setRecentRainbowText('');
         return null;
@@ -146,6 +157,8 @@ var updateSpottedMessage = function(rainbows) {
     recentRainbowLabel.setText(totalSpottedMessage);
 };
 
+// Mention the 3 nearest cities with rainbows predicted
+// This information is also made available to other parts of the app
 var rainbowCities;
 var updateRainbowCities = function() {
     var url = "http://vps40616.public.cloudvps.com/latest/rainbow_cities.json";
@@ -158,7 +171,7 @@ var updateRainbowCities = function() {
             rainbowCities = json;
             Ti.API.info('found on the internet ' + rainbowCities.length + ' cities with heightened chance of rainbows');
 
-            for (i = 0; i < rainbowCities.length; i++) {
+            for (var i = 0; i < rainbowCities.length; i++) {
                 if (rainbowCities[i].name_en === Ti.App.Properties.getString('city_name_en')) {
                 // we are in rainbow area!
                     if (new Date().getHours() < 12) {
@@ -216,6 +229,10 @@ var updateRainbowCities = function() {
     xhr.open("GET", url);
     xhr.send();
 };
+
+//
+// Public exports
+//
 
 exports.Globe = function() {
     this.window = globeWindow;

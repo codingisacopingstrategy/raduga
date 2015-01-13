@@ -1,3 +1,7 @@
+/*
+ * Various utility functions
+ */
+
 var Platform = require('platform');
 
 /* Date Formatting */
@@ -27,6 +31,7 @@ exports.getMonth = function(d) {
 };
 /* Geographical functions */
 
+// Approximate distance in kilometers between two places in earth
 // borrowed from http://www.geodatasource.com/developers/javascript
 var distance = function(lat1, lon1, lat2, lon2, unit) {
     var radlat1 = Math.PI * lat1/180;
@@ -45,12 +50,14 @@ var distance = function(lat1, lon1, lat2, lon2, unit) {
     return dist;
 };
 
+// How far is a location from the location set as home
 exports.distanceToHome = function(lat, lon) {
     return Math.floor(distance(parseFloat(Ti.App.Properties.getString('city_lat')), parseFloat(Ti.App.Properties.getString('city_lon')), lat, lon));
 };
 
 /* Media */
 
+// if we know an image mime type this tells us what extension it is saved under
 exports.mime2extensionDict = {
     "image/jpeg": '.jpg',
     "image/png": ".png",

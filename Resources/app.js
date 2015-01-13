@@ -1,7 +1,7 @@
 /*
  * The main app file
  *
- * The site is implemented as a tabbed application.
+ * The app is implemented as a tabbed application.
  * Each tab is connected to a Window.
  *
  * The achieve modularity, the app uses the CommonJS module system.

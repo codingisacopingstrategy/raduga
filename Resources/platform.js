@@ -1,5 +1,9 @@
-// From the docs: Set local variables to avoid calling native methods
-// http://docs.appcelerator.com/titanium/3.0/#!/guide/Coding_Best_Practices-section-30082362_CodingBestPractices-Setlocalvariablestoavoidcallingnativemethods
+/** 
+ * This modules caches information about the Device we are running on
+ *
+ * From the docs: Set local variables to avoid calling native methods
+ * http://docs.appcelerator.com/titanium/3.0/#!/guide/Coding_Best_Practices-section-30082362_CodingBestPractices-Setlocalvariablestoavoidcallingnativemethods
+ */
 
 exports.osname = Ti.Platform.osname;
 exports.ios = Ti.Platform.name === 'iPhone OS';
